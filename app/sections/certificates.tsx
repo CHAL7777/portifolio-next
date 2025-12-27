@@ -25,11 +25,11 @@ const certificates = [
     link: "#"
   },
   {
-    title: "Data Structures & Algorithms",
-    issuer: "LeetCode",
+    title: "Web Programming",
+    issuer: "Hucisa",
     date: "2024",
-    credentialId: "LC-DSA-777",
-    image: "/certs/leetcode-cert.jpg",
+    credentialId: "hu-web-2024",
+    image: "/docs/web-h.jpg",
     color: "from-orange-500 to-yellow-500",
     link: "#"
   }
