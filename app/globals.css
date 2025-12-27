@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* 1. Tell Tailwind v4 to trigger dark mode when the .dark class is present */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 2. Set up your theme variables */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+}
+
+.dark {
+  --background: #020617; /* This is the Slate-950 color */
+  --foreground: #f8fafc;
+}
+
+/* 3. Apply the background to the whole page */
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply transition-colors duration-500;
+  }
+}
+
+@layer utilities {
+  .bg-grid-infinite {
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, rgba(100, 116, 139, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(100, 116, 139, 0.1) 1px, transparent 1px);
+    /* Creates the 3D floor perspective */
+    transform: perspective(1000px) rotateX(60deg) translateY(-10%);
+    transform-origin: top;
+    animation: grid-scroll 20s linear infinite;
+    mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+  }
+
+  .dark .bg-grid-infinite {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  @keyframes grid-scroll {
+    from { background-position: 0 0; }
+    to { background-position: 0 50px; }
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/10 dark:bg-slate-900/20 backdrop-blur-md border border-white/20 dark:border-slate-700/30 shadow-xl;
+  }
+}
