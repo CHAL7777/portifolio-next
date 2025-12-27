@@ -156,7 +156,7 @@ export default function Projects() {
                 
                 <div className="flex items-center justify-between">
                   <Link 
-                    href={`/projects/${project.slug}`}
+                    href={project.link}
                     className="inline-flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white group/link transition-colors hover:text-blue-600 dark:hover:text-blue-400"
                   >
                     View Case Study
