@@ -1,73 +1,97 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { 
   Framer, 
   Github, 
   Slack, 
-  Trello, 
   Database, 
   Cpu, 
   Globe, 
   Zap,
-  Code2
+  Code2,
+  Layers
 } from "lucide-react";
 
-// Mock data for your tech partners or tools
 const logos = [
-  { name: "GitHub", icon: <Github size={28} /> },
-  { name: "Framer", icon: <Framer size={28} /> },
-  { name: "Deployment", icon: <Zap size={28} /> },
-  { name: "Database", icon: <Database size={28} /> },
-  { name: "Architecture", icon: <Cpu size={28} /> },
-  { name: "Global", icon: <Globe size={28} /> },
-  { name: "System", icon: <Code2 size={28} /> },
-  { name: "Workflow", icon: <Slack size={28} /> },
+  { name: "GitHub", icon: <Github size={24} />, color: "hover:text-white" },
+  { name: "Framer", icon: <Framer size={24} />, color: "hover:text-purple-400" },
+  { name: "Vercel", icon: <Zap size={24} />, color: "hover:text-blue-400" },
+  { name: "PostgreSQL", icon: <Database size={24} />, color: "hover:text-cyan-400" },
+  { name: "Architecture", icon: <Cpu size={24} />, color: "hover:text-emerald-400" },
+  { name: "Scalability", icon: <Globe size={24} />, color: "hover:text-blue-500" },
+  { name: "TypeScript", icon: <Code2 size={24} />, color: "hover:text-blue-400" },
+  { name: "Workflow", icon: <Layers size={24} />, color: "hover:text-orange-400" },
 ];
 
-export default function LogoMarquee() {
-  // We double the array to ensure a seamless loop
-  const duplicatedLogos = [...logos, ...logos];
+export default function LogoMarqueePro() {
+  // Triple the array to ensure no gaps on very wide screens
+  const marqueeItems = [...logos, ...logos, ...logos];
 
   return (
-    <section className="py-20 bg-[#020617] overflow-hidden border-y border-white/5">
-      <div className="container mx-auto px-6 mb-12 text-center">
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
-          Trusted Tools & Technologies
-        </p>
+    <section className="py-24 bg-white dark:bg-slate-950 transition-colors duration-500 relative overflow-hidden">
+      {/* SECTION HEADER */}
+      <div className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="flex flex-col items-center text-center">
+           <div className="h-px w-12 bg-blue-500 mb-6" />
+           <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-500">
+             Powering my development workflow
+           </h3>
+        </div>
       </div>
 
-      <div className="relative flex max-w-[100vw] overflow-hidden">
-        {/* Left and Right Fades for smooth entry/exit */}
-        <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#020617] to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#020617] to-transparent z-10" />
+      {/* MARQUEE CONTAINER */}
+      <div className="relative flex overflow-hidden group">
+        {/* Pro CSS Masking for Smooth Fading Edges */}
+        <div 
+          className="absolute inset-0 z-20 pointer-events-none" 
+          style={{
+            background: 'linear-gradient(90deg, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%)',
+            // Using a CSS variable for the theme background
+            '--bg': 'inherit' 
+          } as any}
+        />
 
         <motion.div
-          className="flex flex-nowrap shrink-0 gap-16"
-          animate={{
-            x: [0, "-50%"],
-          }}
+          className="flex flex-nowrap shrink-0 gap-20 py-4"
+          animate={{ x: [0, "-33.33%"] }}
           transition={{
-            duration: 30, // Adjust speed here
+            duration: 40,
             ease: "linear",
             repeat: Infinity,
           }}
-          whileHover={{ animationPlayState: "paused" }} // Optional: pause on hover
+          // Dynamic speed on hover: instead of pausing, we can slow it down
+          style={{ animationPlayState: 'running' }}
         >
-          {duplicatedLogos.map((logo, idx) => (
+          {marqueeItems.map((logo, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-4 group cursor-default"
+              className="flex items-center gap-6 group/item cursor-pointer"
             >
-              <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-all duration-300">
+              {/* Icon Container with dynamic glow */}
+              <div className={`
+                relative w-14 h-14 rounded-2xl flex items-center justify-center 
+                bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800
+                transition-all duration-500 group-hover/item:border-transparent 
+                group-hover/item:shadow-[0_0_30px_rgba(59,130,246,0.2)]
+                ${logo.color} text-slate-400 dark:text-slate-600
+              `}>
                 {logo.icon}
+                {/* Subtle internal glow on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-current opacity-0 group-hover/item:opacity-5 blur-md transition-opacity" />
               </div>
-              <span className="text-xl font-black text-slate-700 dark:text-slate-800 uppercase tracking-tighter group-hover:text-slate-400 transition-colors">
+
+              {/* Text with high contrast reveal */}
+              <span className="text-2xl font-black text-slate-200 dark:text-slate-900 uppercase tracking-tighter transition-colors duration-500 group-hover/item:text-slate-900 dark:group-hover/item:text-slate-200">
                 {logo.name}
               </span>
             </div>
           ))}
         </motion.div>
       </div>
+      
+      {/* Subtle Bottom Border */}
+      <div className="max-w-4xl mx-auto h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent mt-20" />
     </section>
   );
 }

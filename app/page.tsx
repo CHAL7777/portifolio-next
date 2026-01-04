@@ -21,7 +21,7 @@ export default function Home() {
         <Hero />
         
         {/* The Marquee serves as a perfect transition from Hero to Content */}
-        <LogoMarquee />
+        {/* <LogoMarquee /> */}
         
         <div className="space-y-0"> 
           <About />

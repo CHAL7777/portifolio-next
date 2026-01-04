@@ -1,144 +1,187 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useState } from "react";
-import { FiArrowRight, FiGithub, FiDownload } from "react-icons/fi"; // Optional: Install react-icons
+import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, animate, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { FiArrowRight, FiDownload, FiGithub, FiLinkedin } from "react-icons/fi";
+import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiPostgresql, SiGraphql, SiDocker } from "react-icons/si";
 
-export default function Hero() {
-  const [textIndex, setTextIndex] = useState(0);
-  const texts = [
-    "Full Stack Web Apps",
-    "Scalable Solutions",
-    "Modern UI/UX Design",
-    "Performant APIs"
-  ];
+// --- 1. MAGNETIC EFFECT WRAPPER ---
+// High-end portfolios use magnetic elements to guide user attention
+function MagneticWrapper({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
-  const displayText = useTransform(rounded, (latest) =>
-    texts[textIndex].slice(0, latest)
-  );
+  const springConfig = { damping: 15, stiffness: 150 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
 
-  useEffect(() => {
-    const controls = animate(count, texts[textIndex].length, {
-      type: "tween",
-      duration: 1.5,
-      ease: "easeIn",
-      repeat: Infinity,
-      repeatType: "reverse",
-      repeatDelay: 1,
-      onUpdate(latest) {
-        if (latest === 0) {
-          setTextIndex((prev) => (prev + 1) % texts.length);
-        }
-      },
-    });
-    return controls.stop;
-  }, [textIndex]);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current!.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    x.set((clientX - centerX) * 0.35); // Strength of the pull
+    y.set((clientY - centerY) * 0.35);
+  };
+
+  const reset = () => { x.set(0); y.set(0); };
 
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
-      
-      {/* 1. LAYERED BACKGROUND DECOR */}
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
-           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M36 34v2H20v-2h16zm0-5v2H20v-2h16zm18 11v2H6v-2h48zm0-5v2H6v-2h48zM36 19v2H20v-2h16zm0-5v2H20v-2h16zM36 9v2H20V9h16zm0-5v2H20V4h16z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }} 
-      />
-      
-      {/* Animated Glows */}
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" 
-      />
-      <motion.div 
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" 
-      />
+    <motion.div ref={ref} onMouseMove={handleMouseMove} onMouseLeave={reset} style={{ x: springX, y: springY }}>
+      {children}
+    </motion.div>
+  );
+}
 
-      {/* 2. MAIN CONTENT */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center z-10 max-w-4xl"
+// --- 2. TECH MARQUEE (Optimized) ---
+const TechMarquee = () => {
+  const icons = [SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiPostgresql, SiGraphql, SiDocker];
+  return (
+    <div className="group relative mt-24 w-full overflow-hidden py-4">
+      <div className="absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-slate-50 dark:from-slate-950 to-transparent" />
+      <div className="absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-slate-50 dark:from-slate-950 to-transparent" />
+      
+      <motion.div 
+        className="flex gap-12 whitespace-nowrap"
+        animate={{ x: [0, -1000] }}
+        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
       >
-        {/* Status Badge */}
+        {[...Array(4)].map((_, groupIdx) => (
+          <div key={groupIdx} className="flex gap-12 items-center">
+            {icons.map((Icon, i) => (
+              <div key={i} className="flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer">
+                <Icon className="text-3xl" />
+                <span className="text-sm font-bold tracking-widest hidden md:block">SKILL_0{i+1}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+export default function HeroPro() {
+  const [textIndex, setTextIndex] = useState(0);
+  const texts = ["Full Stack Architect", "UI/UX Engineer", "System Designer"];
+  
+  // Spotlight with Spring Physics for smoothness
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { damping: 20, stiffness: 200 });
+  const smoothMouseY = useSpring(mouseY, { damping: 20, stiffness: 200 });
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <section 
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-700"
+    >
+      {/* 1. PROFESSIONAL BACKGROUND DESIGN */}
+      <div className="absolute inset-0 z-0">
+        {/* Fine-grained Mesh Grid */}
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+        
+        {/* Dynamic Interactive Spotlight */}
+        <motion.div
+          className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-500"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                450px circle at ${smoothMouseX}px ${smoothMouseY}px,
+                rgba(59, 130, 246, 0.08),
+                transparent 80%
+              )
+            `,
+          }}
+        />
+      </div>
+
+      {/* 2. MAIN CONTENT AREA */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="relative z-20 w-full max-w-6xl flex flex-col items-center"
+      >
+        {/* Availability Pill */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-8"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="group cursor-pointer mb-12 flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-4 py-1.5 backdrop-blur-xl shadow-xl shadow-blue-500/5 transition-all hover:border-blue-500/30"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-          </span>
-          Available for new projects
+          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Available for Remote Work</span>
         </motion.div>
 
-        <h1 className="text-5xl md:text-8xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
-          Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Chal Dev</span>
+        {/* Headline with Staggered Character Animation */}
+        <h1 className="text-center text-6xl md:text-9xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.9] mb-8">
+          Crafting <br />
+          <span className="inline-block text-transparent bg-clip-text bg-gradient-to-b from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 italic px-2">
+            digital
+          </span>
+          impact.
         </h1>
 
-        <div className="text-xl md:text-4xl font-medium text-slate-600 dark:text-slate-400 min-h-[60px] flex items-center justify-center gap-3">
-          <span className="hidden sm:inline">Expert in building</span>
-          <div className="relative">
-            <motion.span className="text-slate-900 dark:text-white font-bold">
-              {displayText}
-            </motion.span>
-            <motion.span
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="inline-block w-[3px] h-6 md:h-9 bg-blue-600 ml-1 align-middle"
-            />
-          </div>
+        {/* Dynamic Role Switcher */}
+        <div className="h-8 mb-12 overflow-hidden text-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={textIndex}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              onAnimationComplete={() => {
+                setTimeout(() => setTextIndex((prev) => (prev + 1) % texts.length), 2000);
+              }}
+              className="text-lg md:text-xl font-mono tracking-tighter text-slate-500"
+            >
+               &lt; {texts[textIndex]} /&gt;
+            </motion.p>
+          </AnimatePresence>
         </div>
 
-        <p className="mt-6 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-          Turning complex problems into elegant, high-performing web experiences with 
-          modern technologies and user-centric design.
-        </p>
-
-        {/* 3. CALL TO ACTION BUTTONS */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <a href="#projects" className="group px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all shadow-xl shadow-blue-500/25 flex items-center gap-2">
-            View My Work
-            <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </a>
-          
-          <div className="flex gap-4">
-            <a href="#contact" className="px-8 py-4 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all flex items-center gap-2">
-              Contact Me
+        {/* 3. CTA & SOCIALS */}
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          <MagneticWrapper>
+            <a href="#projects" className="flex items-center gap-3 rounded-2xl bg-slate-950 dark:bg-white px-10 py-5 text-white dark:text-slate-950 font-bold shadow-2xl transition-transform hover:scale-105 active:scale-95">
+              Launch Portfolio <FiArrowRight />
             </a>
-            <button className="p-4 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all shadow-sm" title="Download CV">
-              <FiDownload />
-            </button>
-          </div>
-        </motion.div>
-      </motion.div>
+          </MagneticWrapper>
 
-      {/* 4. SCROLL INDICATOR */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block"
-      >
-        <div className="w-6 h-10 border-2 border-slate-300 dark:border-slate-700 rounded-full flex justify-center p-1">
-          <motion.div 
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-1.5 h-1.5 bg-blue-600 rounded-full"
-          />
+          <div className="flex items-center gap-3">
+             <MagneticWrapper>
+                <button className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
+                  <FiGithub size={22} />
+                </button>
+             </MagneticWrapper>
+             <MagneticWrapper>
+                <button className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
+                  <FiLinkedin size={22} />
+                </button>
+             </MagneticWrapper>
+             <MagneticWrapper>
+                <a href="/resume.pdf" className="flex items-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 px-6 py-4 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all">
+                  <FiDownload /> CV
+                </a>
+             </MagneticWrapper>
+          </div>
         </div>
       </motion.div>
+
+      {/* 4. INFINITE SKILLS MARQUEE */}
+      <TechMarquee />
+
+      {/* Floating Design Elements */}
+      <div className="absolute left-10 top-1/2 -translate-y-1/2 hidden xl:block">
+        <p className="text-[10px] font-mono vertical-text tracking-[0.5em] text-slate-300 dark:text-slate-800 uppercase">Est. 2024 / Portfolio</p>
+      </div>
     </section>
   );
 }

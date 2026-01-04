@@ -1,23 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion";
+import { Moon, Sun, Menu, X, Rocket, Terminal, Command, Zap } from "lucide-react";
 
-export default function Navbar() {
+export default function NavbarElite() {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  // 1. UPDATED NAV ITEMS ARRAY
-  const navItems = ["About","Skills",  "Projects", "Certificates","Experience","Contact"];
+  const navItems = ["About", "Skills", "Projects", "Experience", "Contact"];
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
+  // Framer Motion Values for high-performance scroll tracking
+  const { scrollY } = useScroll();
+  const scrollYProgress = useSpring(useScroll().scrollYProgress, {
+    stiffness: 280,
+    damping: 18, // Extra "bouncy" premium feel
   });
+
+  // Adaptive Styling: The bar gets "denser" as you scroll
+  const navWidth = useTransform(scrollY, [0, 200], ["100%", "90%"]);
+  const navPadding = useTransform(scrollY, [0, 200], ["1.5rem", "0.75rem"]);
+  const navShadow = useTransform(
+    scrollY,
+    [0, 100],
+    ["rgba(0,0,0,0)", "rgba(0,0,0,0.1)"]
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -28,143 +37,154 @@ export default function Navbar() {
     }
 
     const handleScroll = () => {
-      // 2. UPDATED SECTIONS FOR SCROLL TRACKING
-      const sections = ["hero", "about", "experience", "skills", "certificates", "projects", "contact"];
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            setActiveSection(section);
-            break;
-          }
+      const sections = ["hero", ...navItems.map(i => i.toLowerCase())];
+      const current = sections.find(section => {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          return rect.top <= 200 && rect.bottom >= 200;
         }
-      }
+        return false;
+      });
+      if (current) setActiveSection(current);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80; 
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      setIsOpen(false);
-    }
-  };
-
   const toggleTheme = () => {
-    const isDark = document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-    setDarkMode(isDark);
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", darkMode ? "light" : "dark");
   };
 
   if (!mounted) return null;
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[9999] px-4 py-4 pointer-events-none">
-      
-      <div className="max-w-6xl mx-auto relative group pointer-events-auto">
+    <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-6 pointer-events-none flex justify-center">
+      <motion.div 
+        style={{ width: navWidth, padding: navPadding, boxShadow: navShadow }}
+        className="max-w-6xl w-full relative pointer-events-auto transition-all duration-500"
+      >
+        {/* PROGRESS FILAMENT: Now with a glow effect */}
         <motion.div
-          className="absolute top-0 left-4 right-4 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left z-[10001] rounded-full"
-          style={{ scaleX }}
+          className="absolute bottom-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent origin-center z-50 opacity-50"
+          style={{ scaleX: scrollYProgress }}
         />
 
-        <div className="flex justify-between items-center p-3 md:p-4 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800/50 shadow-2xl transition-all duration-500">
+        <div className="flex justify-between items-center bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl border border-white/20 dark:border-slate-800/50 rounded-[2rem] px-6 py-3 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]">
           
-          <a 
-            href="#hero" 
-            onClick={(e) => scrollToSection(e, "hero")}
-            className="text-2xl font-black bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent ml-2 hover:scale-105 transition-transform"
+          {/* BRAND: Using a Command icon for "Developer" vibes */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group flex items-center gap-2 mr-4"
           >
-            Chal.
-          </a>
+            <div className="w-9 h-9 rounded-xl bg-slate-900 dark:bg-white flex items-center justify-center transition-all group-hover:rotate-[15deg] group-hover:scale-110">
+              <Command size={18} className="text-white dark:text-slate-900" strokeWidth={2.5} />
+            </div>
+            <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white hidden sm:block">
+              CHAL<span className="text-blue-500 italic">.</span>
+            </span>
+          </button>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* DESKTOP NAV: The "Liquid Pill" */}
+          <div className="hidden md:flex items-center bg-slate-100/50 dark:bg-slate-800/40 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/50">
             {navItems.map((item) => {
               const id = item.toLowerCase();
               const isActive = activeSection === id;
               return (
-                <a 
+                <button 
                   key={item} 
-                  href={`#${id}`}
-                  onClick={(e) => scrollToSection(e, id)}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                    isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+                  className={`relative px-5 py-2 text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-500 ${
+                    isActive ? "text-white" : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
                   }`}
                 >
-                  {item}
+                  <span className="relative z-10">{item}</span>
                   {isActive && (
                     <motion.div 
-                      layoutId="activeTab"
-                      className="absolute inset-0 bg-blue-500/10 dark:bg-blue-400/10 rounded-xl -z-10 border border-blue-500/20 dark:border-blue-400/20"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      layoutId="liquidPill"
+                      className="absolute inset-0 bg-slate-900 dark:bg-blue-600 rounded-xl shadow-lg shadow-blue-500/20"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
-                </a>
+                </button>
               );
             })}
-            
-            <div className="h-6 w-[1px] bg-slate-200 dark:bg-slate-800 mx-2" />
-
-            <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-lg hover:rotate-12 transition-all"
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
           </div>
 
-          {/* Mobile Toggle */}
-          <div className="flex items-center gap-2 md:hidden">
-            <button onClick={toggleTheme} className="p-2 text-xl">
-               {darkMode ? "☀️" : "🌙"}
-            </button>
+          {/* ACTION CLUSTER */}
+          <div className="flex items-center gap-3 ml-4">
             <button 
-              className="p-2 text-2xl" 
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={toggleTheme}
+              className="group p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-blue-500 transition-all"
             >
-              {isOpen ? "✕" : "☰"}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={darkMode ? "dark" : "light"}
+                  initial={{ y: 10, opacity: 0, rotate: 45 }}
+                  animate={{ y: 0, opacity: 1, rotate: 0 }}
+                  exit={{ y: -10, opacity: 0, rotate: -45 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </button>
+
+            <button className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs uppercase tracking-widest hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white transition-all">
+              Resume <Zap size={14} fill="currentColor" />
+            </button>
+
+            {/* MOBILE MENU TRIGGER */}
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Mobile Menu Overlay */}
+      {/* MOBILE OVERLAY: Bento Style */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-24 left-4 right-4 p-4 rounded-3xl bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 shadow-2xl pointer-events-auto md:hidden flex flex-col gap-2"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            className="fixed inset-0 bg-slate-950/20 z-[-1] md:hidden"
+            onClick={() => setIsOpen(false)}
           >
-            {navItems.map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`} 
-                onClick={(e) => scrollToSection(e, item.toLowerCase())}
-                className={`p-4 rounded-2xl text-lg font-bold transition-all ${
-                  activeSection === item.toLowerCase() 
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30" 
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                }`}
-              >
-                {item}
-              </a>
-            ))}
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="absolute right-0 top-0 bottom-0 w-[80%] max-w-sm bg-white dark:bg-slate-900 p-8 pt-24 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col gap-4">
+                {navItems.map((item, i) => (
+                  <motion.button 
+                    key={item}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    onClick={() => {
+                       document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
+                       setIsOpen(false);
+                    }}
+                    className="flex items-center justify-between p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 text-xl font-black text-slate-900 dark:text-white"
+                  >
+                    {item}
+                    <Rocket size={20} className="text-blue-500" />
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
