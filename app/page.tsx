@@ -2,9 +2,9 @@ import Hero from "./sections/hero";
 import LogoMarquee from "./sections/logo-marquee"; // The new marquee
 import About from "./sections/about";
 import Experience from "./sections/experience";
-import Skills from "./sections/skills";
-import Certificates from "./sections/certificates";
-import Projects from "./sections/projects";
+import SkillsPro from "./sections/skills";
+import CertificatesStudio from "./sections/certificates";
+import ProjectsPro from "./sections/projects";
 import Contact from "./sections/contact";
 import Footer from "./sections/footer";
 import BackgroundMain from "../components/background-main";
@@ -25,9 +25,9 @@ export default function Home() {
         
         <div className="space-y-0"> 
           <About />
-          <Skills />
-          <Projects />
-          <Certificates />
+          <SkillsPro />
+          <ProjectsPro />
+          <CertificatesStudio />
           <Experience />
           <Contact />
           <Footer/>

@@ -1,210 +1,224 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, GraduationCap, Globe, Award, Trophy, Clock, CheckCircle2, Calendar, MapPin } from "lucide-react";
+import { 
+  Briefcase, 
+  GraduationCap, 
+  Globe, 
+  Trophy, 
+  Clock, 
+  CheckCircle2, 
+  MapPin, 
+  Code2
+} from "lucide-react";
 
-// --- Types ---
+// --- Data ---
 const experiences = [
   {
     role: "Full Stack Developer",
-    company: "Freelance / Self-Employed",
+    company: "Freelance / Open Source",
     period: "2023 — Present",
     location: "Remote",
-    description: "Architecting end-to-end solutions for international clients, focusing on conversion-optimized user flows and resilient backend systems.",
+    description: "Developing scalable web applications with a focus on type-safety and performance. Architected custom UI libraries and integrated secure authentication flows for various client projects.",
     metrics: [
-      { label: "Client Projects", value: "10+" },
-      { label: "Deployment Speed", value: "-60%" },
-      { label: "User Base", value: "1k+" }
+      { label: "Lighthouse", value: "98/100" },
+      { label: "Bundle Size", value: "-30%" },
+      { label: "Features", value: "12+" }
     ],
-    skills: ["Next.js", "TypeScript", "Node.js", "AWS"],
-    color: "blue"
+    skills: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
+    active: true
   },
   {
     role: "Frontend Developer Intern",
-    company: "Tech Solutions",
+    company: "Tech Solutions Inc.",
     period: "2022 — 2023",
     location: "Addis Ababa, ET",
-    description: "Collaborated in an agile environment to modernize legacy UI/UX for enterprise-scale dashboard applications.",
+    description: "Collaborated with the design team to implement responsive components. Optimized image loading strategies and refactored legacy state management using modern hooks.",
     metrics: [
-      { label: "Components Built", value: "20+" },
-      { label: "Performance Boost", value: "+40%" },
-      { label: "Team Size", value: "5+" }
+      { label: "Core Web Vitals", value: "+25%" },
+      { label: "Code Coverage", value: "85%" },
+      { label: "PRs Merged", value: "50+" }
     ],
-    skills: ["React", "Redux", "Tailwind CSS", "Git"],
-    color: "purple"
+    skills: ["React", "JavaScript", "Git", "Figma"],
+    active: false
   }
+];
+
+const languages = [
+  { name: "English", level: "Professional Working Proficiency", score: 90 },
+  { name: "Afaan Oromoo", level: "Native", score: 100 },
+  { name: "Amharic", level: "Native", score: 100 }
 ];
 
 export default function ExperiencePro() {
   const containerRef = useRef(null);
-  
-  return (
-    <section id="experience" ref={containerRef} className="py-32 px-6 bg-white dark:bg-slate-950 transition-colors duration-500 relative overflow-hidden">
-      
-      {/* Background Accent */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto">
+  return (
+    <section ref={containerRef} className="relative py-32 bg-slate-50 dark:bg-[#0B0F19] overflow-hidden">
+      
+      {/* Background Ambience */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* SECTION HEADER */}
-        <div className="flex flex-col items-center text-center mb-24">
+        {/* HEADER */}
+        <div className="mb-24 md:text-center max-w-3xl mx-auto">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6"
           >
-            <Clock size={14} className="text-blue-500" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">History & Credibility</span>
+            <Clock size={12} />
+            <span>My Journey</span>
           </motion.div>
-          <h2 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
-            Milestones & <span className="text-blue-600">Growth</span>
-          </h2>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-6"
+          >
+            Crafting digital solutions, <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">layer by layer.</span>
+          </motion.h2>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-16">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-start">
           
-          {/* LEFT: INTERACTIVE TIMELINE (7 Columns) */}
-          <div className="lg:col-span-7 relative">
-            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-12 flex items-center gap-4">
-              <Briefcase size={16} /> Professional Experience
+          {/* LEFT COLUMN: TIMELINE */}
+          <div className="lg:col-span-7">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-12 flex items-center gap-3">
+              <Code2 size={18} className="text-blue-500" />
+              Work Experience
             </h3>
 
-            {/* THE TIMELINE LINE */}
-            <div className="absolute left-4 top-20 bottom-0 w-[2px] bg-slate-100 dark:bg-slate-800">
-               <motion.div 
-                className="absolute top-0 left-0 w-full bg-blue-500 origin-top shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-                initial={{ height: 0 }}
-                whileInView={{ height: "100%" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-               />
-            </div>
-
-            <div className="space-y-12 ml-12">
+            <div className="relative border-l border-slate-200 dark:border-slate-800 ml-3 space-y-16">
               {experiences.map((exp, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="group relative"
-                >
-                  {/* Timeline Node */}
-                  <div className="absolute -left-[45px] top-1.5 h-6 w-6 rounded-full border-4 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 group-hover:bg-blue-500 transition-colors duration-500 shadow-xl" />
-                  
-                  <div className="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800 hover:border-blue-500/30 transition-all duration-500 shadow-sm">
-                    <div className="flex flex-wrap justify-between items-start gap-4 mb-6">
-                      <div>
-                        <h4 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">{exp.role}</h4>
-                        <div className="flex items-center gap-4 mt-2 text-sm font-medium text-slate-500">
-                           <span className="flex items-center gap-1.5"><Briefcase size={14}/> {exp.company}</span>
-                           <span className="flex items-center gap-1.5"><MapPin size={14}/> {exp.location}</span>
-                        </div>
-                      </div>
-                      <span className="px-4 py-1.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-400 whitespace-nowrap">
-                        {exp.period}
-                      </span>
-                    </div>
-
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                      {exp.description}
-                    </p>
-
-                    {/* Pro Metric Grid */}
-                    <div className="grid grid-cols-3 gap-4 mb-8">
-                      {exp.metrics.map((m, i) => (
-                        <div key={i} className="text-center p-3 rounded-2xl bg-white dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800">
-                          <p className="text-lg font-black text-blue-600 dark:text-blue-400">{m.value}</p>
-                          <p className="text-[10px] uppercase font-bold text-slate-400 tracking-tighter">{m.label}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {exp.skills.map((s, i) => (
-                        <span key={i} className="text-[10px] font-bold px-3 py-1 rounded-full bg-blue-500/5 text-blue-600 dark:text-blue-400 border border-blue-500/10">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
+                <ExperienceCard key={idx} data={exp} index={idx} />
               ))}
             </div>
           </div>
 
-          {/* RIGHT: EDUCATION & LANGUAGES (5 Columns) */}
-          <div className="lg:col-span-5 space-y-12">
-            
-            {/* EDUCATION */}
-            <div className="relative">
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-8 flex items-center gap-4">
-                <GraduationCap size={16} /> Academic Background
-              </h3>
-              <div className="relative p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-blue-700 text-white shadow-2xl overflow-hidden group">
-                {/* Decorative Pattern */}
-                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                   <GraduationCap size={120} />
-                </div>
-                
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <span className="px-3 py-1 rounded-lg bg-white/20 backdrop-blur-md text-[10px] font-bold">2023 — 2028</span>
-                    <span className="flex items-center gap-1.5 text-xs font-bold bg-emerald-500/90 px-3 py-1 rounded-full">
-                      <CheckCircle2 size={12}/> ACTIVE
-                    </span>
-                  </div>
-                  <h4 className="text-2xl font-black mb-2 leading-tight">Bachelor of Software Engineering</h4>
-                  <p className="text-blue-100 font-medium mb-6">Haramaya University</p>
+          {/* RIGHT COLUMN: STICKY SIDEBAR */}
+          <div className="lg:col-span-5 relative">
+            <div className="sticky top-12 space-y-10">
+              
+              {/* Education Card */}
+              <div className="group relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl opacity-20 blur group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative p-8 rounded-3xl bg-white dark:bg-[#111625] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
                   
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
-                    <div>
-                      <p className="text-[10px] uppercase font-bold opacity-70">Performance</p>
-                      <p className="text-xl font-black">Above 3.5</p>
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider border border-blue-500/20">
+                      <CheckCircle2 size={12} /> Student
+                    </span>
+                    <span className="font-mono text-xs text-slate-400">2023 — 2028</span>
+                  </div>
+
+                  <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">B.Sc. Software Engineering</h4>
+                  <p className="text-slate-500 font-medium mb-8">Haramaya University</p>
+
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
+                    <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                      <Trophy size={20} />
                     </div>
-                    <Trophy size={24} className="text-amber-400" />
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Academic Standing</p>
+                      <p className="text-lg font-black text-slate-900 dark:text-white">3.6 / 4.0 CGPA</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* LANGUAGES */}
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-8 flex items-center gap-4">
-                <Globe size={16} /> Linguistic Skills
-              </h3>
-              <div className="p-8 rounded-[2.5rem] bg-slate-50 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800">
+              {/* Languages */}
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#111625] border border-slate-100 dark:border-slate-800 shadow-sm">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <Globe size={14} /> Communication
+                </h3>
                 <div className="space-y-6">
-                  {[
-                    { name: "English", level: "Fluent / C2", p: 90 },
-                    { name: "Afaan Oromoo", level: "Native", p: 100 },
-                    { name: "Amharic", level: "Native", p: 100 }
-                  ].map((l, i) => (
+                  {languages.map((lang, i) => (
                     <div key={i}>
-                      <div className="flex justify-between items-end mb-2">
-                        <div>
-                          <p className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">{l.name}</p>
-                          <p className="text-[10px] font-bold text-slate-400 uppercase">{l.level}</p>
-                        </div>
-                        <span className="text-xs font-mono text-blue-500">{l.p}%</span>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="font-bold text-slate-700 dark:text-slate-200">{lang.name}</span>
+                        <span className="text-slate-400 text-xs">{lang.level}</span>
                       </div>
-                      <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
-                          whileInView={{ width: `${l.p}%` }}
-                          transition={{ duration: 1, delay: 0.5 }}
-                          className="h-full bg-blue-600 rounded-full" 
+                          whileInView={{ width: `${lang.score}%` }}
+                          transition={{ duration: 1, delay: 0.2 * i }}
+                          className="h-full bg-blue-600 rounded-full"
                         />
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ExperienceCard({ data, index }) {
+  return (
+    <div className="relative pl-8 md:pl-12 py-2 group">
+      <div className="absolute -left-[5px] top-3 h-[9px] w-[9px] rounded-full bg-slate-200 dark:bg-slate-800 group-hover:bg-blue-500 transition-colors duration-300 ring-4 ring-white dark:ring-[#0B0F19]" />
+      
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        className="relative p-6 md:p-8 rounded-2xl bg-white dark:bg-[#111625] border border-slate-100 dark:border-slate-800 hover:border-blue-500/20 transition-all duration-300"
+      >
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
+          <div>
+            <h4 className="text-xl font-bold text-slate-900 dark:text-white">{data.role}</h4>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm text-slate-500">
+               <span className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
+                 <Briefcase size={14} className="text-blue-500"/> {data.company}
+               </span>
+               <span className="flex items-center gap-1.5">
+                 <MapPin size={14}/> {data.location}
+               </span>
+            </div>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-900 text-xs font-mono font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">
+            {data.period}
+          </span>
+        </div>
+
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
+          {data.description}
+        </p>
+
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {data.metrics.map((m, i) => (
+            <div key={i} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
+              <p className="text-lg md:text-xl font-black text-slate-900 dark:text-white">
+                {m.value}
+              </p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                {m.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {data.skills.map((s, i) => (
+            <span key={i} className="px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              {s}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }
