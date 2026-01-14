@@ -18,8 +18,8 @@ import {
 const experiences = [
   {
     role: "Full Stack Developer",
-    company: "Freelance / Open Source",
-    period: "2023 — Present",
+    company: "Open Source",
+    period: "2024 — Present",
     location: "Remote",
     description: "Developing scalable web applications with a focus on type-safety and performance. Architected custom UI libraries and integrated secure authentication flows for various client projects.",
     metrics: [
@@ -33,7 +33,7 @@ const experiences = [
   {
     role: "Frontend Developer Intern",
     company: "Tech Solutions Inc.",
-    period: "2022 — 2023",
+    period: "2025 — 2026",
     location: "Addis Ababa, ET",
     description: "Collaborated with the design team to implement responsive components. Optimized image loading strategies and refactored legacy state management using modern hooks.",
     metrics: [
