@@ -37,8 +37,8 @@ const projects: Project[] = [
     image: "/docs/ecco.png",
     link: "https://eccommercebychal.netlify.app",
     github: "https://github.com/CHAL7777",
-    stars: 124,
-    forks: 35,
+    stars: 6,
+    forks: 6,
     category: "Full Stack",
     featured: true
   },
@@ -51,7 +51,7 @@ const projects: Project[] = [
     link: "https://omnifoodchaldev.netlify.app/",
     github: "https://github.com/CHAL7777",
     stars: 45,
-    forks: 12,
+    forks: 6,
     category: "Frontend",
     featured: false
   },
@@ -64,7 +64,7 @@ const projects: Project[] = [
     link: "https://saasbychal.netlify.app/",
     github: "https://github.com/CHAL7777",
     stars: 89,
-    forks: 22,
+    forks: 2,
     category: "Full Stack",
     featured: false
   },
@@ -76,7 +76,7 @@ const projects: Project[] = [
     image: "/docs/coffe.png",
     link: "https://coffebychaldev.netlify.app/",
     github: "https://github.com/CHAL7777",
-    stars: 22,
+    stars: 9,
     forks: 6,
     category: "Frontend",
     featured: false
