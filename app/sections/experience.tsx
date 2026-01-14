@@ -177,7 +177,29 @@ export default function ExperiencePro() {
   );
 }
 
-function ExperienceCard({ data, index }) {
+// --- Types ---
+interface ExperienceMetric {
+  label: string;
+  value: string;
+}
+
+interface ExperienceData {
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  description: string;
+  metrics: ExperienceMetric[];
+  skills: string[];
+  active: boolean;
+}
+
+interface ExperienceCardProps {
+  data: ExperienceData;
+  index: number;
+}
+
+function ExperienceCard({ data, index }: ExperienceCardProps) {
   return (
     <div className="relative pl-10 md:pl-16 py-2 group">
       {/* Dot on the timeline */}

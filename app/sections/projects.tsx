@@ -14,7 +14,21 @@ import {
 import Image from "next/image";
 
 // --- Types & Data ---
-const projects = [
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  link: string;
+  github: string;
+  stars: number;
+  forks: number;
+  category: string;
+  featured: boolean;
+}
+
+const projects: Project[] = [
   {
     id: 1,
     title: "E-Commerce Dashboard",
@@ -178,7 +192,7 @@ export default function ProjectsPro() {
   );
 }
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.div
       layout
