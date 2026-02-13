@@ -120,6 +120,18 @@ export default function HeroPro() {
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Available for Remote Work</span>
         </motion.div>
 
+        {/* Name Subtitle */}
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="mb-6"
+        >
+          <span className="text-sm md:text-base font-semibold tracking-[0.3em] text-slate-500 dark:text-slate-400 uppercase">
+            Chala Gobena
+          </span>
+        </motion.div>
+
         {/* Headline with Staggered Character Animation */}
         <h1 className="text-center text-6xl md:text-9xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.9] mb-8">
           Crafting <br />
@@ -157,14 +169,14 @@ export default function HeroPro() {
 
           <div className="flex items-center gap-3">
              <MagneticWrapper>
-                <button className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
+                <a href="https://github.com/CHAL7777" target="_blank" rel="noopener noreferrer" className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
                   <FiGithub size={22} />
-                </button>
+                </a>
              </MagneticWrapper>
              <MagneticWrapper>
-                <button className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
+                <a href="https://www.linkedin.com/in/chala-gobena-01a22b346" target="_blank" rel="noopener noreferrer" className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
                   <FiLinkedin size={22} />
-                </button>
+                </a>
              </MagneticWrapper>
              <MagneticWrapper>
                 <a href="/resume.pdf" className="flex items-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 px-6 py-4 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all">
