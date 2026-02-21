@@ -1,173 +1,293 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
-import { Award, Code2, MapPin, Heart, Target, Zap, Coffee, Music, Terminal } from "lucide-react";
+import { useRef } from "react";
+import { Compass, Gauge, Layers3, MapPin, Rocket, ShieldCheck, Sparkles } from "lucide-react";
 
-// --- Sub-component: Professional Code Signature ---
-const CodeCard = () => (
-  <motion.div 
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    className="hidden lg:block absolute -left-20 bottom-10 z-30 p-4 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700 shadow-2xl font-mono text-[10px] text-blue-300"
-  >
-    <div className="flex gap-1.5 mb-2">
-      <div className="w-2 h-2 rounded-full bg-red-500" />
-      <div className="w-2 h-2 rounded-full bg-yellow-500" />
-      <div className="w-2 h-2 rounded-full bg-green-500" />
-    </div>
-    <p><span className="text-purple-400">const</span> developer = {"{"}</p>
-    <p className="ml-4">name: <span className="text-emerald-400">&apos;Chal Dev&apos;</span>,</p>
-    <p className="ml-4">role: <span className="text-emerald-400">&apos;Full Stack&apos;</span>,</p>
-    <p className="ml-4">coffee: <span className="text-emerald-400">true</span>,</p>
-    <p className="ml-4">origin: <span className="text-emerald-400">&apos;Ethiopia&apos;</span></p>
-    <p>{"}"};</p>
-  </motion.div>
-);
+const principles = [
+  {
+    title: "Performance First",
+    description: "Fast loading, responsive interactions, and smooth motion are treated as baseline product quality.",
+    Icon: Gauge,
+  },
+  {
+    title: "System Thinking",
+    description: "I build reusable structures so teams can scale features without rewriting foundations.",
+    Icon: Layers3,
+  },
+  {
+    title: "Product Focus",
+    description: "Each interface decision is tied to user clarity, conversion goals, and measurable impact.",
+    Icon: Compass,
+  },
+];
+
+const milestones = [
+  { year: "2023", label: "Started coding seriously" },
+  { year: "2024", label: "Shipped first full-stack apps" },
+  { year: "2025", label: "Focused on performance and DX" },
+  { year: "2026", label: "Building premium product systems" },
+];
+
+const stats = [
+  { value: "20+", label: "Projects built" },
+  { value: "95+", label: "Lighthouse target" },
+  { value: "12h", label: "Avg response window" },
+];
 
 export default function About() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: sectionRef,
     offset: ["start end", "end start"],
   });
+  const ambientY = useTransform(scrollYProgress, [0, 1], [120, -90]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -52]);
+  const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
-  // Parallax effects
-  const yImage = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const rotateBadge = useTransform(scrollYProgress, [0, 1], [0, 15]);
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const glowX = useMotionValue(50);
+  const glowY = useMotionValue(50);
+  const springTiltX = useSpring(tiltX, { stiffness: 220, damping: 22, mass: 0.55 });
+  const springTiltY = useSpring(tiltY, { stiffness: 220, damping: 22, mass: 0.55 });
+  const spotlight = useMotionTemplate`radial-gradient(340px circle at ${glowX}% ${glowY}%, rgba(56, 189, 248, 0.26), transparent 74%)`;
 
-  const journeyMilestones = [
-    { year: "2023", title: "Genesis", description: "Wrote my first line of code." },
-    { year: "2024", title: "Evolution", description: "Mastered the MERN stack." },
-    { year: "2025", title: "Scaling", description: "Building for the world." },
-  ];
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion || !portraitRef.current) {
+      return;
+    }
+    const bounds = portraitRef.current.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+
+    tiltX.set((0.5 - y) * 10);
+    tiltY.set((x - 0.5) * 10);
+    glowX.set(x * 100);
+    glowY.set(y * 100);
+  };
+
+  const handlePointerLeave = () => {
+    tiltX.set(0);
+    tiltY.set(0);
+    glowX.set(50);
+    glowY.set(50);
+  };
 
   return (
-    <section 
-      id="about" 
-      ref={containerRef}
-      className="py-32 px-6 md:px-12 bg-white dark:bg-slate-950 transition-colors duration-500 overflow-hidden relative"
+    <section
+      id="about"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-white px-6 py-32 transition-colors duration-500 dark:bg-slate-950 md:px-10 lg:px-12"
     >
-      {/* BACKGROUND DECOR */}
-      <div className="absolute top-1/4 -right-20 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { y: ambientY }}
+        className="pointer-events-none absolute -left-24 top-16 h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[130px]"
+      />
+      <div className="pointer-events-none absolute -right-24 bottom-[-5%] h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_34%,transparent_76%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
 
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-16 items-start">
-          
-          {/* LEFT: CONTENT (7 Columns) */}
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid items-start gap-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-8"
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
             >
-              {/* Pro Label */}
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <Terminal size={14} className="text-blue-500" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Developer_Profile</span>
-              </div>
+              <Sparkles size={14} />
+              About Me
+            </motion.p>
 
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                Bridging imagination <br />
-                <span className="text-slate-400">& with </span> 
-                <span className="relative inline-block text-blue-600">
-                  efficient code.
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 338 12" fill="none">
-                    <path d="M1 9.5C54.5 4.5 149 -1.5 337 9.5" stroke="#2563eb" strokeWidth="3" strokeLinecap="round"/>
-                  </svg>
-                </span>
-              </h2>
+            <motion.h2
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-6xl"
+            >
+              Building products where
+              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+                design meets engineering.
+              </span>
+            </motion.h2>
 
-              <div className="grid sm:grid-cols-2 gap-8 text-slate-600 dark:text-slate-400">
-                <p className="text-lg leading-relaxed">
-                  I don&apos;t just build websites; I engineer solutions. Based in 
-                  <span className="text-slate-900 dark:text-white font-bold italic"> Ethiopia</span>, 
-                  I leverage the power of the MERN stack to create seamless user journeys that convert.
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ delay: 0.08 }}
+              className="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg"
+            >
+              I&apos;m a full-stack developer based in Ethiopia, focused on turning ideas into robust web products.
+              My process combines thoughtful UX, scalable code, and performance-minded delivery.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: 0.14 }}
+              className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400"
+            >
+              I care about creating interfaces that feel effortless while staying maintainable for teams and future
+              features.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.45 }}
+              transition={{ delay: 0.18 }}
+              className="mt-10 grid gap-3 sm:grid-cols-3"
+            >
+              {stats.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-slate-200 bg-white/80 p-4 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65"
+                >
+                  <p className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">{item.value}</p>
+                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.45 }}
+              transition={{ delay: 0.22 }}
+              className="mt-10 grid gap-4 md:grid-cols-3"
+            >
+              {principles.map((principle, index) => (
+                <motion.article
+                  key={principle.title}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ delay: index * 0.07 }}
+                  whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+                  className="rounded-2xl border border-slate-200 bg-white/75 p-5 transition-colors hover:border-blue-500/40 dark:border-slate-800 dark:bg-slate-900/65"
+                >
+                  <principle.Icon size={18} className="mb-3 text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-sm font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white">
+                    {principle.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    {principle.description}
+                  </p>
+                </motion.article>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="relative lg:col-span-5">
+            <motion.div
+              ref={portraitRef}
+              onPointerMove={handlePointerMove}
+              onPointerLeave={handlePointerLeave}
+              style={
+                prefersReducedMotion
+                  ? { y: portraitY }
+                  : {
+                      y: portraitY,
+                      rotateX: springTiltX,
+                      rotateY: springTiltY,
+                      transformPerspective: 1200,
+                    }
+              }
+              className="group relative aspect-[4/5] overflow-hidden rounded-[2.4rem] border border-slate-200/70 shadow-[0_30px_80px_-35px_rgba(2,6,23,0.35)] dark:border-slate-800"
+            >
+              <motion.div
+                aria-hidden
+                style={prefersReducedMotion ? undefined : { background: spotlight }}
+                className="pointer-events-none absolute inset-0 z-[2] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              />
+              <Image
+                src="/img/chala.jpg"
+                alt="Chala Gobena portrait"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-108"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent opacity-75" />
+
+              <div className="absolute bottom-8 left-8 z-10 rounded-2xl border border-white/20 bg-white/10 p-4 text-white backdrop-blur-md">
+                <p className="text-[10px] font-black uppercase tracking-[0.14em] text-white/70">Location</p>
+                <p className="mt-1 flex items-center gap-2 text-sm font-bold">
+                  <MapPin size={14} />
+                  Addis Ababa, Ethiopia
                 </p>
-                <p className="text-lg leading-relaxed">
-                  My philosophy is simple: <span className="text-blue-500">Performance</span> is a feature. 
-                  Every millisecond saved in loading is a win for the user and the business.
-                </p>
               </div>
+            </motion.div>
 
-              {/* STATS BENTO */}
-              <div className="grid grid-cols-3 gap-4 pt-4">
-                {journeyMilestones.map((m, i) => (
-                  <motion.div 
-                    key={i}
-                    whileHover={{ y: -5 }}
-                    className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 transition-colors hover:border-blue-500/50"
-                  >
-                    <p className="text-3xl font-black text-blue-600 dark:text-blue-400 mb-1">{m.year}</p>
-                    <p className="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white mb-2">{m.title}</p>
-                    <p className="text-[11px] leading-tight text-slate-500">{m.description}</p>
-                  </motion.div>
+            <motion.div
+              style={prefersReducedMotion ? undefined : { rotate: badgeRotate }}
+              className="absolute -right-5 -top-6 z-20 hidden rounded-2xl bg-blue-600 px-4 py-3 text-white shadow-2xl shadow-blue-500/35 md:block"
+            >
+              <p className="text-[10px] font-black uppercase tracking-[0.16em]">Current Focus</p>
+              <p className="mt-1 text-sm font-bold">Shipping quality fast</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.55 }}
+              transition={{ delay: 0.12 }}
+              className="mt-6 rounded-2xl border border-slate-200 bg-white/80 p-5 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65"
+            >
+              <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                <Rocket size={13} />
+                Growth Timeline
+              </p>
+              <div className="space-y-3">
+                {milestones.map((item) => (
+                  <div key={item.year} className="flex items-start gap-3 text-sm">
+                    <span className="mt-0.5 rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-blue-600 dark:text-blue-400">
+                      {item.year}
+                    </span>
+                    <span className="font-medium text-slate-600 dark:text-slate-300">{item.label}</span>
+                  </div>
                 ))}
               </div>
             </motion.div>
           </div>
-
-          {/* RIGHT: VISUAL (5 Columns) */}
-          <div className="lg:col-span-5 relative mt-12 lg:mt-0">
-            <motion.div 
-              style={{ y: yImage }}
-              className="relative aspect-[4/5] rounded-[3rem] overflow-hidden group shadow-2xl"
-            >
-              <Image 
-                src="/img/chala.jpg" 
-                alt="Chal Dev"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              {/* Glassmorphic Location Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
-              
-              <div className="absolute bottom-10 left-10 flex items-center gap-4">
-                 <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-                    <MapPin className="text-white" size={24} />
-                 </div>
-                 <div>
-                    <p className="text-white/60 text-xs font-bold uppercase tracking-widest">Currently In</p>
-                    <p className="text-white font-bold text-lg">Addis Ababa, ET</p>
-                 </div>
-              </div>
-            </motion.div>
-
-            {/* Code Snippet Floating */}
-            <CodeCard />
-
-            {/* Pro Floating Status Badge */}
-            <motion.div 
-              style={{ rotate: rotateBadge }}
-              className="absolute -top-6 -right-6 p-6 rounded-3xl bg-blue-600 text-white shadow-2xl shadow-blue-500/40 z-20 hidden md:block"
-            >
-              <Award size={32} />
-              <div className="mt-4">
-                <p className="text-[10px] font-bold opacity-70 uppercase">Vibe</p>
-                <p className="font-black text-lg">Always Coding</p>
-              </div>
-            </motion.div>
-          </div>
-
         </div>
 
-        {/* BOTTOM: INTERESTS BAR */}
-        <div className="mt-24 flex flex-wrap justify-center gap-10 opacity-40 hover:opacity-100 transition-opacity">
-           {[
-             { icon: Music, text: "Jazz & Piano" },
-             { icon: Coffee, text: "Specialty Beans" },
-             { icon: Target, text: "Problem Obsessed" },
-             { icon: Zap, text: "Fast Iteration" }
-           ].map((Item, idx) => (
-             <div key={idx} className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all cursor-default group">
-                <Item.icon size={20} className="group-hover:text-blue-500" />
-                <span className="text-sm font-bold tracking-widest uppercase">{Item.text}</span>
-             </div>
-           ))}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.55 }}
+          className="mt-16 flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white/75 p-5 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/60"
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+            <ShieldCheck size={12} />
+            Type-safe architecture
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+            Product quality workflow
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+            Clear communication
+          </span>
+        </motion.div>
       </div>
     </section>
   );

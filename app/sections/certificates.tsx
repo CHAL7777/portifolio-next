@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
-import { Award, ExternalLink, X, Download, ShieldCheck, ChevronRight } from "lucide-react";
+import { ExternalLink, X, Download, ShieldCheck, ChevronRight } from "lucide-react";
 
 // --- 1. DEFINE TYPES ---
 interface Certificate {
@@ -95,7 +95,7 @@ export default function CertificatesStudio() {
                       {cert.title}
                     </h3>
                     <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                      {cert.issuer} // {cert.date}
+                      {cert.issuer} • {cert.date}
                     </p>
                   </div>
                 </div>

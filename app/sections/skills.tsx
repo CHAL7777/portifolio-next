@@ -1,199 +1,342 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, MouseEvent, useMemo } from "react";
-import { Terminal, Code2, Cpu } from "lucide-react"; 
-import { 
-  SiNextdotjs, SiReact, SiTypescript, SiTailwindcss, SiFramer, 
-  SiNodedotjs, SiPostgresql, SiMongodb, SiPrisma, SiPython, 
-  SiGithub, SiDocker, SiFigma, SiVercel
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { useMemo, useRef } from "react";
+import { ArrowUpRight, Compass, Sparkles, Wrench } from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  SiDocker,
+  SiFigma,
+  SiFramer,
+  SiGithub,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPrisma,
+  SiPython,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel,
 } from "react-icons/si";
 
-// --- Data Structure ---
-const skillCategories = [
+interface SkillItem {
+  name: string;
+  level: number;
+  icon: IconType;
+  color: string;
+}
+
+interface SkillGroup {
+  title: string;
+  subtitle: string;
+  description: string;
+  gradient: string;
+  skills: SkillItem[];
+}
+
+const skillGroups: SkillGroup[] = [
   {
-    title: "Frontend Engineering",
-    gradient: "from-blue-600 to-cyan-500",
-    glow: "rgba(37, 99, 235, 0.15)",
-    icon: <Code2 className="text-white text-xl" />,
+    title: "Frontend Systems",
+    subtitle: "Interaction + UI",
+    description: "Component architecture, motion-driven interfaces, and responsive product workflows.",
+    gradient: "from-blue-600 via-cyan-500 to-indigo-500",
     skills: [
-      { name: "Next.js", level: 65, icon: SiNextdotjs, color: "#000000" },
-      { name: "React", level: 70, icon: SiReact, color: "#61DAFB" },
-      { name: "TypeScript", level: 70, icon: SiTypescript, color: "#3178C6" },
-      { name: "Tailwind", level: 60, icon: SiTailwindcss, color: "#06B6D4" },
-      { name: "Framer", level: 75, icon: SiFramer, color: "#0055FF" },
+      { name: "Next.js", level: 90, icon: SiNextdotjs, color: "#ffffff" },
+      { name: "React", level: 92, icon: SiReact, color: "#61DAFB" },
+      { name: "TypeScript", level: 88, icon: SiTypescript, color: "#3178C6" },
+      { name: "Tailwind", level: 90, icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "Framer Motion", level: 86, icon: SiFramer, color: "#0055FF" },
     ],
   },
   {
-    title: "Backend & Systems",
-    gradient: "from-emerald-600 to-teal-500",
-    glow: "rgba(16, 185, 129, 0.15)",
-    icon: <Cpu className="text-white text-xl" />,
+    title: "Backend + Data",
+    subtitle: "APIs + Persistence",
+    description: "Reliable APIs, structured schemas, and practical data modeling for production use.",
+    gradient: "from-emerald-600 via-teal-500 to-cyan-500",
     skills: [
-      { name: "Node.js", level: 60, icon: SiNodedotjs, color: "#339933" },
-      { name: "PostgreSQL", level: 50, icon: SiPostgresql, color: "#4169E1" },
-      { name: "MongoDB", level: 60, icon: SiMongodb, color: "#47A248" },
-      { name: "Prisma", level: 80, icon: SiPrisma, color: "#2D3748" },
-      { name: "Python", level: 65, icon: SiPython, color: "#3776AB" },
+      { name: "Node.js", level: 82, icon: SiNodedotjs, color: "#339933" },
+      { name: "PostgreSQL", level: 80, icon: SiPostgresql, color: "#4169E1" },
+      { name: "MongoDB", level: 76, icon: SiMongodb, color: "#47A248" },
+      { name: "Prisma", level: 84, icon: SiPrisma, color: "#2D3748" },
+      { name: "Python", level: 72, icon: SiPython, color: "#3776AB" },
     ],
   },
   {
-    title: "Tools & DevOps",
-    gradient: "from-purple-600 to-pink-500",
-    glow: "rgba(168, 85, 247, 0.15)",
-    icon: <Terminal className="text-white text-xl" />,
+    title: "Product Delivery",
+    subtitle: "Workflow + Shipping",
+    description: "From design handoff to deployment, optimized for quality and team velocity.",
+    gradient: "from-violet-600 via-fuchsia-500 to-pink-500",
     skills: [
-      { name: "GitHub", level: 80, icon: SiGithub, color: "#181717" },
-      { name: "Docker", level: 65, icon: SiDocker, color: "#2496ED" },
-      { name: "Figma", level: 80, icon: SiFigma, color: "#F24E1E" },
-      { name: "Vercel", level: 95, icon: SiVercel, color: "#000000" },
+      { name: "GitHub", level: 88, icon: SiGithub, color: "#181717" },
+      { name: "Docker", level: 76, icon: SiDocker, color: "#2496ED" },
+      { name: "Figma", level: 84, icon: SiFigma, color: "#F24E1E" },
+      { name: "Vercel", level: 94, icon: SiVercel, color: "#ffffff" },
     ],
   },
 ];
 
-// --- Perspective Card Component ---
-function PerspectiveCard({ children, glowColor }: { children: React.ReactNode, glowColor: string }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const springConfig = { damping: 20, stiffness: 100 };
-  
-  const x = useSpring(useMotionValue(0), springConfig);
-  const y = useSpring(useMotionValue(0), springConfig);
+export default function SkillsPro() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  const rotateX = useTransform(y, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(x, [-0.5, 0.5], ["-8deg", "8deg"]);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const ambientY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [16, -18]);
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const allSkills = useMemo(() => skillGroups.flatMap((group) => group.skills), []);
+  const strongest = useMemo(
+    () => [...allSkills].sort((a, b) => b.level - a.level).slice(0, 6),
+    [allSkills]
+  );
+  const averageLevel = useMemo(
+    () => Math.round(allSkills.reduce((sum, skill) => sum + skill.level, 0) / allSkills.length),
+    [allSkills]
+  );
 
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ 
-        rotateX, 
-        rotateY, 
-        transformStyle: "preserve-3d",
-        perspective: "1000px" 
-      }}
-      className="group relative h-full w-full rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 md:p-10 shadow-xl transition-colors duration-500"
+    <section
+      id="skills"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-slate-50 px-6 py-32 scroll-mt-24 dark:bg-slate-950"
     >
-      {/* Dynamic Glow Effect */}
-      <div 
-        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `radial-gradient(400px circle at center, ${glowColor}, transparent 80%)` }}
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { y: ambientY }}
+        className="pointer-events-none absolute -left-20 top-16 h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-[130px]"
       />
-      
-      {/* Content wrapper with translateZ for 3D pop */}
-      <div style={{ transform: "translateZ(50px)" }} className="relative z-10">
-        {children}
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-blue-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+            >
+              <Sparkles size={14} />
+              Skills
+            </motion.p>
+
+            <motion.h2
+              style={prefersReducedMotion ? undefined : { y: titleY }}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-5xl"
+            >
+              Technical range built for
+              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+                product execution.
+              </span>
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ delay: 0.08 }}
+              className="mt-6 text-base leading-relaxed text-slate-600 dark:text-slate-400"
+            >
+              I combine frontend craftsmanship, backend reliability, and delivery-focused tooling to ship complete
+              experiences.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.45 }}
+              transition={{ delay: 0.12 }}
+              className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1"
+            >
+              <StatPill label="Skill Groups" value={String(skillGroups.length)} />
+              <StatPill label="Average Proficiency" value={`${averageLevel}%`} />
+              <StatPill label="Top Stack Focus" value="React + TS" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.45 }}
+              transition={{ delay: 0.16 }}
+              className="mt-8 rounded-2xl border border-slate-200 bg-white/80 p-5 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65"
+            >
+              <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                <Compass size={13} />
+                Strengths
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {strongest.map((skill) => (
+                  <span
+                    key={skill.name}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-slate-500 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-400"
+                  >
+                    {skill.name}
+                  </span>
+                ))}
+              </div>
+              <a
+                href="#projects"
+                className="mt-5 inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.13em] text-blue-600 transition-colors hover:text-blue-500 dark:text-blue-400"
+              >
+                See work using these skills
+                <ArrowUpRight size={13} />
+              </a>
+            </motion.div>
+          </div>
+
+          <div className="grid gap-6 lg:col-span-8 md:grid-cols-2">
+            {skillGroups.map((group, index) => (
+              <SkillPanel key={group.title} group={group} index={index} />
+            ))}
+
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: 0.08 }}
+              className="md:col-span-2 rounded-[1.8rem] border border-slate-200 bg-white/85 p-6 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65"
+            >
+              <p className="mb-4 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                <Wrench size={13} />
+                Delivery Principle
+              </p>
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+                I optimize for the whole lifecycle: planning, implementation, review, deployment, and iteration.
+                Strong code quality and predictable delivery are part of the product, not an afterthought.
+              </p>
+            </motion.article>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
 
-// --- Main Skills Component ---
-export default function SkillsPro() {
-  const categories = useMemo(() => skillCategories, []);
+function SkillPanel({ group, index }: { group: SkillGroup; index: number }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const gx = useMotionValue(50);
+  const gy = useMotionValue(50);
+  const springX = useSpring(x, { stiffness: 190, damping: 20, mass: 0.5 });
+  const springY = useSpring(y, { stiffness: 190, damping: 20, mass: 0.5 });
+  const glow = useMotionTemplate`radial-gradient(320px circle at ${gx}% ${gy}%, rgba(56, 189, 248, 0.2), transparent 72%)`;
+
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!panelRef.current || prefersReducedMotion) {
+      return;
+    }
+    const bounds = panelRef.current.getBoundingClientRect();
+    const px = (event.clientX - bounds.left) / bounds.width;
+    const py = (event.clientY - bounds.top) / bounds.height;
+    x.set((px - 0.5) * 10);
+    y.set((0.5 - py) * 10);
+    gx.set(px * 100);
+    gy.set(py * 100);
+  };
+
+  const onPointerLeave = () => {
+    x.set(0);
+    y.set(0);
+    gx.set(50);
+    gy.set(50);
+  };
 
   return (
-    <section 
-      id="skills" 
-      className="py-32 px-6 bg-slate-50 dark:bg-slate-950 overflow-hidden relative scroll-mt-24"
+    <motion.article
+      ref={panelRef}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ delay: index * 0.08 }}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      style={
+        prefersReducedMotion
+          ? undefined
+          : { rotateX: springY, rotateY: springX, transformPerspective: 1200 }
+      }
+      className="group relative overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white/85 p-6 shadow-sm backdrop-blur-xl transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/10 dark:border-slate-800 dark:bg-slate-900/65"
     >
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        {/* Decorative Badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="flex justify-center mb-8"
-        >
-           <span className="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
-             Technical Expertise
-           </span>
-        </motion.div>
-
-        <header className="mb-24 text-center">
-          <motion.h2 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-4"
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { background: glow }}
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      />
+      <div className="relative z-10">
+        <div className="mb-5 flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+              {group.subtitle}
+            </p>
+            <h3 className="mt-1 text-xl font-black tracking-tight text-slate-900 dark:text-white">
+              {group.title}
+            </h3>
+          </div>
+          <span
+            className={`rounded-lg bg-gradient-to-r ${group.gradient} px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white`}
           >
-            Software <br /> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 italic font-serif">Arsenal.</span>
-          </motion.h2>
-        </header>
+            Core
+          </span>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
-          {categories.map((cat, i) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <PerspectiveCard glowColor={cat.glow}>
-                {/* Category Header */}
-                <div className="flex items-center justify-between mb-12">
-                  <h3 className="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">
-                    {cat.title}
-                  </h3>
-                  <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${cat.gradient} flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-500`}>
-                    {cat.icon}
+        <p className="mb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{group.description}</p>
+
+        <div className="space-y-4">
+          {group.skills.map((skill, idx) => {
+            const Icon = skill.icon;
+            return (
+              <div key={skill.name}>
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Icon style={{ color: skill.color }} className="text-base" />
+                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{skill.name}</span>
                   </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.12em] text-blue-600 dark:text-blue-400">
+                    {skill.level}%
+                  </span>
                 </div>
-
-                {/* Skills List */}
-                <div className="space-y-8">
-                  {cat.skills.map((skill) => (
-                    <div key={skill.name} className="group/item">
-                      <div className="flex justify-between items-end mb-3">
-                        <div className="flex items-center gap-3">
-                          <skill.icon 
-                            style={{ color: skill.color }} 
-                            className="text-xl opacity-80 group-hover/item:opacity-100 transition-opacity" 
-                          />
-                          <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
-                            {skill.name}
-                          </span>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-blue-500 opacity-0 group-hover/item:opacity-100 transition-opacity">
-                          {skill.level}%
-                        </span>
-                      </div>
-                      
-                      {/* Progress Bar */}
-                      <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800/50 rounded-full overflow-hidden">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1.5, delay: 0.2, ease: "circOut" }}
-                          className={`h-full bg-gradient-to-r ${cat.gradient}`}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800/60">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 1, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    className={`h-full rounded-full bg-gradient-to-r ${group.gradient}`}
+                  />
                 </div>
-              </PerspectiveCard>
-            </motion.div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </div>
+    </motion.article>
+  );
+}
 
-      {/* Background Subtle Elements */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-500/5 blur-[100px] rounded-full pointer-events-none" />
-    </section>
+function StatPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65">
+      <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-1 text-xl font-black tracking-tight text-slate-900 dark:text-white">{value}</p>
+    </div>
   );
 }

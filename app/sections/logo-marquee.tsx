@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { 
   Framer, 
   Github, 
-  Slack, 
   Database, 
   Cpu, 
   Globe, 
@@ -43,14 +42,7 @@ export default function LogoMarqueePro() {
       {/* MARQUEE CONTAINER */}
       <div className="relative flex overflow-hidden group">
         {/* Pro CSS Masking for Smooth Fading Edges */}
-        <div 
-          className="absolute inset-0 z-20 pointer-events-none" 
-          style={{
-            background: 'linear-gradient(90deg, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%)',
-            // Using a CSS variable for the theme background
-            '--bg': 'inherit' 
-          } as any}
-        />
+        <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-white via-transparent to-white dark:from-slate-950 dark:to-slate-950" />
 
         <motion.div
           className="flex flex-nowrap shrink-0 gap-20 py-4"

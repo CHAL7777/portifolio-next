@@ -1,190 +1,305 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { 
-  ExternalLink, 
-  Github, 
-  Layers, 
-  ArrowUpRight, 
-  Star, 
-  GitFork, 
-  FolderOpen
-} from "lucide-react";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
+import {
+  ArrowUpRight,
+  ExternalLink,
+  FolderOpen,
+  GitFork,
+  Github,
+  Layers,
+  Sparkles,
+  Star,
+} from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
-// --- Types & Data ---
 interface Project {
   id: number;
   title: string;
-  description: string;
+  summary: string;
   tags: string[];
   image: string;
-  link: string;
-  github: string;
+  liveUrl: string;
+  sourceUrl: string;
   stars: number;
   forks: number;
-  category: string;
+  category: "Full Stack" | "Frontend";
   featured: boolean;
+  year: number;
+  highlight: string;
 }
 
-const projects: Project[] = [
+const projectData: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Dashboard",
-    description: "A full-stack analytics platform processing 10k+ daily events. Features real-time inventory tracking, heatmaps, and AI-driven sales forecasting.",
-    tags: ["Next.js 14", "TypeScript", "Prisma", "Recharts"],
-    image: "/docs/ecco.png",
-    link: "https://eccommercebychal.netlify.app",
-    github: "https://github.com/CHAL7777",
-    stars: 6,
+    title: "Latest Food Delivery Web App",
+    summary:
+      "Modern ordering experience with responsive menu flows, polished UI states, and production deployment.",
+    tags: ["Next.js", "Tailwind", "Supabase"],
+    image: "/docs/latest.png",
+    liveUrl: "https://food-delivery-rho-rouge.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777",
+    stars: 9,
     forks: 6,
     category: "Full Stack",
-    featured: true
+    featured: true,
+    year: 2026,
+    highlight: "Latest release",
   },
   {
     id: 2,
-    title: "Omnifood Delivery",
-    description: "Conversion-optimized landing page with 98/100 Lighthouse score. Implements intersection observers for scroll-triggered animations.",
-    tags: ["HTML5", "Sass", "Vanilla JS"],
-    image: "/docs/food.png",
-    link: "https://omnifoodchaldev.netlify.app/",
-    github: "https://github.com/CHAL7777",
-    stars: 45,
+    title: "E-Commerce Dashboard",
+    summary:
+      "Analytics dashboard for 10k+ daily events with inventory insights, heatmaps, and forecast-ready data views.",
+    tags: ["Next.js 14", "TypeScript", "Prisma", "Recharts"],
+    image: "/docs/ecco.png",
+    liveUrl: "https://eccommercebychal.netlify.app",
+    sourceUrl: "https://github.com/CHAL7777",
+    stars: 6,
     forks: 6,
-    category: "Frontend",
-    featured: false
+    category: "Full Stack",
+    featured: true,
+    year: 2025,
+    highlight: "10k+ daily events",
   },
   {
     id: 3,
     title: "Ethiopian E-book Site",
-    description: "A digital library offering a rich collection of Ethiopian books in Amharic, Oromo, and English. Read online or download PDFs and EPUBs easily.",
+    summary:
+      "Multilingual digital library with clean browsing, online reading, and simple downloads across devices.",
     tags: ["Next.js", "Tailwind", "Supabase"],
-    image: "/docs/saas.png",
-    link: "https://ethio-book-site.vercel.app/",
-    github: "https://github.com/CHAL7777",
+    image: "/docs/saass.png",
+    liveUrl: "https://ethio-book-site.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777",
     stars: 89,
     forks: 2,
     category: "Full Stack",
-    featured: false
+    featured: false,
+    year: 2025,
+    highlight: "Multi-language library",
   },
   {
     id: 4,
+    title: "Omnifood Delivery",
+    summary:
+      "Conversion-focused marketing site tuned for loading performance and smooth interaction patterns.",
+    tags: ["HTML5", "Sass", "Vanilla JS"],
+    image: "/docs/food.png",
+    liveUrl: "https://omnifoodchaldev.netlify.app/",
+    sourceUrl: "https://github.com/CHAL7777",
+    stars: 45,
+    forks: 6,
+    category: "Frontend",
+    featured: false,
+    year: 2024,
+    highlight: "98/100 Lighthouse",
+  },
+  {
+    id: 5,
     title: "Coffee Shop Classic",
-    description: "A retrospective on fundamental web design principles. Built without frameworks to demonstrate mastery of the DOM and CSS Grid.",
+    summary:
+      "No-framework web build focused on fundamentals, semantic markup, and CSS Grid craftsmanship.",
     tags: ["CSS Grid", "HTML", "DOM API"],
     image: "/docs/coffe.png",
-    link: "https://coffebychaldev.netlify.app/",
-    github: "https://github.com/CHAL7777",
+    liveUrl: "https://coffebychaldev.netlify.app/",
+    sourceUrl: "https://github.com/CHAL7777",
     stars: 9,
     forks: 6,
     category: "Frontend",
-    featured: false
-  }
+    featured: false,
+    year: 2023,
+    highlight: "No-framework build",
+  },
 ];
 
-// Removed "Certification" from here
-const categories = ["All", "Full Stack", "Frontend"];
+const categories = ["All", ...Array.from(new Set(projectData.map((project) => project.category)))];
 
 export default function ProjectsPro() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const prefersReducedMotion = useReducedMotion();
 
-  const filteredProjects = activeCategory === "All" 
-    ? projects 
-    : projects.filter(p => p.category === activeCategory);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const headlineY = useTransform(scrollYProgress, [0, 1], [18, -18]);
+  const ambientY = useTransform(scrollYProgress, [0, 1], [90, -110]);
+  const ambientOpacity = useTransform(scrollYProgress, [0, 0.4, 1], [0.2, 0.36, 0.16]);
+
+  const filteredProjects = useMemo(() => {
+    const base =
+      activeCategory === "All"
+        ? projectData
+        : projectData.filter((project) => project.category === activeCategory);
+
+    return [...base].sort((a, b) => {
+      const yearDiff = b.year - a.year;
+      if (yearDiff !== 0) {
+        return yearDiff;
+      }
+      return Number(b.featured) - Number(a.featured);
+    });
+  }, [activeCategory]);
+
+  const totalFeatured = useMemo(
+    () => projectData.filter((project) => project.featured).length,
+    []
+  );
 
   return (
-    <section id="projects" className="py-32 bg-slate-50 dark:bg-[#0B0F19] relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-slate-50 py-32 dark:bg-[#0B0F19]"
+    >
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { y: ambientY, opacity: ambientOpacity }}
+        className="pointer-events-none absolute right-[-90px] top-[8%] h-[560px] w-[560px] rounded-full bg-blue-500/10 blur-[150px]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_78%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* HEADER SECTION */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
-          <div className="max-w-2xl">
-            <motion.div 
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="mb-16 grid items-end gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold tracking-widest text-xs uppercase mb-6"
+              viewport={{ once: true, amount: 0.4 }}
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
             >
-              <FolderOpen size={16} />
-              <span>Selected Works</span>
-            </motion.div>
-            
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
+              <FolderOpen size={15} />
+              Selected Projects
+            </motion.p>
+
+            <motion.h2
+              style={prefersReducedMotion ? undefined : { y: headlineY }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6"
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.65 }}
+              className="text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white md:text-6xl"
             >
-              Crafting Digital <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Experiences</span>
+              Product work focused on
+              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+                speed and craft.
+              </span>
             </motion.h2>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg"
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: 0.08 }}
+              className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg"
             >
-              A curated collection of projects pushing the boundaries of performance, design, and user interaction.
+              A curated set of products spanning full-stack platforms and frontend builds, each designed for clean UX
+              and performance.
             </motion.p>
           </div>
 
-          {/* Filter Pills */}
-          <motion.div 
-             initial={{ opacity: 0, x: 20 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true }}
-             className="flex flex-wrap gap-2"
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ delay: 0.12 }}
+            className="grid gap-3 sm:grid-cols-3 lg:col-span-4 lg:grid-cols-1"
           >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border ${
-                  activeCategory === cat
-                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-transparent shadow-lg"
-                    : "bg-white dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:text-blue-500"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            <InfoPill label="Projects" value={String(projectData.length)} />
+            <InfoPill label="Featured" value={String(totalFeatured)} />
+            <InfoPill
+              label="Latest Year"
+              value={String(Math.max(...projectData.map((project) => project.year)))}
+            />
           </motion.div>
         </div>
 
-        {/* PROJECTS GRID */}
-        <motion.div 
-          layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
-          <AnimatePresence mode="popLayout">
+          <LayoutGroup id="project-filters">
+            <div className="flex flex-wrap gap-2 rounded-full border border-slate-200/80 bg-white/80 p-1.5 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/60">
+              {categories.map((category) => {
+                const isActive = activeCategory === category;
+
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => setActiveCategory(category)}
+                    className="relative rounded-full px-4 py-2 text-sm font-bold"
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="active-filter-pill"
+                        transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                        className="absolute inset-0 rounded-full bg-slate-900 shadow-md dark:bg-white"
+                      />
+                    )}
+                    <span
+                      className={`relative z-10 transition-colors ${
+                        isActive
+                          ? "text-white dark:text-slate-900"
+                          : "text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                      }`}
+                    >
+                      {category}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </LayoutGroup>
+
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            Showing {filteredProjects.length} {filteredProjects.length === 1 ? "project" : "projects"}
+          </p>
+        </motion.div>
+
+        <motion.div layout className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence mode="popLayout" initial={false}>
             {filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* CTA */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-24 flex justify-center"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          className="mt-20 flex flex-wrap items-center justify-center gap-3"
         >
-          <a 
+          <a
             href="https://github.com/CHAL7777"
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-3 px-8 py-4 bg-white dark:bg-[#111625] border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-white font-bold hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300"
+            className="group inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
           >
-            <Github size={20} className="text-slate-400 group-hover:text-blue-500 transition-colors" />
-            <span>View Full Archive</span>
-            <ArrowUpRight size={18} className="text-slate-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            Full Archive
+            <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-6 py-3 text-sm font-bold text-slate-700 transition-colors hover:border-blue-500 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+          >
+            Let&apos;s Collaborate
           </a>
         </motion.div>
       </div>
@@ -193,72 +308,178 @@ export default function ProjectsPro() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const prefersReducedMotion = useReducedMotion();
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const glowX = useMotionValue(50);
+  const glowY = useMotionValue(50);
+  const springRotateX = useSpring(rotateX, { stiffness: 210, damping: 18, mass: 0.6 });
+  const springRotateY = useSpring(rotateY, { stiffness: 210, damping: 18, mass: 0.6 });
+  const imageScale = useSpring(1, { stiffness: 180, damping: 18, mass: 0.45 });
+  const spotlight = useMotionTemplate`radial-gradient(330px circle at ${glowX}% ${glowY}%, rgba(56, 189, 248, 0.23), transparent 75%)`;
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) {
+      return;
+    }
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+
+    rotateX.set((0.5 - y) * 11);
+    rotateY.set((x - 0.5) * 11);
+    glowX.set(x * 100);
+    glowY.set(y * 100);
+    imageScale.set(1.05);
+  };
+
+  const handlePointerLeave = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+    glowX.set(50);
+    glowY.set(50);
+    imageScale.set(1);
+  };
+
   return (
-    <motion.div
+    <motion.article
       layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3, delay: index * 0.05 }}
-      className={`group relative rounded-[2rem] bg-white dark:bg-[#111625] border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col h-full hover:shadow-2xl hover:shadow-blue-500/10 transition-shadow duration-500 ${
-        project.featured ? 'md:col-span-2' : ''
+      initial={{ opacity: 0, y: 20, scale: 0.97 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          delay: index * 0.05,
+          duration: 0.45,
+          ease: [0.16, 1, 0.3, 1],
+        },
+      }}
+      exit={{ opacity: 0, y: 16, scale: 0.98 }}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={
+        prefersReducedMotion
+          ? undefined
+          : {
+              rotateX: springRotateX,
+              rotateY: springRotateY,
+              transformPerspective: 1200,
+            }
+      }
+      className={`group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-slate-800 dark:bg-[#111625] ${
+        project.featured ? "md:col-span-2" : ""
       }`}
     >
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { background: spotlight }}
+        className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      />
+
       <div className="relative h-64 w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-        <div className="absolute top-4 left-4 z-20">
-          <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/90 dark:bg-slate-950/90 backdrop-blur-md text-slate-900 dark:text-white shadow-lg border border-white/20">
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+        <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
+          <span className="rounded-full border border-white/20 bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-900 shadow-lg backdrop-blur-md dark:bg-slate-950/90 dark:text-white">
             {project.category}
           </span>
+          {project.featured && (
+            <span className="rounded-full border border-amber-300/30 bg-amber-300/15 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-amber-100 backdrop-blur-md">
+              Featured
+            </span>
+          )}
         </div>
-        <div className="absolute top-4 right-4 z-20 flex gap-2 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-           <a href={project.github} target="_blank" rel="noreferrer" className="p-2.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-colors">
-              <Github size={18} />
-           </a>
-           <a href={project.link} target="_blank" rel="noreferrer" className="p-2.5 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
-              <ExternalLink size={18} />
-           </a>
+
+        <div className="absolute right-4 top-4 z-20 flex gap-2 translate-y-[-10px] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <a
+            href={project.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${project.title} source code`}
+            className="rounded-full border border-white/20 bg-white/10 p-2.5 text-white backdrop-blur-md transition-colors hover:bg-white hover:text-black"
+          >
+            <Github size={18} />
+          </a>
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${project.title} live demo`}
+            className="rounded-full bg-blue-600 p-2.5 text-white shadow-lg shadow-blue-600/25 transition-colors hover:bg-blue-500"
+          >
+            <ExternalLink size={18} />
+          </a>
         </div>
-        {!project.image ? (
-           <div className="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-300">
-              <Layers size={48} />
-           </div>
+
+        {project.image ? (
+          <motion.div style={prefersReducedMotion ? undefined : { scale: imageScale }} className="h-full w-full">
+            <Image src={project.image} alt={project.title} fill className="object-cover" />
+          </motion.div>
         ) : (
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
+          <div className="flex h-full w-full items-center justify-center text-slate-300 dark:text-slate-700">
+            <Layers size={48} />
+          </div>
         )}
       </div>
 
-      <div className="p-6 md:p-8 flex flex-col flex-grow">
-        <div className="flex flex-wrap gap-2 mb-4">
+      <div className="relative z-[2] flex flex-grow flex-col p-6 md:p-8">
+        <div className="mb-4 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
+          <span>{project.year}</span>
+          <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
+            <Sparkles size={13} />
+            {project.highlight}
+          </span>
+        </div>
+
+        <h3 className="mb-2 text-xl font-black text-slate-900 transition-colors group-hover:text-blue-500 dark:text-white md:text-2xl">
+          {project.title}
+        </h3>
+        <p className="mb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-base">
+          {project.summary}
+        </p>
+
+        <div className="mb-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span key={tag} className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/50">
+            <span
+              key={tag}
+              className="rounded-md border border-slate-200 bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600 dark:border-slate-700/50 dark:bg-slate-800 dark:text-slate-400"
+            >
               {tag}
             </span>
           ))}
         </div>
-        <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-500 transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
-            {project.description}
-          </p>
-        </div>
-        <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-           <div className="flex items-center gap-4 text-xs font-bold text-slate-500">
-              <span className="flex items-center gap-1"><Star size={14} className="text-amber-400 fill-amber-400"/> {project.stars}</span>
-              <span className="flex items-center gap-1"><GitFork size={14}/> {project.forks}</span>
-           </div>
-           <a href={project.link} className="inline-flex items-center gap-1 text-sm font-bold text-blue-600 dark:text-blue-400 hover:gap-2 transition-all">
-             Case Study <ArrowUpRight size={16} />
-           </a>
+
+        <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800">
+          <div className="flex items-center gap-4 text-xs font-bold text-slate-500 dark:text-slate-400">
+            <span className="flex items-center gap-1">
+              <Star size={14} className="fill-amber-400 text-amber-400" />
+              {project.stars}
+            </span>
+            <span className="flex items-center gap-1">
+              <GitFork size={14} />
+              {project.forks}
+            </span>
+          </div>
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-black text-blue-600 transition-all hover:gap-2 dark:text-blue-400"
+          >
+            Case Study <ArrowUpRight size={16} />
+          </a>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
+  );
+}
+
+function InfoPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white/75 px-4 py-3 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65">
+      <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-1 text-xl font-black tracking-tight text-slate-900 dark:text-white">{value}</p>
+    </div>
   );
 }

@@ -1,199 +1,295 @@
 "use client";
 
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, animate, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { FiArrowRight, FiDownload, FiGithub, FiLinkedin } from "react-icons/fi";
-import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiPostgresql, SiGraphql, SiDocker } from "react-icons/si";
+import {
+  SiDocker,
+  SiFramer,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
 
-// --- 1. MAGNETIC EFFECT WRAPPER ---
-// High-end portfolios use magnetic elements to guide user attention
-function MagneticWrapper({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+const rotatingRoles = [
+  "Full-Stack Product Engineer",
+  "Interaction-Focused Frontend Builder",
+  "Performance-Driven System Thinker",
+];
 
-  const springConfig = { damping: 15, stiffness: 150 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
+const techItems = [
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "React", Icon: SiReact },
+  { name: "Framer Motion", Icon: SiFramer },
+  { name: "Tailwind", Icon: SiTailwindcss },
+  { name: "Node.js", Icon: SiNodedotjs },
+  { name: "PostgreSQL", Icon: SiPostgresql },
+  { name: "Docker", Icon: SiDocker },
+];
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current!.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * 0.35); // Strength of the pull
-    y.set((clientY - centerY) * 0.35);
+const highlights = ["Available for 2026 projects", "Remote-ready", "Fast delivery cycles"];
+
+export default function HeroPro() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 28, mass: 0.45 });
+  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 28, mass: 0.45 });
+  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${smoothX}px ${smoothY}px, rgba(56, 189, 248, 0.22), transparent 72%)`;
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const panelY = useTransform(scrollYProgress, [0, 1], [0, -56]);
+  const badgeRotate = useTransform(scrollYProgress, [0, 1], [0, 8]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
+    const timer = window.setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % rotatingRoles.length);
+    }, 2400);
+    return () => window.clearInterval(timer);
+  }, [prefersReducedMotion]);
+
+  const handlePointerMove = (event: React.MouseEvent<HTMLElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    mouseX.set(event.clientX - bounds.left);
+    mouseY.set(event.clientY - bounds.top);
   };
 
-  const reset = () => { x.set(0); y.set(0); };
+  const marqueeItems = [...techItems, ...techItems, ...techItems];
 
   return (
-    <motion.div ref={ref} onMouseMove={handleMouseMove} onMouseLeave={reset} style={{ x: springX, y: springY }}>
-      {children}
-    </motion.div>
+    <section
+      id="hero"
+      ref={sectionRef}
+      onMouseMove={handlePointerMove}
+      className="relative min-h-screen overflow-hidden bg-slate-50 px-6 pb-24 pt-36 transition-colors duration-700 dark:bg-slate-950 md:px-10 lg:px-12"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_78%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
+      <motion.div
+        aria-hidden
+        style={prefersReducedMotion ? undefined : { background: spotlight }}
+        className="pointer-events-none absolute inset-0"
+      />
+      <div className="pointer-events-none absolute -left-16 top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-[110px] dark:bg-cyan-500/15" />
+      <div className="pointer-events-none absolute -right-20 top-20 h-[26rem] w-[26rem] rounded-full bg-blue-500/15 blur-[120px]" />
+
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-16 lg:gap-20">
+        <div className="grid items-center gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-8 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500 shadow-lg backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-400"
+            >
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+              Open for remote work
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08 }}
+              className="mb-6 text-xs font-bold uppercase tracking-[0.38em] text-slate-500 dark:text-slate-400"
+            >
+              Chala Gobena • Portfolio 2026
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.14 }}
+              className="text-5xl font-black leading-[0.94] tracking-tight text-slate-900 dark:text-white sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+            >
+              Interfaces that
+              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-transparent">
+                feel alive.
+              </span>
+            </motion.h1>
+
+            <div className="mt-6 h-8 overflow-hidden sm:h-10">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={roleIndex}
+                  initial={{ y: 22, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -22, opacity: 0 }}
+                  transition={{ duration: 0.32 }}
+                  className="text-sm font-mono tracking-tight text-slate-600 dark:text-slate-300 sm:text-base md:text-lg"
+                >
+                  &lt; {rotatingRoles[roleIndex]} /&gt;
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-7 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg"
+            >
+              I design and ship modern web products with premium motion, clean architecture, and real performance
+              gains. Built for teams that care about quality and velocity.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.24 }}
+              className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+            >
+              <a
+                href="#projects"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-7 py-4 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
+              >
+                Explore Work
+                <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-7 py-4 text-sm font-bold text-slate-700 transition-all hover:border-blue-500 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+              >
+                Resume <FiDownload />
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.28 }}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
+              <a
+                href="https://github.com/CHAL7777"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-blue-500 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
+                aria-label="GitHub"
+              >
+                <FiGithub size={20} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/chala-gobena-01a22b346"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-blue-500 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
+                aria-label="LinkedIn"
+              >
+                <FiLinkedin size={20} />
+              </a>
+              <div className="flex flex-wrap gap-2 pl-0 sm:pl-2">
+                {highlights.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[11px] font-semibold text-slate-500 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.16 }}
+            style={prefersReducedMotion ? undefined : { y: panelY }}
+            className="relative lg:col-span-5"
+          >
+            <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white/80 p-7 shadow-[0_30px_80px_-30px_rgba(2,6,23,0.28)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65">
+              <div className="absolute inset-0 bg-[radial-gradient(540px_circle_at_100%_0%,rgba(56,189,248,0.2),transparent_70%)]" />
+              <div className="relative z-10 space-y-6">
+                <motion.div
+                  style={prefersReducedMotion ? undefined : { rotate: badgeRotate }}
+                  className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                  Live Mode
+                </motion.div>
+
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    Current Focus
+                  </p>
+                  <h3 className="mt-2 text-2xl font-black leading-tight text-slate-900 dark:text-white">
+                    High-converting product interfaces with measurable speed improvements.
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-3 gap-3">
+                  <StatCard label="Avg. Lighthouse" value="95+" />
+                  <StatCard label="Delivery Cycle" value="1-2w" />
+                  <StatCard label="Core Stack" value="TS/Next" />
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/85 p-4 dark:border-slate-800 dark:bg-slate-950/70">
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    Workflow
+                  </p>
+                  <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600 dark:text-slate-300">
+                    Discovery → Architecture → Motion System → Build → Performance QA.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.3 }}
+          className="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white/70 py-4 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/55"
+        >
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-slate-50 to-transparent dark:from-slate-950" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-slate-50 to-transparent dark:from-slate-950" />
+          <motion.div
+            animate={prefersReducedMotion ? undefined : { x: ["0%", "-33.333%"] }}
+            transition={prefersReducedMotion ? undefined : { duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex w-max items-center gap-10 px-4"
+          >
+            {marqueeItems.map((item, index) => (
+              <div key={`${item.name}-${index}`} className="flex items-center gap-2 text-slate-500 dark:text-slate-300">
+                <item.Icon className="text-lg" />
+                <span className="text-xs font-bold uppercase tracking-[0.14em]">{item.name}</span>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
   );
 }
 
-// --- 2. TECH MARQUEE (Optimized) ---
-const TechMarquee = () => {
-  const icons = [SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiPostgresql, SiGraphql, SiDocker];
+function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="group relative mt-24 w-full overflow-hidden py-4">
-      <div className="absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-slate-50 dark:from-slate-950 to-transparent" />
-      <div className="absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-slate-50 dark:from-slate-950 to-transparent" />
-      
-      <motion.div 
-        className="flex gap-12 whitespace-nowrap"
-        animate={{ x: [0, -1000] }}
-        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-      >
-        {[...Array(4)].map((_, groupIdx) => (
-          <div key={groupIdx} className="flex gap-12 items-center">
-            {icons.map((Icon, i) => (
-              <div key={i} className="flex items-center gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer">
-                <Icon className="text-3xl" />
-                <span className="text-sm font-bold tracking-widest hidden md:block">SKILL_0{i+1}</span>
-              </div>
-            ))}
-          </div>
-        ))}
-      </motion.div>
+    <div className="rounded-xl border border-slate-200 bg-white/80 p-3 text-center dark:border-slate-800 dark:bg-slate-900/80">
+      <p className="text-[9px] font-black uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-1 text-sm font-black text-slate-900 dark:text-white">{value}</p>
     </div>
-  );
-};
-
-export default function HeroPro() {
-  const [textIndex, setTextIndex] = useState(0);
-  const texts = ["Full Stack Architect", "UI/UX Engineer", "System Designer"];
-  
-  // Spotlight with Spring Physics for smoothness
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothMouseX = useSpring(mouseX, { damping: 20, stiffness: 200 });
-  const smoothMouseY = useSpring(mouseY, { damping: 20, stiffness: 200 });
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <section 
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex flex-col justify-center items-center px-4 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-700"
-    >
-      {/* 1. PROFESSIONAL BACKGROUND DESIGN */}
-      <div className="absolute inset-0 z-0">
-        {/* Fine-grained Mesh Grid */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
-        
-        {/* Dynamic Interactive Spotlight */}
-        <motion.div
-          className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-500"
-          style={{
-            background: useMotionTemplate`
-              radial-gradient(
-                450px circle at ${smoothMouseX}px ${smoothMouseY}px,
-                rgba(59, 130, 246, 0.08),
-                transparent 80%
-              )
-            `,
-          }}
-        />
-      </div>
-
-      {/* 2. MAIN CONTENT AREA */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="relative z-20 w-full max-w-6xl flex flex-col items-center"
-      >
-        {/* Availability Pill */}
-        <motion.div 
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="group cursor-pointer mb-12 flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-4 py-1.5 backdrop-blur-xl shadow-xl shadow-blue-500/5 transition-all hover:border-blue-500/30"
-        >
-          <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Available for Remote Work</span>
-        </motion.div>
-
-        {/* Name Subtitle */}
-        <motion.div 
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="mb-6"
-        >
-          <span className="text-sm md:text-base font-semibold tracking-[0.3em] text-slate-500 dark:text-slate-400 uppercase">
-            Chala Gobena
-          </span>
-        </motion.div>
-
-        {/* Headline with Staggered Character Animation */}
-        <h1 className="text-center text-6xl md:text-9xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.9] mb-8">
-          Crafting <br />
-          <span className="inline-block text-transparent bg-clip-text bg-gradient-to-b from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 italic px-2">
-            digital
-          </span>
-          impact.
-        </h1>
-
-        {/* Dynamic Role Switcher */}
-        <div className="h-8 mb-12 overflow-hidden text-center">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={textIndex}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              onAnimationComplete={() => {
-                setTimeout(() => setTextIndex((prev) => (prev + 1) % texts.length), 2000);
-              }}
-              className="text-lg md:text-xl font-mono tracking-tighter text-slate-500"
-            >
-               &lt; {texts[textIndex]} /&gt;
-            </motion.p>
-          </AnimatePresence>
-        </div>
-
-        {/* 3. CTA & SOCIALS */}
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          <MagneticWrapper>
-            <a href="#projects" className="flex items-center gap-3 rounded-2xl bg-slate-950 dark:bg-white px-10 py-5 text-white dark:text-slate-950 font-bold shadow-2xl transition-transform hover:scale-105 active:scale-95">
-              Launch Portfolio <FiArrowRight />
-            </a>
-          </MagneticWrapper>
-
-          <div className="flex items-center gap-3">
-             <MagneticWrapper>
-                <a href="https://github.com/CHAL7777" target="_blank" rel="noopener noreferrer" className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
-                  <FiGithub size={22} />
-                </a>
-             </MagneticWrapper>
-             <MagneticWrapper>
-                <a href="https://www.linkedin.com/in/chala-gobena-01a22b346" target="_blank" rel="noopener noreferrer" className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:text-blue-500 transition-colors">
-                  <FiLinkedin size={22} />
-                </a>
-             </MagneticWrapper>
-             <MagneticWrapper>
-                <a href="/resume.pdf" className="flex items-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 px-6 py-4 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all">
-                  <FiDownload /> CV
-                </a>
-             </MagneticWrapper>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* 4. INFINITE SKILLS MARQUEE */}
-      <TechMarquee />
-
-      {/* Floating Design Elements */}
-      <div className="absolute left-10 top-1/2 -translate-y-1/2 hidden xl:block">
-        <p className="text-[10px] font-mono vertical-text tracking-[0.5em] text-slate-300 dark:text-slate-800 uppercase">Est. 2024 / Portfolio</p>
-      </div>
-    </section>
   );
 }

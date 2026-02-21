@@ -1,5 +1,4 @@
 import Hero from "./sections/hero";
-import LogoMarquee from "./sections/logo-marquee"; // The new marquee
 import About from "./sections/about";
 import Experience from "./sections/experience";
 import SkillsPro from "./sections/skills";
@@ -19,10 +18,7 @@ export default function Home() {
       
       <div className="relative z-10 w-full">
         <Hero />
-        
-        {/* The Marquee serves as a perfect transition from Hero to Content */}
-        {/* <LogoMarquee /> */}
-        
+
         <div className="space-y-0"> 
           <About />
           <SkillsPro />
