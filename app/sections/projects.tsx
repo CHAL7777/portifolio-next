@@ -79,7 +79,7 @@ const projectData: Project[] = [
     summary:
       "Multilingual digital library with clean browsing, online reading, and simple downloads across devices.",
     tags: ["Next.js", "Tailwind", "Supabase"],
-    image: "/docs/saass.png",
+    image: "/docs/saas.png",
     liveUrl: "https://ethio-book-site.vercel.app/",
     sourceUrl: "https://github.com/CHAL7777",
     stars: 89,
@@ -167,8 +167,9 @@ export default function ProjectsPro() {
       <motion.div
         aria-hidden
         style={prefersReducedMotion ? undefined : { y: ambientY, opacity: ambientOpacity }}
-        className="pointer-events-none absolute right-[-90px] top-[8%] h-[560px] w-[560px] rounded-full bg-blue-500/10 blur-[150px]"
+        className="pointer-events-none absolute right-[-90px] top-[8%] h-[560px] w-[560px] rounded-full bg-[#135DCC]/10 blur-[150px]"
       />
+      <div className="pointer-events-none absolute -left-24 bottom-[8%] h-[520px] w-[520px] rounded-full bg-[#D19A2A]/10 blur-[140px]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_78%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
@@ -178,7 +179,7 @@ export default function ProjectsPro() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
-              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#135DCC] dark:text-[#7CC6FF]"
             >
               <FolderOpen size={15} />
               Selected Projects
@@ -193,7 +194,7 @@ export default function ProjectsPro() {
               className="text-4xl font-black leading-[1.05] tracking-tight text-slate-900 dark:text-white md:text-6xl"
             >
               Product work focused on
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
                 speed and craft.
               </span>
             </motion.h2>
@@ -255,7 +256,7 @@ export default function ProjectsPro() {
                       className={`relative z-10 transition-colors ${
                         isActive
                           ? "text-white dark:text-slate-900"
-                          : "text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                          : "text-slate-500 hover:text-[#135DCC] dark:text-slate-400 dark:hover:text-[#7CC6FF]"
                       }`}
                     >
                       {category}
@@ -290,14 +291,14 @@ export default function ProjectsPro() {
             href="https://github.com/CHAL7777"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-[#135DCC] dark:bg-white dark:text-slate-900 dark:hover:bg-[#0EA5E9] dark:hover:text-white"
           >
             Full Archive
             <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-6 py-3 text-sm font-bold text-slate-700 transition-colors hover:border-blue-500 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-6 py-3 text-sm font-bold text-slate-700 transition-colors hover:border-[#135DCC] hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-[#7CC6FF]"
           >
             Let&apos;s Collaborate
           </a>
@@ -316,7 +317,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const springRotateX = useSpring(rotateX, { stiffness: 210, damping: 18, mass: 0.6 });
   const springRotateY = useSpring(rotateY, { stiffness: 210, damping: 18, mass: 0.6 });
   const imageScale = useSpring(1, { stiffness: 180, damping: 18, mass: 0.45 });
-  const spotlight = useMotionTemplate`radial-gradient(330px circle at ${glowX}% ${glowY}%, rgba(56, 189, 248, 0.23), transparent 75%)`;
+  const spotlight = useMotionTemplate`radial-gradient(330px circle at ${glowX}% ${glowY}%, rgba(14, 165, 233, 0.24), transparent 75%)`;
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (prefersReducedMotion) {
@@ -367,7 +368,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               transformPerspective: 1200,
             }
       }
-      className={`group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-slate-800 dark:bg-[#111625] ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition-shadow duration-500 hover:shadow-2xl hover:shadow-[#135DCC]/18 dark:border-slate-800 dark:bg-[#111625] ${
         project.featured ? "md:col-span-2" : ""
       }`}
     >
@@ -385,7 +386,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.category}
           </span>
           {project.featured && (
-            <span className="rounded-full border border-amber-300/30 bg-amber-300/15 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-amber-100 backdrop-blur-md">
+            <span className="rounded-full border border-[#D19A2A]/45 bg-[#D19A2A]/20 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-[#FFF3CC] backdrop-blur-md">
               Featured
             </span>
           )}
@@ -406,7 +407,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Open ${project.title} live demo`}
-            className="rounded-full bg-blue-600 p-2.5 text-white shadow-lg shadow-blue-600/25 transition-colors hover:bg-blue-500"
+            className="rounded-full bg-[#135DCC] p-2.5 text-white shadow-lg shadow-[#135DCC]/30 transition-colors hover:bg-[#0EA5E9]"
           >
             <ExternalLink size={18} />
           </a>
@@ -426,13 +427,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="relative z-[2] flex flex-grow flex-col p-6 md:p-8">
         <div className="mb-4 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
           <span>{project.year}</span>
-          <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400">
+          <span className="flex items-center gap-1 text-[#135DCC] dark:text-[#7CC6FF]">
             <Sparkles size={13} />
             {project.highlight}
           </span>
         </div>
 
-        <h3 className="mb-2 text-xl font-black text-slate-900 transition-colors group-hover:text-blue-500 dark:text-white md:text-2xl">
+        <h3 className="mb-2 text-xl font-black text-slate-900 transition-colors group-hover:text-[#135DCC] dark:text-white md:text-2xl">
           {project.title}
         </h3>
         <p className="mb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400 md:text-base">
@@ -453,7 +454,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800">
           <div className="flex items-center gap-4 text-xs font-bold text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1">
-              <Star size={14} className="fill-amber-400 text-amber-400" />
+              <Star size={14} className="fill-[#D19A2A] text-[#D19A2A]" />
               {project.stars}
             </span>
             <span className="flex items-center gap-1">
@@ -465,7 +466,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-black text-blue-600 transition-all hover:gap-2 dark:text-blue-400"
+            className="inline-flex items-center gap-1 text-sm font-black text-[#135DCC] transition-all hover:gap-2 dark:text-[#7CC6FF]"
           >
             Case Study <ArrowUpRight size={16} />
           </a>

@@ -63,7 +63,7 @@ export default function About() {
   const glowY = useMotionValue(50);
   const springTiltX = useSpring(tiltX, { stiffness: 220, damping: 22, mass: 0.55 });
   const springTiltY = useSpring(tiltY, { stiffness: 220, damping: 22, mass: 0.55 });
-  const spotlight = useMotionTemplate`radial-gradient(340px circle at ${glowX}% ${glowY}%, rgba(56, 189, 248, 0.26), transparent 74%)`;
+  const spotlight = useMotionTemplate`radial-gradient(340px circle at ${glowX}% ${glowY}%, rgba(19, 93, 204, 0.24), transparent 74%)`;
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (prefersReducedMotion || !portraitRef.current) {
@@ -95,9 +95,9 @@ export default function About() {
       <motion.div
         aria-hidden
         style={prefersReducedMotion ? undefined : { y: ambientY }}
-        className="pointer-events-none absolute -left-24 top-16 h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[130px]"
+        className="pointer-events-none absolute -left-24 top-16 h-[520px] w-[520px] rounded-full bg-[#0EA5E9]/12 blur-[130px]"
       />
-      <div className="pointer-events-none absolute -right-24 bottom-[-5%] h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[130px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-[-5%] h-[520px] w-[520px] rounded-full bg-[#135DCC]/10 blur-[130px]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_34%,transparent_76%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -107,7 +107,7 @@ export default function About() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
-              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#135DCC] dark:text-[#7CC6FF]"
             >
               <Sparkles size={14} />
               About Me
@@ -121,7 +121,7 @@ export default function About() {
               className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-6xl"
             >
               Building products where
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
                 design meets engineering.
               </span>
             </motion.h2>
@@ -183,9 +183,9 @@ export default function About() {
                   viewport={{ once: true, amount: 0.6 }}
                   transition={{ delay: index * 0.07 }}
                   whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-                  className="rounded-2xl border border-slate-200 bg-white/75 p-5 transition-colors hover:border-blue-500/40 dark:border-slate-800 dark:bg-slate-900/65"
+                  className="rounded-2xl border border-slate-200 bg-white/75 p-5 transition-colors hover:border-[#135DCC]/40 dark:border-slate-800 dark:bg-slate-900/65"
                 >
-                  <principle.Icon size={18} className="mb-3 text-blue-600 dark:text-blue-400" />
+                  <principle.Icon size={18} className="mb-3 text-[#135DCC] dark:text-[#7CC6FF]" />
                   <h3 className="text-sm font-black uppercase tracking-[0.12em] text-slate-900 dark:text-white">
                     {principle.title}
                   </h3>
@@ -239,7 +239,7 @@ export default function About() {
 
             <motion.div
               style={prefersReducedMotion ? undefined : { rotate: badgeRotate }}
-              className="absolute -right-5 -top-6 z-20 hidden rounded-2xl bg-blue-600 px-4 py-3 text-white shadow-2xl shadow-blue-500/35 md:block"
+              className="absolute -right-5 -top-6 z-20 hidden rounded-2xl bg-[#135DCC] px-4 py-3 text-white shadow-2xl shadow-[#135DCC]/32 md:block"
             >
               <p className="text-[10px] font-black uppercase tracking-[0.16em]">Current Focus</p>
               <p className="mt-1 text-sm font-bold">Shipping quality fast</p>
@@ -259,7 +259,7 @@ export default function About() {
               <div className="space-y-3">
                 {milestones.map((item) => (
                   <div key={item.year} className="flex items-start gap-3 text-sm">
-                    <span className="mt-0.5 rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-blue-600 dark:text-blue-400">
+                    <span className="mt-0.5 rounded-md bg-[#135DCC]/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-[#135DCC] dark:text-[#7CC6FF]">
                       {item.year}
                     </span>
                     <span className="font-medium text-slate-600 dark:text-slate-300">{item.label}</span>

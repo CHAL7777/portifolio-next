@@ -51,7 +51,7 @@ export default function HeroPro() {
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 220, damping: 28, mass: 0.45 });
   const smoothY = useSpring(mouseY, { stiffness: 220, damping: 28, mass: 0.45 });
-  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${smoothX}px ${smoothY}px, rgba(56, 189, 248, 0.22), transparent 72%)`;
+  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${smoothX}px ${smoothY}px, rgba(14, 165, 233, 0.24), transparent 72%)`;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -91,8 +91,8 @@ export default function HeroPro() {
         style={prefersReducedMotion ? undefined : { background: spotlight }}
         className="pointer-events-none absolute inset-0"
       />
-      <div className="pointer-events-none absolute -left-16 top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-[110px] dark:bg-cyan-500/15" />
-      <div className="pointer-events-none absolute -right-20 top-20 h-[26rem] w-[26rem] rounded-full bg-blue-500/15 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-16 top-24 h-72 w-72 rounded-full bg-[#0EA5E9]/20 blur-[110px] dark:bg-[#0EA5E9]/12" />
+      <div className="pointer-events-none absolute -right-20 top-20 h-[26rem] w-[26rem] rounded-full bg-[#135DCC]/16 blur-[120px]" />
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-16 lg:gap-20">
         <div className="grid items-center gap-14 lg:grid-cols-12">
@@ -123,7 +123,7 @@ export default function HeroPro() {
               className="text-5xl font-black leading-[0.94] tracking-tight text-slate-900 dark:text-white sm:text-6xl md:text-7xl lg:text-[5.5rem]"
             >
               Interfaces that
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
                 feel alive.
               </span>
             </motion.h1>
@@ -161,7 +161,7 @@ export default function HeroPro() {
             >
               <a
                 href="#projects"
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-7 py-4 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-7 py-4 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-[#135DCC] dark:bg-white dark:text-slate-900 dark:hover:bg-[#0EA5E9] dark:hover:text-white"
               >
                 Explore Work
                 <FiArrowRight className="transition-transform group-hover:translate-x-1" />
@@ -170,7 +170,7 @@ export default function HeroPro() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-7 py-4 text-sm font-bold text-slate-700 transition-all hover:border-blue-500 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-7 py-4 text-sm font-bold text-slate-700 transition-all hover:border-[#135DCC] hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-[#7CC6FF]"
               >
                 Resume <FiDownload />
               </a>
@@ -186,7 +186,7 @@ export default function HeroPro() {
                 href="https://github.com/CHAL7777"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-blue-500 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
                 aria-label="GitHub"
               >
                 <FiGithub size={20} />
@@ -195,7 +195,7 @@ export default function HeroPro() {
                 href="https://www.linkedin.com/in/chala-gobena-01a22b346"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-blue-500 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white/85 text-slate-600 transition-colors hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300"
                 aria-label="LinkedIn"
               >
                 <FiLinkedin size={20} />
@@ -221,13 +221,13 @@ export default function HeroPro() {
             className="relative lg:col-span-5"
           >
             <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white/80 p-7 shadow-[0_30px_80px_-30px_rgba(2,6,23,0.28)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65">
-              <div className="absolute inset-0 bg-[radial-gradient(540px_circle_at_100%_0%,rgba(56,189,248,0.2),transparent_70%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(540px_circle_at_100%_0%,rgba(19,93,204,0.2),transparent_70%)]" />
               <div className="relative z-10 space-y-6">
                 <motion.div
                   style={prefersReducedMotion ? undefined : { rotate: badgeRotate }}
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#135DCC]/20 bg-[#135DCC]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#135DCC] dark:text-[#7CC6FF]"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0EA5E9]/80" />
                   Live Mode
                 </motion.div>
 

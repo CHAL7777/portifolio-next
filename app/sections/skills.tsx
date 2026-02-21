@@ -41,6 +41,7 @@ interface SkillGroup {
   subtitle: string;
   description: string;
   gradient: string;
+  glow: string;
   skills: SkillItem[];
 }
 
@@ -49,9 +50,10 @@ const skillGroups: SkillGroup[] = [
     title: "Frontend Systems",
     subtitle: "Interaction + UI",
     description: "Component architecture, motion-driven interfaces, and responsive product workflows.",
-    gradient: "from-blue-600 via-cyan-500 to-indigo-500",
+    gradient: "from-[#135DCC] via-[#0EA5E9] to-[#14B8A6]",
+    glow: "rgba(14, 165, 233, 0.22)",
     skills: [
-      { name: "Next.js", level: 90, icon: SiNextdotjs, color: "#ffffff" },
+      { name: "Next.js", level: 90, icon: SiNextdotjs, color: "#94A3B8" },
       { name: "React", level: 92, icon: SiReact, color: "#61DAFB" },
       { name: "TypeScript", level: 88, icon: SiTypescript, color: "#3178C6" },
       { name: "Tailwind", level: 90, icon: SiTailwindcss, color: "#06B6D4" },
@@ -62,7 +64,8 @@ const skillGroups: SkillGroup[] = [
     title: "Backend + Data",
     subtitle: "APIs + Persistence",
     description: "Reliable APIs, structured schemas, and practical data modeling for production use.",
-    gradient: "from-emerald-600 via-teal-500 to-cyan-500",
+    gradient: "from-[#0F766E] via-[#14B8A6] to-[#0284C7]",
+    glow: "rgba(20, 184, 166, 0.22)",
     skills: [
       { name: "Node.js", level: 82, icon: SiNodedotjs, color: "#339933" },
       { name: "PostgreSQL", level: 80, icon: SiPostgresql, color: "#4169E1" },
@@ -75,12 +78,13 @@ const skillGroups: SkillGroup[] = [
     title: "Product Delivery",
     subtitle: "Workflow + Shipping",
     description: "From design handoff to deployment, optimized for quality and team velocity.",
-    gradient: "from-violet-600 via-fuchsia-500 to-pink-500",
+    gradient: "from-[#B9770E] via-[#D19A2A] to-[#0EA5E9]",
+    glow: "rgba(209, 154, 42, 0.24)",
     skills: [
-      { name: "GitHub", level: 88, icon: SiGithub, color: "#181717" },
+      { name: "GitHub", level: 88, icon: SiGithub, color: "#94A3B8" },
       { name: "Docker", level: 76, icon: SiDocker, color: "#2496ED" },
       { name: "Figma", level: 84, icon: SiFigma, color: "#F24E1E" },
-      { name: "Vercel", level: 94, icon: SiVercel, color: "#ffffff" },
+      { name: "Vercel", level: 94, icon: SiVercel, color: "#94A3B8" },
     ],
   },
 ];
@@ -112,12 +116,14 @@ export default function SkillsPro() {
       ref={sectionRef}
       className="relative overflow-hidden bg-slate-50 px-6 py-32 scroll-mt-24 dark:bg-slate-950"
     >
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[86%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#0EA5E9]/30 to-transparent" />
       <motion.div
         aria-hidden
         style={prefersReducedMotion ? undefined : { y: ambientY }}
-        className="pointer-events-none absolute -left-20 top-16 h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-[130px]"
+        className="pointer-events-none absolute -left-20 top-16 h-[28rem] w-[28rem] rounded-full bg-[#0EA5E9]/12 blur-[130px]"
       />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-blue-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-[#135DCC]/12 blur-[140px]" />
+      <div className="pointer-events-none absolute right-[10%] top-[15%] h-[20rem] w-[20rem] rounded-full bg-[#D19A2A]/12 blur-[120px]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -127,7 +133,7 @@ export default function SkillsPro() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
-              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+              className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#135DCC] dark:text-[#7CC6FF]"
             >
               <Sparkles size={14} />
               Skills
@@ -142,7 +148,7 @@ export default function SkillsPro() {
               className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-5xl"
             >
               Technical range built for
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
                 product execution.
               </span>
             </motion.h2>
@@ -193,7 +199,7 @@ export default function SkillsPro() {
               </div>
               <a
                 href="#projects"
-                className="mt-5 inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.13em] text-blue-600 transition-colors hover:text-blue-500 dark:text-blue-400"
+                className="mt-5 inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.13em] text-[#135DCC] transition-colors hover:text-[#0EA5E9] dark:text-[#7CC6FF]"
               >
                 See work using these skills
                 <ArrowUpRight size={13} />
@@ -238,7 +244,7 @@ function SkillPanel({ group, index }: { group: SkillGroup; index: number }) {
   const gy = useMotionValue(50);
   const springX = useSpring(x, { stiffness: 190, damping: 20, mass: 0.5 });
   const springY = useSpring(y, { stiffness: 190, damping: 20, mass: 0.5 });
-  const glow = useMotionTemplate`radial-gradient(320px circle at ${gx}% ${gy}%, rgba(56, 189, 248, 0.2), transparent 72%)`;
+  const glow = useMotionTemplate`radial-gradient(320px circle at ${gx}% ${gy}%, ${group.glow}, transparent 72%)`;
 
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!panelRef.current || prefersReducedMotion) {
@@ -274,7 +280,7 @@ function SkillPanel({ group, index }: { group: SkillGroup; index: number }) {
           ? undefined
           : { rotateX: springY, rotateY: springX, transformPerspective: 1200 }
       }
-      className="group relative overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white/85 p-6 shadow-sm backdrop-blur-xl transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/10 dark:border-slate-800 dark:bg-slate-900/65"
+      className="group relative overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white/85 p-6 shadow-sm backdrop-blur-xl transition-all duration-500 hover:shadow-xl hover:shadow-[#0EA5E9]/18 dark:border-slate-800 dark:bg-slate-900/65"
     >
       <motion.div
         aria-hidden
@@ -310,7 +316,7 @@ function SkillPanel({ group, index }: { group: SkillGroup; index: number }) {
                     <Icon style={{ color: skill.color }} className="text-base" />
                     <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{skill.name}</span>
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.12em] text-blue-600 dark:text-blue-400">
+                  <span className="text-[10px] font-black uppercase tracking-[0.12em] text-[#135DCC] dark:text-[#7CC6FF]">
                     {skill.level}%
                   </span>
                 </div>

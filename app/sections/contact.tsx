@@ -52,15 +52,16 @@ export default function ContactStudio() {
       className="relative overflow-hidden bg-white px-6 py-32 transition-colors duration-500 dark:bg-[#020617]"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
-      <div className="pointer-events-none absolute -left-24 top-[20%] h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-[130px]" />
-      <div className="pointer-events-none absolute -right-24 bottom-[5%] h-[28rem] w-[28rem] rounded-full bg-blue-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute -left-24 top-[20%] h-[28rem] w-[28rem] rounded-full bg-[#0EA5E9]/12 blur-[130px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-[5%] h-[28rem] w-[28rem] rounded-full bg-[#135DCC]/10 blur-[140px]" />
+      <div className="pointer-events-none absolute right-[16%] top-[14%] h-[18rem] w-[18rem] rounded-full bg-[#D19A2A]/10 blur-[110px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+          className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#135DCC] dark:text-[#7CC6FF]"
         >
           <Sparkles size={14} />
           Contact
@@ -74,7 +75,7 @@ export default function ContactStudio() {
           className="max-w-3xl text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-6xl"
         >
           Let&apos;s build something
-          <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
             useful and beautiful.
           </span>
         </motion.h2>
@@ -117,7 +118,7 @@ export default function ContactStudio() {
               <button
                 type="button"
                 onClick={copyEmail}
-                className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-left transition-colors hover:border-blue-500/40 hover:bg-blue-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:bg-slate-900"
+                className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-left transition-colors hover:border-[#135DCC]/40 hover:bg-[#0EA5E9]/8 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:bg-slate-900"
               >
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
@@ -130,7 +131,7 @@ export default function ContactStudio() {
                 {copied ? (
                   <CheckCircle2 size={18} className="text-emerald-500" />
                 ) : (
-                  <Copy size={18} className="text-slate-400 transition-colors group-hover:text-blue-500" />
+                  <Copy size={18} className="text-slate-400 transition-colors group-hover:text-[#135DCC]" />
                 )}
               </button>
 
@@ -141,7 +142,7 @@ export default function ContactStudio() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-blue-500/40 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300 dark:hover:text-blue-400"
+                    className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-[#135DCC]/40 hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300 dark:hover:text-[#7CC6FF]"
                   >
                     {link.label}
                     <link.Icon size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -169,7 +170,7 @@ export default function ContactStudio() {
             transition={{ duration: 0.55 }}
             className="lg:col-span-7"
           >
-            <div className="rounded-[2rem] border border-slate-200 bg-white/85 p-7 shadow-[0_25px_70px_-35px_rgba(2,6,23,0.35)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65 md:p-9">
+            <div className="rounded-[2rem] border border-slate-200 bg-white/85 p-7 shadow-[0_25px_70px_-35px_rgba(19,93,204,0.28)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/65 md:p-9">
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid gap-5 md:grid-cols-2">
                   <Field label="Name" name="name" type="text" placeholder="Your full name" />
@@ -187,7 +188,7 @@ export default function ContactStudio() {
                     required
                     rows={6}
                     placeholder="Tell me what you want to build, current stage, and timeline."
-                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-500 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-[#135DCC] dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
                   />
                 </div>
 
@@ -195,7 +196,7 @@ export default function ContactStudio() {
                   type="submit"
                   disabled={formState === "loading"}
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:bg-blue-600 disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:bg-[#135DCC] disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-[#0EA5E9] dark:hover:text-white"
                 >
                   <AnimatePresence mode="wait">
                     {formState === "idle" && (
@@ -273,7 +274,7 @@ function Field({
         type={type}
         required
         placeholder={placeholder}
-        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-500 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
+        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-[#135DCC] dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
       />
     </div>
   );

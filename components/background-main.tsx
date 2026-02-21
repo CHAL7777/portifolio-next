@@ -24,7 +24,7 @@ export default function BackgroundMain() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="pointer-events-none absolute left-[-10%] top-[-15%] h-[70vw] w-[70vw] rounded-full bg-blue-400/20 blur-[100px] dark:bg-blue-600/10"
+        className="pointer-events-none absolute left-[-10%] top-[-15%] h-[70vw] w-[70vw] rounded-full bg-[#135DCC]/18 blur-[100px] dark:bg-[#135DCC]/12"
       />
 
       <motion.div
@@ -42,7 +42,26 @@ export default function BackgroundMain() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[70vw] w-[70vw] rounded-full bg-cyan-400/15 blur-[120px] dark:bg-cyan-500/10"
+        className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[70vw] w-[70vw] rounded-full bg-[#0EA5E9]/14 blur-[120px] dark:bg-[#0EA5E9]/12"
+      />
+
+      <motion.div
+        animate={
+          prefersReducedMotion
+            ? undefined
+            : {
+                x: [0, 32, -18, 0],
+                y: [0, -30, 24, 0],
+                scale: [1, 1.08, 0.92, 1],
+              }
+        }
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1.8,
+        }}
+        className="pointer-events-none absolute left-[28%] top-[38%] h-[42vw] w-[42vw] rounded-full bg-[#D19A2A]/12 blur-[110px]"
       />
 
       <motion.div
@@ -60,7 +79,7 @@ export default function BackgroundMain() {
           ease: "linear",
           delay: 5,
         }}
-        className="pointer-events-none absolute top-[30%] h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+        className="pointer-events-none absolute top-[30%] h-[1px] w-full bg-gradient-to-r from-transparent via-[#0EA5E9] to-transparent"
       />
 
       <div className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay dark:opacity-[0.06] [background-image:radial-gradient(rgba(15,23,42,0.3)_0.6px,transparent_0.6px)] [background-size:3px_3px]" />

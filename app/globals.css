@@ -12,6 +12,10 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  --premium-cobalt: #135dcc;
+  --premium-cyan: #0ea5e9;
+  --premium-teal: #14b8a6;
+  --premium-gold: #d19a2a;
 }
 
 .dark {

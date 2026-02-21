@@ -36,9 +36,10 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-white pb-12 pt-28 transition-colors duration-500 dark:bg-[#020617]">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-px w-[86%] -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-500/25 to-transparent" />
-        <div className="absolute -left-20 bottom-0 h-[24rem] w-[24rem] rounded-full bg-cyan-500/10 blur-[120px]" />
-        <div className="absolute -right-24 top-10 h-[28rem] w-[28rem] rounded-full bg-blue-500/10 blur-[140px]" />
+        <div className="absolute left-1/2 top-0 h-px w-[86%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#0EA5E9]/30 to-transparent" />
+        <div className="absolute -left-20 bottom-0 h-[24rem] w-[24rem] rounded-full bg-[#0EA5E9]/12 blur-[120px]" />
+        <div className="absolute -right-24 top-10 h-[28rem] w-[28rem] rounded-full bg-[#135DCC]/10 blur-[140px]" />
+        <div className="absolute right-[14%] top-[30%] h-[18rem] w-[18rem] rounded-full bg-[#D19A2A]/10 blur-[110px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.04)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_28%,transparent_78%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
       </div>
 
@@ -52,7 +53,7 @@ export default function Footer() {
         >
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
-              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400">
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#0EA5E9]/25 bg-[#0EA5E9]/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#135DCC] dark:text-[#7CC6FF]">
                 <Sparkles size={12} />
                 Ready to build
               </p>
@@ -66,7 +67,7 @@ export default function Footer() {
 
             <a
               href="mailto:chalagobena43@gmail.com"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-blue-500 dark:hover:text-white"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-white transition-all hover:-translate-y-1 hover:bg-[#135DCC] dark:bg-white dark:text-slate-900 dark:hover:bg-[#0EA5E9] dark:hover:text-white"
             >
               Start a Project
               <ArrowUpRight size={16} />
@@ -83,7 +84,7 @@ export default function Footer() {
             className="lg:col-span-5"
           >
             <h3 className="text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-              CHAL<span className="text-blue-600">.</span>
+              CHAL<span className="text-[#135DCC]">.</span>
             </h3>
             <p className="mt-5 max-w-sm text-base leading-relaxed text-slate-600 dark:text-slate-400">
               Product-focused full-stack developer based in Ethiopia, building quality experiences from concept to
@@ -101,7 +102,7 @@ export default function Footer() {
               </p>
               <a
                 href="mailto:chalagobena43@gmail.com"
-                className="inline-flex items-center gap-2 font-semibold text-slate-700 transition-colors hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400"
+                className="inline-flex items-center gap-2 font-semibold text-slate-700 transition-colors hover:text-[#135DCC] dark:text-slate-300 dark:hover:text-[#7CC6FF]"
               >
                 <Mail size={16} />
                 chalagobena43@gmail.com
@@ -124,7 +125,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="group inline-flex items-center gap-2 text-sm font-bold text-slate-700 transition-colors hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400"
+                    className="group inline-flex items-center gap-2 text-sm font-bold text-slate-700 transition-colors hover:text-[#135DCC] dark:text-slate-300 dark:hover:text-[#7CC6FF]"
                   >
                     {link.label}
                     <ArrowUpRight size={14} className="opacity-0 transition-opacity group-hover:opacity-100" />
@@ -151,7 +152,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-blue-500/40 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+                  className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-[#135DCC]/40 hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-[#7CC6FF]"
                 >
                   <span>{social.label}</span>
                   <social.Icon size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -161,7 +162,7 @@ export default function Footer() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-blue-500/40 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-blue-400"
+                className="group inline-flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-[#135DCC]/40 hover:text-[#135DCC] dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:text-[#7CC6FF]"
               >
                 <span>Resume</span>
                 <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -192,7 +193,7 @@ export default function Footer() {
           </div>
           <a
             href="#hero"
-            className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.14em] text-slate-500 transition-colors hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+            className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-[0.14em] text-slate-500 transition-colors hover:text-[#135DCC] dark:text-slate-400 dark:hover:text-[#7CC6FF]"
           >
             Back to top
             <motion.span

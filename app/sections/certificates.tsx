@@ -24,7 +24,7 @@ const certificates: Certificate[] = [
     date: "2025",
     credentialId: "UD-AI-9920",
     image: "/docs/ai.png", 
-    color: "from-blue-600 to-indigo-600",
+    color: "from-[#135DCC] to-[#0EA5E9]",
     link: "#"
   },
   {
@@ -33,7 +33,7 @@ const certificates: Certificate[] = [
     date: "2025",
     credentialId: "UD-PROG-4412",
     image: "/docs/web.png",
-    color: "from-purple-600 to-pink-600",
+    color: "from-[#0F766E] to-[#14B8A6]",
     link: "#"
   },
   {
@@ -42,7 +42,7 @@ const certificates: Certificate[] = [
     date: "2024",
     credentialId: "hu-web-2024",
     image: "/docs/web-h.jpg",
-    color: "from-orange-500 to-yellow-500",
+    color: "from-[#B9770E] to-[#D19A2A]",
     link: "#"
   }
 ];
@@ -54,6 +54,10 @@ export default function CertificatesStudio() {
 
   return (
     <section id="certificates" className="py-40 px-6 bg-white dark:bg-[#020617] relative overflow-hidden">
+      <div className="pointer-events-none absolute -left-24 top-20 h-[30rem] w-[30rem] rounded-full bg-[#0EA5E9]/12 blur-[130px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-[#135DCC]/10 blur-[140px]" />
+      <div className="pointer-events-none absolute right-[18%] top-[18%] h-[20rem] w-[20rem] rounded-full bg-[#D19A2A]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.04)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
       
       {/* BACKGROUND WATERMARK */}
       <div className="absolute top-20 left-0 text-[20vw] font-black text-slate-50 dark:text-white/[0.02] leading-none pointer-events-none select-none">
@@ -63,11 +67,11 @@ export default function CertificatesStudio() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col gap-6 mb-32">
            <div className="flex items-center gap-4">
-              <div className="h-[2px] w-12 bg-blue-600" />
-              <span className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-600">Verification</span>
+              <div className="h-[2px] w-12 bg-gradient-to-r from-[#135DCC] to-[#0EA5E9]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#135DCC] dark:text-[#7CC6FF]">Verification</span>
            </div>
            <h2 className="text-6xl md:text-[7vw] font-black tracking-tighter leading-[0.8] dark:text-white">
-              CERTIFIED<br />ACHIEVEMENTS<span className="text-blue-600">.</span>
+              CERTIFIED<br />ACHIEVEMENTS<span className="text-[#D19A2A]">.</span>
            </h2>
         </div>
 
@@ -91,7 +95,7 @@ export default function CertificatesStudio() {
                 <div className="flex items-center gap-8 relative z-10">
                   <span className="text-sm font-mono text-slate-400">0{index + 1}</span>
                   <div className="space-y-1">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white group-hover:text-[#135DCC] dark:group-hover:text-[#7CC6FF] transition-colors">
                       {cert.title}
                     </h3>
                     <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
@@ -105,7 +109,7 @@ export default function CertificatesStudio() {
                       <p className="text-[10px] font-black uppercase text-slate-400">Credential ID</p>
                       <p className="text-xs font-mono dark:text-slate-500">{cert.credentialId}</p>
                    </div>
-                   <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all">
+                   <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:bg-[#135DCC] group-hover:border-[#135DCC] group-hover:text-white group-hover:shadow-lg group-hover:shadow-[#135DCC]/30 transition-all">
                       <ChevronRight size={20} />
                    </div>
                 </div>
@@ -175,7 +179,7 @@ export default function CertificatesStudio() {
                     <button onClick={() => setSelectedCert(null)} className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                       <X size={24} />
                     </button>
-                    <div className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full mb-4 uppercase tracking-tighter">Official Document</div>
+                    <div className="inline-block px-3 py-1 bg-[#135DCC]/12 dark:bg-[#135DCC]/25 text-[#135DCC] dark:text-[#7CC6FF] text-xs font-bold rounded-full mb-4 uppercase tracking-tighter">Official Document</div>
                     <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-4">{selectedCert.title}</h3>
                     <p className="text-slate-600 dark:text-slate-400 mb-8">Issued by {selectedCert.issuer} in {selectedCert.date}.</p>
                     <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl space-y-2">
@@ -184,7 +188,7 @@ export default function CertificatesStudio() {
                     </div>
                   </div>
                   <div className="flex gap-4 mt-8">
-                    <button className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2"><Download size={18} /> Download</button>
+                    <button className="flex-1 py-4 bg-[#135DCC] hover:bg-[#0F4FAA] text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2"><Download size={18} /> Download</button>
                     <a href={selectedCert.link} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">Verify <ExternalLink size={18} /></a>
                   </div>
                 </div>

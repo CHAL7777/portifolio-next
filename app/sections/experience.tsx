@@ -102,15 +102,16 @@ export default function ExperiencePro() {
       className="relative overflow-hidden bg-slate-50 py-32 scroll-mt-24 dark:bg-slate-950"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0.05)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_78%)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)]" />
-      <div className="pointer-events-none absolute -left-20 top-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/8 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-20 top-[20%] h-[28rem] w-[28rem] rounded-full bg-blue-500/10 blur-[130px]" />
+      <div className="pointer-events-none absolute -left-20 top-0 h-[28rem] w-[28rem] rounded-full bg-[#0EA5E9]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-20 top-[20%] h-[28rem] w-[28rem] rounded-full bg-[#135DCC]/10 blur-[130px]" />
+      <div className="pointer-events-none absolute right-[18%] top-[42%] h-[24rem] w-[24rem] rounded-full bg-[#D19A2A]/10 blur-[125px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.45 }}
-          className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+          className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#135DCC] dark:text-[#7CC6FF]"
         >
           <Sparkles size={14} />
           Experience
@@ -126,7 +127,7 @@ export default function ExperiencePro() {
               className="text-4xl font-black leading-[1.06] tracking-tight text-slate-900 dark:text-white md:text-6xl"
             >
               Experience shaped by
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-[#135DCC] via-[#0EA5E9] to-[#D19A2A] bg-clip-text text-transparent">
                 real product delivery.
               </span>
             </motion.h2>
@@ -169,7 +170,7 @@ export default function ExperiencePro() {
               <motion.div
                 aria-hidden
                 style={prefersReducedMotion ? undefined : { scaleY: progress, transformOrigin: "top" }}
-                className="absolute left-0 top-0 h-full w-[2px] rounded-full bg-gradient-to-b from-blue-500 via-cyan-500 to-indigo-500"
+                className="absolute left-0 top-0 h-full w-[2px] rounded-full bg-gradient-to-b from-[#135DCC] via-[#0EA5E9] to-[#D19A2A]"
               />
 
               {experienceData.map((item, index) => (
@@ -194,7 +195,7 @@ export default function ExperiencePro() {
                 viewport={{ once: true, amount: 0.45 }}
                 className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900"
               >
-                <p className="mb-4 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400">
+                <p className="mb-4 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-[#135DCC] dark:text-[#7CC6FF]">
                   <GraduationCap size={13} />
                   Education
                 </p>
@@ -239,7 +240,7 @@ export default function ExperiencePro() {
                           whileInView={{ width: `${language.score}%` }}
                           viewport={{ once: true, amount: 0.7 }}
                           transition={{ duration: 1, delay: index * 0.08, ease: "circOut" }}
-                          className="h-full rounded-full bg-blue-600"
+                          className="h-full rounded-full bg-gradient-to-r from-[#135DCC] to-[#0EA5E9]"
                         />
                       </div>
                     </div>
@@ -265,7 +266,7 @@ function ExperienceCard({
 }) {
   return (
     <article className="group relative pl-10 md:pl-14">
-      <div className="absolute -left-[9px] top-6 h-4 w-4 rounded-full bg-slate-200 ring-4 ring-slate-50 transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-600 dark:bg-slate-800 dark:ring-slate-950" />
+      <div className="absolute -left-[9px] top-6 h-4 w-4 rounded-full bg-slate-200 ring-4 ring-slate-50 transition-all duration-500 group-hover:scale-110 group-hover:bg-[#135DCC] dark:bg-slate-800 dark:ring-slate-950" />
 
       <motion.div
         initial={{ opacity: 0, x: -18 }}
@@ -273,16 +274,16 @@ function ExperienceCard({
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.5, delay: index * 0.08 }}
         whileHover={prefersReducedMotion ? undefined : { y: -3 }}
-        className="relative overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white p-7 shadow-lg transition-all hover:border-blue-500/35 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-slate-800 dark:bg-slate-900 md:p-8"
+        className="relative overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white p-7 shadow-lg transition-all hover:border-[#135DCC]/35 hover:shadow-2xl hover:shadow-[#0EA5E9]/16 dark:border-slate-800 dark:bg-slate-900 md:p-8"
       >
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(460px_circle_at_100%_0%,rgba(56,189,248,0.16),transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(460px_circle_at_100%_0%,rgba(19,93,204,0.18),transparent_70%)]" />
         <div className="relative z-10">
           <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">{item.role}</h3>
               <p className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
                 <span className="inline-flex items-center gap-1.5 font-bold text-slate-700 dark:text-slate-200">
-                  <Briefcase size={14} className="text-blue-500" />
+                  <Briefcase size={14} className="text-[#135DCC]" />
                   {item.company}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
@@ -338,7 +339,7 @@ function ExperienceCard({
                 {tech}
               </span>
             ))}
-            <span className="inline-flex items-center gap-1 rounded-md border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-blue-500">
+            <span className="inline-flex items-center gap-1 rounded-md border border-[#135DCC]/20 bg-[#135DCC]/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#135DCC]">
               <ChartNoAxesCombined size={11} />
               Impact
             </span>
