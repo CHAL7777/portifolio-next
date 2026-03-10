@@ -121,6 +121,22 @@ const projectData: Project[] = [
     year: 2023,
     highlight: "No-framework build",
   },
+   {
+    id: 6,
+    title: "Study Buddy Web App",
+    summary:
+      "Study planner and resource hub with real-time collaboration, task management, and progress tracking.",
+    tags: ["Next.js", "Tailwind", "Supabase"],
+    image: "/docs/saas-s.png",
+    liveUrl: "https://student-sass.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777",
+    stars: 4,
+    forks: 6,
+    category: "Full Stack",
+    featured: false,
+    year: 2026,
+    highlight: "No-framework build",
+  },
 ];
 
 const categories = ["All", ...Array.from(new Set(projectData.map((project) => project.category)))];
