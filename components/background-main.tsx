@@ -6,25 +6,27 @@ export default function BackgroundMain() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden bg-slate-50 transition-colors duration-1000 dark:bg-[#020617]">
-      <div className="absolute inset-0 z-0 h-[200vh] w-full bg-grid-infinite pointer-events-none" />
+    <div className="fixed inset-0 -z-50 overflow-hidden bg-[var(--background)] transition-colors duration-1000">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.54),transparent_42%)] dark:bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.08),transparent_42%)]" />
+      <div className="pointer-events-none absolute inset-0 mesh-overlay opacity-40 dark:opacity-30" />
+      <div className="absolute inset-0 z-0 h-[200vh] w-full bg-grid-infinite pointer-events-none opacity-45" />
 
       <motion.div
         animate={
           prefersReducedMotion
             ? undefined
             : {
-                x: [0, 40, -20, 0],
-                y: [0, -60, 30, 0],
-                scale: [1, 1.16, 0.94, 1],
+                x: [0, 28, -16, 0],
+                y: [0, -42, 18, 0],
+                scale: [1, 1.08, 0.98, 1],
               }
         }
         transition={{
-          duration: 16,
+          duration: 20,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="pointer-events-none absolute left-[-10%] top-[-15%] h-[70vw] w-[70vw] rounded-full bg-[#135DCC]/18 blur-[100px] dark:bg-[#135DCC]/12"
+        className="pointer-events-none absolute left-[-8%] top-[-14%] h-[68vw] w-[68vw] rounded-full bg-[#135DCC]/14 blur-[120px] dark:bg-[#135DCC]/11"
       />
 
       <motion.div
@@ -32,59 +34,39 @@ export default function BackgroundMain() {
           prefersReducedMotion
             ? undefined
             : {
-                x: [0, -50, 40, 0],
-                y: [0, 80, -40, 0],
-                scale: [1, 0.84, 1.1, 1],
+                x: [0, -36, 28, 0],
+                y: [0, 56, -34, 0],
+                scale: [1, 0.9, 1.04, 1],
+              }
+        }
+        transition={{
+          duration: 24,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[68vw] w-[68vw] rounded-full bg-[#11B3D8]/11 blur-[138px] dark:bg-[#11B3D8]/10"
+      />
+
+      <motion.div
+        animate={
+          prefersReducedMotion
+            ? undefined
+            : {
+                x: [0, 20, -12, 0],
+                y: [0, -22, 14, 0],
+                scale: [1, 1.05, 0.94, 1],
               }
         }
         transition={{
           duration: 21,
           repeat: Infinity,
           ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[70vw] w-[70vw] rounded-full bg-[#0EA5E9]/14 blur-[120px] dark:bg-[#0EA5E9]/12"
-      />
-
-      <motion.div
-        animate={
-          prefersReducedMotion
-            ? undefined
-            : {
-                x: [0, 32, -18, 0],
-                y: [0, -30, 24, 0],
-                scale: [1, 1.08, 0.92, 1],
-              }
-        }
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
           delay: 1.8,
         }}
-        className="pointer-events-none absolute left-[28%] top-[38%] h-[42vw] w-[42vw] rounded-full bg-[#D19A2A]/12 blur-[110px]"
+        className="pointer-events-none absolute left-[28%] top-[38%] h-[42vw] w-[42vw] rounded-full bg-[#E39A31]/10 blur-[125px]"
       />
-
-      <motion.div
-        animate={
-          prefersReducedMotion
-            ? undefined
-            : {
-                x: ["-100%", "200%"],
-                opacity: [0, 0.2, 0],
-              }
-        }
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "linear",
-          delay: 5,
-        }}
-        className="pointer-events-none absolute top-[30%] h-[1px] w-full bg-gradient-to-r from-transparent via-[#0EA5E9] to-transparent"
-      />
-
-      <div className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay dark:opacity-[0.06] [background-image:radial-gradient(rgba(15,23,42,0.3)_0.6px,transparent_0.6px)] [background-size:3px_3px]" />
-
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(248,250,252,0.6)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.72)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-multiply dark:mix-blend-screen [background-image:radial-gradient(rgba(15,23,42,0.28)_0.6px,transparent_0.7px)] [background-size:5px_5px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(244,239,228,0.78)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,17,29,0.84)_100%)]" />
     </div>
   );
 }

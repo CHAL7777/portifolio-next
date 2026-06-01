@@ -7,7 +7,6 @@ import { ArrowUp } from "lucide-react"; // npm install lucide-react if you haven
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Show button when page is scrolled down
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
@@ -36,15 +35,10 @@ export default function ScrollToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-4 rounded-full 
-                     bg-white/30 dark:bg-slate-900/30 backdrop-blur-xl 
-                     border border-white/40 dark:border-slate-800/50 
-                     text-blue-600 dark:text-blue-400 shadow-2xl 
-                     hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 
-                     transition-all duration-300 group"
+          className="group fixed bottom-8 right-8 z-50 rounded-full border border-[var(--line)] bg-[var(--surface-strong)] p-4 text-[#135DCC] shadow-[var(--shadow-soft)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-[#135DCC] hover:text-white dark:text-[#7CC6FF] dark:hover:bg-[#11B3D8]"
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform duration-300" />
+          <ArrowUp className="h-6 w-6 transition-transform duration-300 group-hover:-translate-y-1" />
         </motion.button>
       )}
     </AnimatePresence>

@@ -1,36 +1,27 @@
-import Hero from "./sections/hero";
 import About from "./sections/about";
-import Experience from "./sections/experience";
-import SkillsPro from "./sections/skills";
-import CertificatesStudio from "./sections/certificates";
-import ProjectsPro from "./sections/projects";
+import Certificates from "./sections/certificates";
 import Contact from "./sections/contact";
+import Experience from "./sections/experience";
 import Footer from "./sections/footer";
-import BackgroundMain from "../components/background-main";
-import ScrollToTop from "../components/scroll-to-top";
+import Hero from "./sections/hero";
+import LogoMarquee from "./sections/logo-marquee";
+import Projects from "./sections/projects";
+import Skills from "./sections/skills";
 import Navbar from "../components/navbar";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen scroll-smooth bg-[#020617]">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Navbar />
-      <BackgroundMain />
-      
-      <div className="relative z-10 w-full">
-        <Hero />
-
-        <div className="space-y-0"> 
-          <About />
-          <SkillsPro />
-          <ProjectsPro />
-          <CertificatesStudio />
-          <Experience />
-          <Contact />
-          <Footer/>
-        </div>
-      </div>
-
-      <ScrollToTop />
+      <Hero />
+      <LogoMarquee />
+      <Projects />
+      <Skills />
+      <About />
+      <Experience />
+      <Certificates />
+      <Contact />
+      <Footer />
     </main>
   );
 }

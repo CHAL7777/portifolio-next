@@ -1,23 +1,23 @@
-import Navbar from "@/components/navbar";
 import "./globals.css";
-import { Metadata } from "next"; // 1. Import Metadata type
+import { Metadata } from "next";
 
-// 2. Define your metadata
 export const metadata: Metadata = {
-  title: "Chala | Portfolio",
-  description: "Software Engineer Portfolio",
+  title: "Chala | Product Engineer",
+  description: "Product-minded full-stack developer building simple, polished web products.",
   icons: {
-    icon: "./favicon.png", // Points to public/favicon.ico
-    // Optional: add apple-touch-icon for mobile bookmarks
-    // apple: "/favicon.png", 
+    icon: "./favicon.png",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300">
-        <Navbar />
+      <body className="antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{const t=localStorage.getItem("theme");const d=t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)}catch{}`,
+          }}
+        />
         {children}
       </body>
     </html>
