@@ -1,57 +1,31 @@
-import type { IconType } from "react-icons";
-import {
-  SiFigma,
-  SiGithub,
-  SiNextdotjs,
-  SiPostgresql,
-  SiPrisma,
-  SiReact,
-  SiSupabase,
-  SiTailwindcss,
-  SiTypescript,
-  SiVercel,
-} from "react-icons/si";
-
-const logos: Array<{ name: string; Icon: IconType }> = [
-  { name: "React", Icon: SiReact },
-  { name: "Next.js", Icon: SiNextdotjs },
-  { name: "TypeScript", Icon: SiTypescript },
-  { name: "Tailwind CSS", Icon: SiTailwindcss },
-  { name: "Supabase", Icon: SiSupabase },
-  { name: "PostgreSQL", Icon: SiPostgresql },
-  { name: "Prisma", Icon: SiPrisma },
-  { name: "Vercel", Icon: SiVercel },
-  { name: "GitHub", Icon: SiGithub },
-  { name: "Figma", Icon: SiFigma },
-];
+import Reveal from "@/components/reveal";
+import { toolchain } from "@/app/data/portfolio";
 
 export default function LogoMarquee() {
   return (
-    <section className="overflow-hidden border-y border-[var(--line)] bg-[var(--surface)] py-12">
-      <div className="site-shell reveal stagger-2 mb-9 text-center">
-        <p className="text-lg font-black text-[var(--ink)] md:text-xl">
-          The tools behind my best work
-        </p>
-        <p className="body-copy mx-auto mt-2 max-w-xl text-sm">
-          A focused stack for clean interfaces, useful products, and reliable releases.
-        </p>
-      </div>
-
+    <section className="border-y border-[var(--line)] bg-[var(--surface-strong)] py-8 backdrop-blur-xl">
       <div className="site-shell">
-        <div className="team-logo-sequence">
-          {logos.map((logo, index) => (
-            <div
-              key={logo.name}
-              className="team-logo-item"
-              style={{ animationDelay: `${index * 120}ms` }}
-            >
-              <div className="team-logo-content">
-                <logo.Icon className="text-3xl" />
-                <span>{logo.name}</span>
-              </div>
+        <Reveal>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="section-kicker">Working stack</p>
+              <p className="mt-2 text-xl font-black text-[var(--ink)]">
+                Tools chosen for product clarity, backend reliability, and AI workflows
+              </p>
             </div>
-          ))}
-        </div>
+            <div className="no-scrollbar flex gap-3 overflow-x-auto pb-1 lg:max-w-3xl">
+              {toolchain.map((logo) => (
+                <div
+                  key={logo.name}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-black text-[var(--ink)]"
+                >
+                  <logo.Icon className="text-lg text-[var(--accent)]" aria-hidden="true" />
+                  {logo.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

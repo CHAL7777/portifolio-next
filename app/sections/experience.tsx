@@ -1,70 +1,68 @@
-const experience = [
-  {
-    role: "Full Stack Developer",
-    company: "Open Source and freelance-style projects",
-    period: "2024 - Present",
-    text: "Building practical web products with Next.js, React, Tailwind, databases, and deployment workflows.",
-    points: ["Reusable UI components", "API and database integration", "Responsive production pages"],
-  },
-  {
-    role: "Frontend Developer Intern",
-    company: "Tech Solutions Inc.",
-    period: "2025 - 2026",
-    text: "Worked with product and design direction to improve responsive pages and modern React implementation.",
-    points: ["Interface cleanup", "Image and loading improvements", "React component updates"],
-  },
-];
+import { experiences } from "@/app/data/portfolio";
+import Reveal from "@/components/reveal";
+import { BriefcaseBusiness, GraduationCap, Handshake, Users } from "lucide-react";
 
-const details = [
-  { label: "Education", value: "B.Sc. Software Engineering, Haramaya University" },
-  { label: "Languages", value: "English, Afaan Oromoo, Amharic" },
-  { label: "Location", value: "Addis Ababa, Ethiopia" },
-];
+const iconMap = {
+  Work: BriefcaseBusiness,
+  Freelance: Handshake,
+  Internship: GraduationCap,
+  Leadership: Users,
+};
 
 export default function Experience() {
   return (
     <section id="experience" className="section-band bg-[var(--background)]">
       <div className="site-shell">
-        <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr]">
-          <div>
-            <p className="section-label">[Part 04 / 06] Experience</p>
-            <h2 className="display-title mt-4 text-5xl text-[var(--ink)] md:text-6xl">
-              Learning by shipping real interfaces.
-            </h2>
-          </div>
-
-          <div className="grid gap-5">
-            {experience.map((item) => (
-              <article key={item.role} className="simple-card p-5 md:p-6">
-                <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-                  <div>
-                    <h3 className="text-2xl font-black text-[var(--ink)]">{item.role}</h3>
-                    <p className="mt-1 text-sm font-bold text-[var(--muted)]">{item.company}</p>
-                  </div>
-                  <p className="text-sm font-black uppercase tracking-[0.12em] text-[var(--accent-2)]">
-                    {item.period}
-                  </p>
-                </div>
-                <p className="body-copy mt-4">{item.text}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {item.points.map((point) => (
-                    <span key={point} className="tag">
-                      {point}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {details.map((item) => (
-            <div key={item.label} className="border-t border-[var(--line)] pt-5">
-              <p className="section-label">{item.label}</p>
-              <p className="mt-3 text-lg font-black leading-snug text-[var(--ink)]">{item.value}</p>
+        <div className="grid gap-10 lg:grid-cols-[0.34fr_0.66fr]">
+          <Reveal>
+            <div>
+              <p className="section-kicker">Experience</p>
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+                Ownership built through shipped work.
+              </h2>
+              <p className="body-copy mt-5 text-lg">
+                My experience is a mix of independent product building, client-style interfaces, internship
+                practice, and student team leadership. The common thread is taking unclear work and making it
+                usable.
+              </p>
             </div>
-          ))}
+          </Reveal>
+
+          <div className="relative grid gap-5">
+            <div className="absolute left-5 top-0 hidden h-full w-px bg-[var(--line)] md:block" aria-hidden="true" />
+            {experiences.map((item, index) => {
+              const Icon = iconMap[item.type as keyof typeof iconMap] ?? BriefcaseBusiness;
+
+              return (
+                <Reveal key={`${item.type}-${item.role}`} delay={index * 0.06}>
+                  <article className="glass-card interactive-card relative p-5 md:ml-12 md:p-6">
+                    <div className="absolute -left-[3.25rem] top-6 hidden h-10 w-10 items-center justify-center rounded-lg border border-[var(--line)] bg-[var(--surface-solid)] text-[var(--accent)] md:flex">
+                      <Icon size={18} />
+                    </div>
+                    <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                      <div>
+                        <span className="tag">{item.type}</span>
+                        <h3 className="mt-4 text-2xl font-black text-[var(--ink)]">{item.role}</h3>
+                        <p className="mt-1 text-sm font-bold text-[var(--muted)]">{item.organization}</p>
+                      </div>
+                      <p className="text-sm font-black text-[var(--accent)]">{item.period}</p>
+                    </div>
+                    <p className="body-copy mt-4">{item.summary}</p>
+                    <div className="mt-5">
+                      <p className="text-sm font-black text-[var(--ink)]">Impact signals</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {item.impact.map((point) => (
+                          <span key={point} className="tag">
+                            {point}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

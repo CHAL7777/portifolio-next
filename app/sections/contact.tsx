@@ -1,12 +1,16 @@
 "use client";
 
-import { Check, Copy, Github, Linkedin, Mail, Send } from "lucide-react";
+import { profile } from "@/app/data/portfolio";
+import { Check, Copy, Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
+import type { FormEvent } from "react";
 import { useRef, useState } from "react";
 
+const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "/api/contact";
+
 const contactLinks = [
-  { label: "GitHub", href: "https://github.com/CHAL7777", Icon: Github },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/chala-gobena-01a22b346", Icon: Linkedin },
-  { label: "Telegram", href: "https://t.me/chaldev", Icon: Send },
+  { label: "GitHub", href: profile.links.github, Icon: Github },
+  { label: "LinkedIn", href: profile.links.linkedin, Icon: Linkedin },
+  { label: "Telegram", href: profile.links.telegram, Icon: Send },
 ];
 
 export default function Contact() {
@@ -15,20 +19,35 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const copyEmail = async () => {
-    await navigator.clipboard.writeText("chalagobena43@gmail.com");
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = profile.links.email;
+    }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("loading");
 
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      projectType: String(formData.get("project_type") || ""),
+      budget: String(formData.get("budget") || ""),
+      message: String(formData.get("message") || ""),
+      company: String(formData.get("company") || ""),
+      source: "portfolio",
+    };
+
     try {
-      const response = await fetch("https://formspree.io/f/xojavqep", {
+      const response = await fetch(contactEndpoint, {
         method: "POST",
-        body: new FormData(event.currentTarget),
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -49,28 +68,30 @@ export default function Contact() {
       <div className="site-shell">
         <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr]">
           <div>
-            <p className="section-label">[Part 06 / 06] Contact</p>
-            <h2 className="display-title mt-4 text-5xl text-[var(--ink)] md:text-6xl">
-              Tell me what you want to build.
+            <p className="section-kicker">Contact</p>
+            <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              Great software starts with understanding the problem.
             </h2>
             <p className="body-copy mt-5 text-lg">
-              Send the project idea, page you want improved, or product you want to launch. I&apos;ll reply with
-              a practical next step.
+              If you have an idea, a challenge, or a product you&apos;d like to build, I&apos;d be glad to hear
+              your story. Send the context that matters: what you are trying to make possible, who it serves,
+              and where the current friction lives.
+            </p>
+            <p className="body-copy mt-4 text-lg">
+              I&apos;ll reply with practical next questions, not a generic pitch.
             </p>
 
             <div className="mt-8 grid gap-3">
               <button
                 type="button"
                 onClick={copyEmail}
-                className="simple-card flex items-center justify-between gap-4 p-4 text-left"
+                className="glass-card interactive-card flex items-center justify-between gap-4 p-4 text-left"
               >
                 <span>
-                  <span className="block text-xs font-black uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Email
-                  </span>
-                  <span className="mt-1 block font-bold text-[var(--ink)]">chalagobena43@gmail.com</span>
+                  <span className="block text-xs font-black uppercase text-[var(--muted)]">Email</span>
+                  <span className="mt-1 block font-bold text-[var(--ink)]">{profile.email}</span>
                 </span>
-                {copied ? <Check size={18} className="text-[var(--accent-2)]" /> : <Copy size={18} />}
+                {copied ? <Check size={18} className="text-[var(--accent-3)]" /> : <Copy size={18} />}
               </button>
 
               <div className="grid gap-3 sm:grid-cols-3">
@@ -80,42 +101,51 @@ export default function Contact() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="simple-card flex items-center justify-between gap-3 p-4 text-sm font-black text-[var(--ink)]"
+                    className="glass-card interactive-card flex items-center justify-between gap-3 p-4 text-sm font-black text-[var(--ink)]"
                   >
                     {link.label}
                     <link.Icon size={16} />
                   </a>
                 ))}
               </div>
+
+              <div className="glass-card flex items-center gap-3 p-4 text-sm font-bold text-[var(--ink)]">
+                <MapPin size={18} className="text-[var(--accent)]" />
+                {profile.location} - Remote-friendly - {profile.timezone}
+              </div>
             </div>
           </div>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="simple-card p-5 md:p-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="glass-card p-5 md:p-6">
+            <input name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="Name" name="name" type="text" placeholder="Your name" />
               <Field label="Email" name="email" type="email" placeholder="you@example.com" />
             </div>
-            <div className="mt-4">
-              <Field label="Project" name="project_type" type="text" placeholder="Website, dashboard, app..." />
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <Field label="Context" name="project_type" type="text" placeholder="Role, product, system, AI workflow..." />
+              <Field label="Timeline" name="budget" type="text" placeholder="ASAP, this month, flexible..." />
             </div>
             <div className="mt-4">
-              <label className="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-[var(--muted)]">
-                Message
-              </label>
+              <label className="mb-2 block text-xs font-black uppercase text-[var(--muted)]">Message</label>
               <textarea
                 name="message"
                 required
                 rows={6}
-                placeholder="What are you trying to build or improve?"
-                className="w-full rounded-md border border-[var(--line)] bg-[var(--input-bg)] px-4 py-3 text-sm text-[var(--ink)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent-2)]"
+                placeholder="Tell me what you are trying to build, what is unclear, and what a good outcome would look like."
+                className="input-field resize-y"
               />
             </div>
-            <button type="submit" disabled={status === "loading"} className="simple-button button-primary mt-5 w-full">
+            <button type="submit" disabled={status === "loading"} className="button-base button-primary mt-5 w-full">
               {status === "loading" ? "Sending..." : "Send message"}
               <Mail size={16} />
             </button>
-            {status === "success" && <p className="mt-3 text-sm font-bold text-[var(--accent-2)]">Message sent.</p>}
-            {status === "error" && <p className="mt-3 text-sm font-bold text-red-700">Could not send. Try email instead.</p>}
+            {status === "success" && <p className="mt-3 text-sm font-bold text-[var(--accent-3)]">Message sent.</p>}
+            {status === "error" && (
+              <p className="mt-3 text-sm font-bold text-[var(--danger)]">
+                Could not send through the form. Email me directly at {profile.email}.
+              </p>
+            )}
           </form>
         </div>
       </div>
@@ -136,14 +166,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-black uppercase tracking-[0.14em] text-[var(--muted)]">{label}</label>
-      <input
-        name={name}
-        type={type}
-        required
-        placeholder={placeholder}
-        className="w-full rounded-md border border-[var(--line)] bg-[var(--input-bg)] px-4 py-3 text-sm text-[var(--ink)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent-2)]"
-      />
+      <label className="mb-2 block text-xs font-black uppercase text-[var(--muted)]">{label}</label>
+      <input name={name} type={type} required placeholder={placeholder} className="input-field" />
     </div>
   );
 }

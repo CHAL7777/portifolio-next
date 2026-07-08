@@ -1,89 +1,228 @@
-import { ArrowUpRight, Github, Linkedin, Mail, MapPin } from "lucide-react";
-import Image from "next/image";
+import AnimatedCounter from "@/components/animated-counter";
+import Reveal from "@/components/reveal";
+import { heroMetrics, profile, trustSignals } from "@/app/data/portfolio";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  CheckCircle2,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Send,
+  ShieldCheck,
+} from "lucide-react";
 
-const metrics = [
-  { value: "20+", label: "projects" },
-  { value: "3+", label: "years building" },
-  { value: "Full-stack", label: "focus" },
+const socialLinks = [
+  { label: "GitHub", href: profile.links.github, Icon: Github },
+  { label: "LinkedIn", href: profile.links.linkedin, Icon: Linkedin },
+  { label: "Telegram", href: profile.links.telegram, Icon: Send },
+];
+
+const diagramNodes = [
+  { label: "Product need", className: "left-[7%] top-[16%]" },
+  { label: "API contract", className: "left-[38%] top-[9%]" },
+  { label: "Auth", className: "right-[8%] top-[22%]" },
+  { label: "Domain logic", className: "left-[23%] top-[45%]" },
+  { label: "PostgreSQL", className: "right-[18%] top-[52%]" },
+  { label: "AI context", className: "left-[42%] bottom-[12%]" },
 ];
 
 export default function Hero() {
   return (
-    <section id="hero" className="pt-16 pb-12 md:pt-24 md:pb-20">
+    <section id="hero" className="relative overflow-hidden pt-14 pb-14 md:pt-20 md:pb-20">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <video
+          aria-hidden="true"
+          className="h-full w-full object-cover opacity-[0.16] grayscale sepia contrast-125 dark:opacity-[0.2]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/video/video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,rgba(247,243,234,0.9)_36%,rgba(247,243,234,0.5)_100%)] dark:bg-[linear-gradient(90deg,var(--background)_0%,rgba(8,10,8,0.9)_36%,rgba(8,10,8,0.58)_100%)]" />
+        <div className="absolute inset-0 architectural-grid opacity-35" />
+      </div>
+
       <div className="site-shell">
-        <div className="grid gap-12 lg:grid-cols-[1.06fr_0.94fr] lg:items-end">
+        <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
           <div>
-            <p className="section-label reveal">Frontend and full-stack developer</p>
-            <h1 className="display-title reveal stagger-1 mt-5 max-w-4xl text-6xl text-[var(--ink)] sm:text-7xl lg:text-8xl">
-              I build simple web products that feel clear, fast, and useful.
-            </h1>
-            <p className="body-copy reveal stagger-2 mt-7 max-w-2xl text-lg md:text-xl">
-              I&apos;m Chala Gobena, a product-minded developer based in Ethiopia. I turn rough ideas,
-              dashboards, content sites, and service platforms into polished interfaces that are easy to use
-              and maintain.
-            </p>
+            <Reveal>
+              <div className="inline-flex max-w-full items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-bold text-[var(--ink)] backdrop-blur-xl">
+                <ShieldCheck size={16} className="shrink-0 text-[var(--accent)]" />
+                Building product surfaces, backend contracts, and AI workflows
+              </div>
+            </Reveal>
 
-            <div className="reveal stagger-3 mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#projects" className="simple-button button-primary">
-                See work
-                <ArrowUpRight size={16} />
-              </a>
-              <a href="mailto:chalagobena43@gmail.com" className="simple-button button-secondary">
-                Contact me
-                <Mail size={16} />
-              </a>
-            </div>
+            <Reveal delay={0.08}>
+              <h1 className="display-title mt-6 max-w-5xl text-5xl text-[var(--ink)] sm:text-6xl lg:text-7xl">
+                Reliable software for teams who need clarity before speed.
+              </h1>
+            </Reveal>
 
-            <div className="reveal stagger-4 mt-10 grid max-w-2xl grid-cols-3 border-y border-[var(--line)]">
-              {metrics.map((item, index) => (
-                <div key={item.label} className={`py-5 pr-4 reveal stagger-${Math.min(index + 2, 5)}`}>
-                  <p className="text-2xl font-black text-[var(--ink)] md:text-3xl">{item.value}</p>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-[var(--muted)]">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="reveal stagger-5 mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-bold text-[var(--muted)]">
-              <span className="inline-flex items-center gap-2">
-                <MapPin size={16} className="text-[var(--accent)]" />
-                Addis Ababa, Ethiopia
-              </span>
-              <a
-                href="https://github.com/CHAL7777"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 transition-colors hover:text-[var(--ink)]"
-              >
-                <Github size={16} />
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/chala-gobena-01a22b346"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 transition-colors hover:text-[var(--ink)]"
-              >
-                <Linkedin size={16} />
-                LinkedIn
-              </a>
-            </div>
-          </div>
-
-          <div className="simple-card reveal-scale stagger-3 overflow-hidden bg-[var(--surface)]">
-            <div className="relative aspect-[4/5] min-h-[26rem]">
-              <Image src="/img/chala.jpg" alt="Chala Gobena" fill priority className="object-cover" />
-            </div>
-            <div className="border-t border-[var(--line)] p-5">
-              <p className="section-label">Available for selected work</p>
-              <p className="body-copy mt-2 text-sm">
-                Best fit: product websites, admin dashboards, full-stack prototypes, and frontend polish.
+            <Reveal delay={0.16}>
+              <p className="body-copy mt-6 max-w-2xl text-lg md:text-xl">
+                I help founders, product teams, and engineering leads turn rough ideas into web products that
+                feel calm on the surface and deliberate underneath: clear APIs, readable data models,
+                thoughtful interfaces, and AI features with guardrails.
               </p>
-            </div>
+            </Reveal>
+
+            <Reveal delay={0.24}>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="#projects" className="button-base button-primary">
+                  Explore case studies
+                  <ArrowUpRight size={16} />
+                </a>
+                <a href="#contact" className="button-base button-secondary">
+                  Talk through a build
+                  <Mail size={16} />
+                </a>
+                <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="button-base button-ghost">
+                  <Download size={16} />
+                  Resume
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.32}>
+              <div className="mt-9 grid max-w-3xl gap-3 sm:grid-cols-3">
+                {heroMetrics.map((metric) => (
+                  <div key={metric.label} className="glass-card p-4">
+                    <p className="text-3xl font-black text-[var(--ink)]">
+                      <AnimatedCounter value={metric.value} />
+                    </p>
+                    <p className="mt-2 text-sm font-black text-[var(--ink)]">{metric.label}</p>
+                    <p className="body-copy mt-1 text-xs">{metric.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.4}>
+              <div className="mt-8 grid gap-3 text-sm font-bold text-[var(--muted)] sm:grid-cols-2">
+                {trustSignals.map((signal) => (
+                  <span key={signal} className="inline-flex items-start gap-2">
+                    <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[var(--accent)]" />
+                    {signal}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.46}>
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-bold text-[var(--muted)]">
+                <span className="inline-flex items-center gap-2">
+                  <MapPin size={16} className="text-[var(--accent-2)]" />
+                  {profile.location}
+                </span>
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-[var(--ink)]"
+                  >
+                    <link.Icon size={16} />
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </Reveal>
           </div>
+
+          <Reveal delay={0.18} className="lg:justify-self-end">
+            <EngineeringIllustration />
+          </Reveal>
         </div>
+
+        <Reveal delay={0.5}>
+          <a
+            href="#projects"
+            className="mt-10 inline-flex items-center gap-2 text-sm font-black text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+          >
+            See how the work is structured
+            <ArrowDown size={15} />
+          </a>
+        </Reveal>
       </div>
     </section>
+  );
+}
+
+function EngineeringIllustration() {
+  return (
+    <div className="cinematic-surface shimmer-line w-full max-w-[36rem] p-4 md:p-5">
+      <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
+        <div>
+          <p className="section-kicker">Engineering map</p>
+          <p className="mt-1 text-lg font-black text-[var(--ink)]">From user intent to reliable system behavior</p>
+        </div>
+        <div className="hidden rounded-lg border border-[var(--line)] px-3 py-2 text-xs font-black text-[var(--accent)] sm:block">
+          Live thinking
+        </div>
+      </div>
+
+      <div className="relative mt-5 aspect-[1.02/1] min-h-[25rem] overflow-hidden rounded-lg border border-[var(--line)] bg-[linear-gradient(135deg,rgba(15,107,74,0.12),rgba(255,250,240,0.72)_42%,rgba(166,120,58,0.12))] p-5 dark:bg-[linear-gradient(135deg,rgba(51,208,138,0.12),rgba(17,20,15,0.82)_42%,rgba(215,179,106,0.11))]">
+        <div className="absolute inset-0 architectural-grid opacity-45" />
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 420 420" aria-hidden="true">
+          <path
+            d="M72 84 C154 54 210 74 264 86 S354 125 366 174"
+            fill="none"
+            stroke="var(--accent)"
+            strokeDasharray="10 12"
+            strokeWidth="2"
+            className="pulse-trace"
+          />
+          <path
+            d="M94 210 C155 160 220 190 268 222 S321 278 230 344"
+            fill="none"
+            stroke="var(--accent-2)"
+            strokeDasharray="8 10"
+            strokeWidth="2"
+            className="pulse-trace"
+          />
+          <path
+            d="M164 228 C228 222 279 220 330 238"
+            fill="none"
+            stroke="var(--accent-3)"
+            strokeDasharray="6 10"
+            strokeWidth="2"
+            className="pulse-trace"
+          />
+        </svg>
+
+        {diagramNodes.map((node, index) => (
+          <div
+            key={node.label}
+            className={`absolute ${node.className} float-soft rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-2 text-xs font-black text-[var(--ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl`}
+            style={{ animationDelay: `${index * 0.4}s` }}
+          >
+            {node.label}
+          </div>
+        ))}
+
+        <div className="absolute inset-x-5 bottom-5 rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] p-4 backdrop-blur-xl">
+          <div className="grid gap-3 sm:grid-cols-3">
+            {["Validate", "Design", "Ship"].map((step, index) => (
+              <div key={step} className="flex items-center gap-2 text-sm font-black text-[var(--ink)]">
+                <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[var(--ink)] text-xs text-[var(--ink-contrast)]">
+                  {index + 1}
+                </span>
+                {step}
+              </div>
+            ))}
+          </div>
+          <p className="body-copy mt-3 text-sm">
+            I like systems that can be explained in a room, traced in logs, and improved without drama.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
