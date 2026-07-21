@@ -15,7 +15,7 @@ export default function GitHubSection() {
           <Reveal>
             <div>
               <p className="section-kicker">GitHub integration</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-5xl">
                 Public work, commits, and repository signals.
               </h2>
             </div>

@@ -33,7 +33,7 @@ export default function Skills() {
           <Reveal>
             <div>
               <p className="section-kicker">Capabilities</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Skills grouped by the problems they help solve.
               </h2>
               <p className="body-copy mt-5 text-lg">

@@ -1,0 +1,97 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="opsGlowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(265 205) rotate(34) scale(720 520)">
+      <stop stop-color="#8B5CF6" stop-opacity="0.66"/>
+      <stop offset="0.52" stop-color="#23C58D" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#0A0C0B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="opsGlowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1030 650) rotate(153) scale(560 430)">
+      <stop stop-color="#F0B84F" stop-opacity="0.66"/>
+      <stop offset="0.48" stop-color="#BE3B6A" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#0A0C0B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="opsPanel" x1="145" y1="122" x2="1010" y2="746" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.2"/>
+      <stop offset="0.58" stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="opsLine" x1="258" y1="602" x2="724" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#23C58D"/>
+      <stop offset="0.48" stop-color="#F0B84F"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <filter id="opsShadow" x="68" y="70" width="1078" height="767" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="34" stdDeviation="36" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+    <pattern id="opsGrid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" stroke="#FFF7EA" stroke-opacity="0.075"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" rx="48" fill="#0A0C0B"/>
+  <rect width="1200" height="900" rx="48" fill="url(#opsGrid)"/>
+  <rect width="1200" height="900" rx="48" fill="url(#opsGlowA)"/>
+  <rect width="1200" height="900" rx="48" fill="url(#opsGlowB)"/>
+
+  <g filter="url(#opsShadow)">
+    <rect x="146" y="126" width="908" height="640" rx="46" fill="url(#opsPanel)" stroke="#FFF7EA" stroke-opacity="0.2"/>
+    <rect x="191" y="186" width="216" height="138" rx="30" fill="#FFF7EA" fill-opacity="0.1" stroke="#FFF7EA" stroke-opacity="0.15"/>
+    <rect x="439" y="186" width="216" height="138" rx="30" fill="#FFF7EA" fill-opacity="0.1" stroke="#FFF7EA" stroke-opacity="0.15"/>
+    <rect x="687" y="186" width="320" height="138" rx="30" fill="#FFF7EA" fill-opacity="0.1" stroke="#FFF7EA" stroke-opacity="0.15"/>
+    <rect x="191" y="370" width="520" height="332" rx="36" fill="#060807" fill-opacity="0.56" stroke="#FFF7EA" stroke-opacity="0.13"/>
+    <rect x="749" y="370" width="258" height="332" rx="36" fill="#060807" fill-opacity="0.56" stroke="#FFF7EA" stroke-opacity="0.13"/>
+  </g>
+
+  <g>
+    <rect x="224" y="220" width="90" height="12" rx="6" fill="#FFF7EA" fill-opacity="0.32"/>
+    <rect x="224" y="252" width="122" height="26" rx="13" fill="#FFF7EA" fill-opacity="0.78"/>
+    <path d="M224 295L250 280L280 290L311 264L352 278" stroke="#23C58D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="472" y="220" width="88" height="12" rx="6" fill="#FFF7EA" fill-opacity="0.32"/>
+    <rect x="472" y="252" width="118" height="26" rx="13" fill="#FFF7EA" fill-opacity="0.78"/>
+    <path d="M472 296H614" stroke="#F0B84F" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="614" cy="296" r="10" fill="#F0B84F"/>
+
+    <rect x="724" y="220" width="98" height="12" rx="6" fill="#FFF7EA" fill-opacity="0.32"/>
+    <rect x="724" y="252" width="200" height="26" rx="13" fill="#FFF7EA" fill-opacity="0.78"/>
+    <rect x="724" y="302" width="58" height="8" rx="4" fill="#8B5CF6"/>
+    <rect x="798" y="302" width="86" height="8" rx="4" fill="#23C58D"/>
+    <rect x="900" y="302" width="52" height="8" rx="4" fill="#F0B84F"/>
+  </g>
+
+  <g>
+    <path d="M245 638C300 566 341 590 389 520C439 446 497 482 545 425C591 370 631 382 667 408" stroke="url(#opsLine)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M245 638C300 566 341 590 389 520C439 446 497 482 545 425C591 370 631 382 667 408" stroke="#FFF7EA" stroke-opacity="0.14" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#FFF7EA" fill-opacity="0.16">
+      <rect x="245" y="444" width="28" height="190" rx="14"/>
+      <rect x="310" y="505" width="28" height="129" rx="14"/>
+      <rect x="375" y="471" width="28" height="163" rx="14"/>
+      <rect x="440" y="420" width="28" height="214" rx="14"/>
+      <rect x="505" y="462" width="28" height="172" rx="14"/>
+      <rect x="570" y="401" width="28" height="233" rx="14"/>
+      <rect x="635" y="438" width="28" height="196" rx="14"/>
+    </g>
+    <circle cx="389" cy="520" r="13" fill="#F0B84F"/>
+    <circle cx="545" cy="425" r="13" fill="#23C58D"/>
+    <circle cx="667" cy="408" r="13" fill="#8B5CF6"/>
+  </g>
+
+  <g transform="translate(788 414)">
+    <circle cx="88" cy="88" r="72" fill="#FFF7EA" fill-opacity="0.07" stroke="#FFF7EA" stroke-opacity="0.14" stroke-width="24"/>
+    <path d="M88 16A72 72 0 0 1 158 104" stroke="#23C58D" stroke-width="24" stroke-linecap="round"/>
+    <path d="M156 112A72 72 0 0 1 78 160" stroke="#F0B84F" stroke-width="24" stroke-linecap="round"/>
+    <circle cx="88" cy="88" r="42" fill="#070907"/>
+    <rect x="56" y="76" width="64" height="12" rx="6" fill="#FFF7EA" fill-opacity="0.78"/>
+    <rect x="68" y="100" width="40" height="8" rx="4" fill="#FFF7EA" fill-opacity="0.3"/>
+    <rect x="-6" y="214" width="190" height="18" rx="9" fill="#FFF7EA" fill-opacity="0.12"/>
+    <rect x="-6" y="214" width="128" height="18" rx="9" fill="#8B5CF6"/>
+  </g>
+
+  <g opacity="0.78">
+    <rect x="908" y="92" width="128" height="56" rx="28" fill="#FFF7EA" fill-opacity="0.1" stroke="#FFF7EA" stroke-opacity="0.16"/>
+    <circle cx="940" cy="120" r="12" fill="#23C58D"/>
+    <rect x="964" y="114" width="42" height="12" rx="6" fill="#FFF7EA" fill-opacity="0.58"/>
+    <rect x="92" y="564" width="126" height="72" rx="26" fill="#FFF7EA" fill-opacity="0.08" stroke="#FFF7EA" stroke-opacity="0.14"/>
+    <rect x="122" y="592" width="66" height="12" rx="6" fill="#F0B84F"/>
+  </g>
+</svg>

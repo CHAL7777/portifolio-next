@@ -21,7 +21,7 @@ export default function AIEngineering() {
           <Reveal>
             <div>
               <p className="section-kicker">AI engineering</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 AI features should be useful, explainable, and constrained.
               </h2>
               <p className="body-copy mt-5 text-lg">

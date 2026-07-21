@@ -59,7 +59,7 @@ export default function Hero() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <h1 className="display-title mt-6 max-w-5xl text-5xl text-[var(--ink)] sm:text-6xl lg:text-7xl">
+              <h1 className="display-title mt-6 max-w-5xl text-5xl text-[var(--ink)] sm:text-6xl lg:text-4xl">
                 Reliable software for teams who need clarity before speed.
               </h1>
             </Reveal>

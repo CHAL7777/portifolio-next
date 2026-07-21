@@ -10,7 +10,7 @@ export default function Blog() {
           <Reveal>
             <div>
               <p className="section-kicker">Blog</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Writing that explains how I think.
               </h2>
             </div>

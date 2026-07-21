@@ -11,7 +11,7 @@ export default function Certificates() {
           <Reveal>
             <div>
               <p className="section-kicker">Certifications</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Learning records that support the stack.
               </h2>
             </div>

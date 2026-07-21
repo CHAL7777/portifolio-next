@@ -13,7 +13,7 @@ export default function Achievements() {
           <Reveal>
             <div>
               <p className="section-kicker">Achievements</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Signals of momentum and consistency.
               </h2>
             </div>

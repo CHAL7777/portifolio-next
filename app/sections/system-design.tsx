@@ -53,7 +53,7 @@ export default function SystemDesign() {
           <Reveal>
             <div>
               <p className="section-kicker">System design</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 I think in flows, boundaries, and failure modes.
               </h2>
               <p className="body-copy mt-5 text-lg">

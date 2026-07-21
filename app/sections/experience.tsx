@@ -17,7 +17,7 @@ export default function Experience() {
           <Reveal>
             <div>
               <p className="section-kicker">Experience</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Ownership built through shipped work.
               </h2>
               <p className="body-copy mt-5 text-lg">

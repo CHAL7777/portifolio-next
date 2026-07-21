@@ -69,7 +69,7 @@ export default function Contact() {
         <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr]">
           <div>
             <p className="section-kicker">Contact</p>
-            <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+            <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
               Great software starts with understanding the problem.
             </h2>
             <p className="body-copy mt-5 text-lg">

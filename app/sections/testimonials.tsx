@@ -10,7 +10,7 @@ export default function Testimonials() {
           <Reveal>
             <div>
               <p className="section-kicker">Testimonials</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Collaboration traits teams can expect.
               </h2>
             </div>

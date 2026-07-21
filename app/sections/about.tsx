@@ -55,7 +55,7 @@ export default function About() {
           <div>
             <Reveal delay={0.08}>
               <p className="section-kicker">Story</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 I care about the moment software becomes understandable.
               </h2>
             </Reveal>

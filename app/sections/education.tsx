@@ -10,7 +10,7 @@ export default function Education() {
           <Reveal>
             <div>
               <p className="section-kicker">Education</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-6xl">
+              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-4xl">
                 Academic foundation for software engineering.
               </h2>
             </div>

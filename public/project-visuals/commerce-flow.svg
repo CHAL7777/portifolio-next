@@ -1,0 +1,98 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="commerceGlowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(290 190) rotate(46) scale(710 580)">
+      <stop stop-color="#23D48D" stop-opacity="0.72"/>
+      <stop offset="0.45" stop-color="#E7A93A" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#0B0E0C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="commerceGlowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(950 650) rotate(150) scale(520 430)">
+      <stop stop-color="#F97316" stop-opacity="0.72"/>
+      <stop offset="0.5" stop-color="#7C2D12" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#0B0E0C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="commercePanel" x1="179" y1="130" x2="986" y2="764" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8EA" stop-opacity="0.2"/>
+      <stop offset="0.52" stop-color="#FFF8EA" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FFF8EA" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="commerceAccent" x1="256" y1="182" x2="782" y2="682" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#23D48D"/>
+      <stop offset="0.52" stop-color="#F3B64E"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="commerceShadow" x="84" y="60" width="1038" height="795" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="34" stdDeviation="34" flood-color="#000000" flood-opacity="0.34"/>
+    </filter>
+    <filter id="commerceSoft" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <pattern id="commerceGrid" width="54" height="54" patternUnits="userSpaceOnUse">
+      <path d="M54 0H0V54" stroke="#FFF8EA" stroke-opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" rx="48" fill="#0B0E0C"/>
+  <rect width="1200" height="900" rx="48" fill="url(#commerceGrid)"/>
+  <rect width="1200" height="900" rx="48" fill="url(#commerceGlowA)"/>
+  <rect width="1200" height="900" rx="48" fill="url(#commerceGlowB)"/>
+
+  <g filter="url(#commerceShadow)">
+    <path d="M195 170C195 136.863 221.863 110 255 110H935C968.137 110 995 136.863 995 170V690C995 723.137 968.137 750 935 750H255C221.863 750 195 723.137 195 690V170Z" fill="url(#commercePanel)" stroke="#FFF8EA" stroke-opacity="0.22"/>
+    <path d="M242 184C242 169.641 253.641 158 268 158H628C642.359 158 654 169.641 654 184V643C654 657.359 642.359 669 628 669H268C253.641 669 242 657.359 242 643V184Z" fill="#111713" stroke="#FFF8EA" stroke-opacity="0.16"/>
+    <path d="M704 184C704 169.641 715.641 158 730 158H920C934.359 158 946 169.641 946 184V643C946 657.359 934.359 669 920 669H730C715.641 669 704 657.359 704 643V184Z" fill="#101310" fill-opacity="0.82" stroke="#FFF8EA" stroke-opacity="0.13"/>
+  </g>
+
+  <g opacity="0.96">
+    <rect x="286" y="210" width="160" height="32" rx="16" fill="#FFF8EA" fill-opacity="0.16"/>
+    <rect x="286" y="260" width="324" height="86" rx="24" fill="#FFF8EA" fill-opacity="0.1" stroke="#FFF8EA" stroke-opacity="0.15"/>
+    <rect x="310" y="284" width="58" height="38" rx="14" fill="url(#commerceAccent)" fill-opacity="0.95"/>
+    <rect x="390" y="284" width="138" height="14" rx="7" fill="#FFF8EA" fill-opacity="0.6"/>
+    <rect x="390" y="311" width="84" height="10" rx="5" fill="#FFF8EA" fill-opacity="0.26"/>
+    <circle cx="574" cy="303" r="22" fill="#23D48D" fill-opacity="0.22" stroke="#23D48D"/>
+    <path d="M564 303H584M574 293V313" stroke="#FFF8EA" stroke-width="4" stroke-linecap="round"/>
+
+    <rect x="286" y="372" width="324" height="86" rx="24" fill="#FFF8EA" fill-opacity="0.1" stroke="#FFF8EA" stroke-opacity="0.15"/>
+    <rect x="310" y="396" width="58" height="38" rx="14" fill="#F3B64E"/>
+    <rect x="390" y="396" width="124" height="14" rx="7" fill="#FFF8EA" fill-opacity="0.62"/>
+    <rect x="390" y="423" width="98" height="10" rx="5" fill="#FFF8EA" fill-opacity="0.26"/>
+    <circle cx="574" cy="415" r="22" fill="#F97316" fill-opacity="0.22" stroke="#F97316"/>
+    <path d="M564 415H584M574 405V425" stroke="#FFF8EA" stroke-width="4" stroke-linecap="round"/>
+
+    <rect x="286" y="484" width="324" height="126" rx="28" fill="#050806" fill-opacity="0.58" stroke="#FFF8EA" stroke-opacity="0.14"/>
+    <rect x="314" y="514" width="118" height="14" rx="7" fill="#FFF8EA" fill-opacity="0.62"/>
+    <rect x="314" y="544" width="248" height="12" rx="6" fill="#FFF8EA" fill-opacity="0.18"/>
+    <rect x="314" y="576" width="248" height="12" rx="6" fill="#FFF8EA" fill-opacity="0.18"/>
+    <rect x="450" y="622" width="160" height="48" rx="24" fill="url(#commerceAccent)"/>
+  </g>
+
+  <g transform="translate(736 216)">
+    <rect x="0" y="0" width="166" height="314" rx="38" fill="#070A08" stroke="#FFF8EA" stroke-opacity="0.24" stroke-width="2"/>
+    <rect x="14" y="18" width="138" height="278" rx="28" fill="#121712"/>
+    <rect x="42" y="42" width="82" height="10" rx="5" fill="#FFF8EA" fill-opacity="0.55"/>
+    <rect x="34" y="80" width="98" height="98" rx="28" fill="url(#commerceAccent)"/>
+    <circle cx="83" cy="129" r="27" fill="#FFF8EA" fill-opacity="0.22"/>
+    <rect x="30" y="205" width="106" height="14" rx="7" fill="#FFF8EA" fill-opacity="0.5"/>
+    <rect x="30" y="232" width="84" height="10" rx="5" fill="#FFF8EA" fill-opacity="0.24"/>
+    <rect x="30" y="258" width="106" height="32" rx="16" fill="#23D48D"/>
+  </g>
+
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M653 286C681 268 705 264 735 272" stroke="#23D48D" stroke-opacity="0.68" stroke-width="3" stroke-dasharray="8 12"/>
+    <path d="M653 425C682 439 707 438 738 421" stroke="#F3B64E" stroke-opacity="0.76" stroke-width="3" stroke-dasharray="8 12"/>
+    <path d="M650 560C704 576 757 566 815 532" stroke="#F97316" stroke-opacity="0.72" stroke-width="3" stroke-dasharray="8 12"/>
+  </g>
+
+  <g filter="url(#commerceSoft)" opacity="0.62">
+    <circle cx="965" cy="214" r="72" fill="#23D48D"/>
+    <circle cx="206" cy="710" r="88" fill="#F97316"/>
+  </g>
+
+  <g>
+    <circle cx="1008" cy="250" r="34" fill="#FFF8EA" fill-opacity="0.1" stroke="#FFF8EA" stroke-opacity="0.16"/>
+    <path d="M995 251L1005 261L1023 238" stroke="#23D48D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="805" y="610" width="178" height="48" rx="24" fill="#FFF8EA" fill-opacity="0.1" stroke="#FFF8EA" stroke-opacity="0.15"/>
+    <circle cx="834" cy="634" r="14" fill="#23D48D"/>
+    <rect x="860" y="625" width="86" height="8" rx="4" fill="#FFF8EA" fill-opacity="0.52"/>
+    <rect x="860" y="641" width="56" height="7" rx="3.5" fill="#FFF8EA" fill-opacity="0.24"/>
+  </g>
+</svg>
