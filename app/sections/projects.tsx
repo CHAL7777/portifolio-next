@@ -203,8 +203,8 @@ function ProjectCard({
       id={slug}
       layout
       aria-labelledby={titleId}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
+      onPointerMove={reduceMotion ? undefined : handlePointerMove}
+      onPointerLeave={reduceMotion ? undefined : handlePointerLeave}
       initial={reduceMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -14 }}
