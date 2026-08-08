@@ -13,8 +13,11 @@ import {
   ExternalLink,
   Github,
   Layers3,
+  Maximize2,
   Search,
   Sparkles,
+  X,
+  ZoomIn,
 } from "lucide-react";
 import Image from "next/image";
 import type { PointerEvent, ReactNode } from "react";
@@ -36,12 +39,14 @@ const architectureSteps: Record<string, string[]> = {
   Operations: ["KPI Widgets", "Analytics", "Inventory", "Reports"],
   Content: ["Metadata", "Search", "Categories", "Reading Flow"],
   SaaS: ["Workspace", "Tasks", "Progress", "Persistence"],
+  AI: ["Assessment", "AI Roadmap", "State Recovery", "Analytics"],
 };
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [activeDetail, setActiveDetail] = useState<{ title: string; mode: DetailMode } | null>(null);
+  const [previewImage, setPreviewImage] = useState<{ src: string; title: string; alt: string } | null>(null);
   const reduceMotion = useReducedMotion();
 
   const filteredProjects = useMemo(() => {
@@ -92,7 +97,7 @@ export default function Projects() {
             <div>
               <p className="section-kicker text-[#23d48d]">Selected work</p>
               <h2 id="projects-heading" className="display-title mt-4 text-4xl text-white md:text-5xl">
-                Production-grade products, visualized like systems.
+                Production-grade products, built with real UI screenshots.
               </h2>
             </div>
           </Reveal>
@@ -100,8 +105,8 @@ export default function Projects() {
           <Reveal delay={0.08}>
             <div>
               <p className="max-w-2xl text-lg leading-8 text-white/68">
-                Each project gets a custom visual language: commerce flows, analytics surfaces, content systems,
-                and AI-assisted workspaces instead of ordinary screenshots.
+                Explore real application interfaces from food delivery platforms to e-commerce dashboards, content hubs,
+                and AI-assisted pathfinders. Click any screenshot to view full resolution.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]">
                 <label className="relative block">
@@ -143,7 +148,7 @@ export default function Projects() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:auto-rows-[minmax(24rem,auto)]">
+        <div className="mt-12 grid gap-6 lg:grid-cols-12 lg:auto-rows-[minmax(24rem,auto)]">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => {
               const detailMode = activeDetail?.title === project.title ? activeDetail.mode : null;
@@ -155,6 +160,13 @@ export default function Projects() {
                   index={index}
                   detailMode={detailMode}
                   onDetailToggle={(mode) => toggleDetail(project.title, mode)}
+                  onPreviewImage={() =>
+                    setPreviewImage({
+                      src: project.image,
+                      title: project.title,
+                      alt: project.visual.alt,
+                    })
+                  }
                   reduceMotion={Boolean(reduceMotion)}
                 />
               );
@@ -166,11 +178,59 @@ export default function Projects() {
           <div className="mt-8 rounded-lg border border-white/12 bg-white/[0.07] p-8 text-center shadow-[0_24px_80px_rgba(0,0,0,0.24)] backdrop-blur-2xl">
             <p className="font-black text-white">No projects match that search.</p>
             <p className="mt-2 text-sm leading-6 text-white/62">
-              Try a term like API, dashboard, checkout, content, SaaS, or motion.
+              Try a term like AI, dashboard, checkout, content, SaaS, or motion.
             </p>
           </div>
         )}
       </div>
+
+      {/* Screenshot Lightbox Modal */}
+      <AnimatePresence>
+        {previewImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setPreviewImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/88 p-4 backdrop-blur-md md:p-8"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-h-[92vh] max-w-5xl overflow-hidden rounded-xl border border-white/20 bg-[#0d0f0d] p-3 shadow-2xl"
+            >
+              <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3 px-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="h-3 w-3 rounded-full bg-red-500/80" />
+                    <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
+                    <div className="h-3 w-3 rounded-full bg-green-500/80" />
+                  </div>
+                  <span className="ml-2 text-xs font-bold text-white/80">{previewImage.title} — Real Screenshot</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewImage(null)}
+                  className="rounded-lg border border-white/14 bg-white/10 p-1.5 text-white/80 transition hover:bg-white/20 hover:text-white"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="relative max-h-[80vh] overflow-y-auto rounded-lg bg-black">
+                <Image
+                  src={previewImage.src}
+                  alt={previewImage.alt}
+                  width={1400}
+                  height={900}
+                  className="w-full object-contain rounded-lg"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -180,12 +240,14 @@ function ProjectCard({
   index,
   detailMode,
   onDetailToggle,
+  onPreviewImage,
   reduceMotion,
 }: {
   project: Project;
   index: number;
   detailMode: DetailMode | null;
   onDetailToggle: (mode: DetailMode) => void;
+  onPreviewImage: () => void;
   reduceMotion: boolean;
 }) {
   const slug = slugify(project.title);
@@ -211,35 +273,66 @@ function ProjectCard({
       whileHover={reduceMotion ? undefined : { y: -6 }}
       transition={{ duration: 0.42, delay: reduceMotion ? 0 : index * 0.045, ease }}
       style={style}
-      className={`premium-project-card group relative isolate flex min-h-[34rem] flex-col overflow-hidden rounded-lg border border-white/12 bg-white/[0.07] shadow-[0_26px_90px_rgba(0,0,0,0.3)] backdrop-blur-2xl ${layoutClass(
+      className={`premium-project-card group relative isolate flex min-h-[34rem] flex-col overflow-hidden rounded-xl border border-white/14 bg-white/[0.07] shadow-[0_26px_90px_rgba(0,0,0,0.3)] backdrop-blur-2xl ${layoutClass(
         project.visual.size,
+        index
       )}`}
     >
-      <a
-        href={project.liveUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open live demo for ${project.title}`}
-        className={`project-visual-shell relative block overflow-hidden border-b border-white/10 bg-[#0c0f0c] ${
-          isFeatured ? "min-h-[22rem] md:min-h-[27rem]" : "min-h-[18rem]"
-        }`}
-      >
-        <Image
-          src={project.image}
-          alt={project.visual.alt}
-          fill
-          sizes={isFeatured ? "(min-width: 1024px) 54vw, 100vw" : "(min-width: 1024px) 38vw, 100vw"}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,7,0.66),transparent_46%,rgba(8,9,7,0.08))]" />
-        <div className="absolute left-4 top-4 rounded-lg border border-white/14 bg-black/32 px-3 py-2 text-[0.68rem] font-black uppercase tracking-[0.16em] text-white/82 backdrop-blur-xl">
-          {project.visual.label}
+      {/* Visual Window Header & Frame */}
+      <div className="relative overflow-hidden border-b border-white/10 bg-[#0c0f0c]">
+        {/* Browser Mockup Top Bar */}
+        <div className="flex items-center justify-between border-b border-white/10 bg-[#121512] px-4 py-2 text-xs text-white/50">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
+            <span className="ml-2 font-mono text-[0.68rem] text-white/40">{project.liveUrl.replace("https://", "")}</span>
+          </div>
+          <button
+            type="button"
+            onClick={onPreviewImage}
+            title="Expand Full Screenshot"
+            className="flex items-center gap-1 text-[0.68rem] font-bold text-white/70 hover:text-white transition"
+          >
+            <ZoomIn size={13} />
+            <span>Expand</span>
+          </button>
         </div>
-        <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-2">
-          <VisualBadge icon={<Sparkles size={13} />} label={project.category} />
-          <VisualBadge icon={<Code2 size={13} />} label={project.role} />
-        </div>
-      </a>
+
+        <button
+          type="button"
+          onClick={onPreviewImage}
+          aria-label={`View full screenshot for ${project.title}`}
+          className={`project-visual-shell relative block w-full text-left overflow-hidden cursor-pointer ${
+            isFeatured ? "h-[22rem] md:h-[26rem]" : "h-[18rem]"
+          }`}
+        >
+          <Image
+            src={project.image}
+            alt={project.visual.alt}
+            fill
+            sizes={isFeatured ? "(min-width: 1024px) 54vw, 100vw" : "(min-width: 1024px) 38vw, 100vw"}
+            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,9,7,0.78),transparent_48%,rgba(8,9,7,0.12))]" />
+          
+          {/* Zoom Hover Indicator */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/75 px-4 py-2 text-xs font-black text-white shadow-xl">
+              <Maximize2 size={14} className="text-[var(--project-accent)]" />
+              View Full Screenshot
+            </span>
+          </div>
+
+          <div className="absolute left-4 top-4 rounded-lg border border-white/14 bg-black/45 px-3 py-1.5 text-[0.68rem] font-black uppercase tracking-[0.16em] text-white/90 backdrop-blur-xl">
+            {project.visual.label}
+          </div>
+          <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-2">
+            <VisualBadge icon={<Sparkles size={13} />} label={project.category} />
+            <VisualBadge icon={<Code2 size={13} />} label={project.role} />
+          </div>
+        </button>
+      </div>
 
       <div className="relative flex flex-1 flex-col p-5 md:p-6">
         <div className="flex flex-wrap items-center gap-2">
@@ -501,16 +594,20 @@ function handlePointerLeave(event: PointerEvent<HTMLElement>) {
   card.style.setProperty("--tilt-y", "0deg");
 }
 
-function layoutClass(size: Project["visual"]["size"]) {
+function layoutClass(size: Project["visual"]["size"], index: number) {
   if (size === "featured") {
-    return "lg:col-span-7 lg:row-span-2";
+    return "lg:col-span-7";
   }
 
-  if (size === "small") {
-    return "lg:col-span-6 lg:col-start-4";
+  if (index === 1) {
+    return "lg:col-span-5";
   }
 
-  return "lg:col-span-5";
+  if (index === 4) {
+    return "lg:col-span-12";
+  }
+
+  return "lg:col-span-6";
 }
 
 function slugify(value: string) {
@@ -519,3 +616,4 @@ function slugify(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+
