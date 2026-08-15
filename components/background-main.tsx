@@ -1,10 +1,44 @@
 export default function BackgroundMain() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-50 overflow-hidden bg-[var(--background)]">
-      <div className="absolute inset-0 slow-pan bg-[linear-gradient(120deg,rgba(15,107,74,0.11),transparent_34%,rgba(166,120,58,0.08)_64%,rgba(122,31,50,0.05)_92%)] dark:bg-[linear-gradient(120deg,rgba(51,208,138,0.09),transparent_36%,rgba(215,179,106,0.08)_68%,rgba(212,91,116,0.07)_94%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(23,26,22,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(23,26,22,0.03)_1px,transparent_1px)] bg-[size:44px_44px] dark:bg-[linear-gradient(rgba(243,239,230,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(243,239,230,0.03)_1px,transparent_1px)] dark:bg-[size:44px_44px]" />
-      <div className="absolute inset-0 bg-[linear-gradient(105deg,transparent,rgba(255,250,240,0.22)_46%,transparent_58%)] opacity-40 dark:bg-[linear-gradient(105deg,transparent,rgba(243,239,230,0.08)_46%,transparent_58%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--background),transparent_18%,transparent_76%,var(--background))]" />
+      {/* Aurora gradient orbs */}
+      <div
+        className="aurora-pulse absolute -left-[20%] -top-[20%] h-[60rem] w-[60rem] rounded-full opacity-[0.12]"
+        style={{
+          background: "radial-gradient(circle, rgba(0, 229, 255, 0.3), transparent 60%)",
+          animation: "aurora-drift 22s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="aurora-pulse absolute -right-[15%] top-[20%] h-[50rem] w-[50rem] rounded-full opacity-[0.1]"
+        style={{
+          background: "radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 60%)",
+          animation: "aurora-drift 28s ease-in-out infinite reverse",
+          animationDelay: "-8s",
+        }}
+      />
+      <div
+        className="aurora-pulse absolute -bottom-[10%] left-[30%] h-[45rem] w-[45rem] rounded-full opacity-[0.08]"
+        style={{
+          background: "radial-gradient(circle, rgba(255, 107, 107, 0.25), transparent 60%)",
+          animation: "aurora-drift 25s ease-in-out infinite",
+          animationDelay: "-14s",
+        }}
+      />
+
+      {/* Dot grid overlay */}
+      <div className="dot-grid absolute inset-0 opacity-40" />
+
+      {/* Noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Edge vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--background)_100%)]" />
     </div>
   );
 }

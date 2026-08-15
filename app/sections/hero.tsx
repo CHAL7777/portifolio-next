@@ -1,6 +1,9 @@
+"use client";
+
 import AnimatedCounter from "@/components/animated-counter";
 import Reveal from "@/components/reveal";
-import { heroMetrics, profile, trustSignals } from "@/app/data/portfolio";
+import TypingEffect from "@/components/typing-effect";
+import { heroMetrics, profile, trustSignals, typingPhrases, toolchain } from "@/app/data/portfolio";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -12,11 +15,11 @@ import {
   MapPin,
   Send,
   ShieldCheck,
-  Zap,
   Layers,
   Sparkles,
   Cpu,
   Terminal,
+  Zap,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -26,85 +29,59 @@ const socialLinks = [
   { label: "Telegram", href: profile.links.telegram, Icon: Send },
 ];
 
-const diagramNodes = [
-  { label: "Product need", className: "left-[4%] top-[14%]", status: "Input", color: "#23D48D" },
-  { label: "API contract", className: "left-[36%] top-[8%]", status: "Schema", color: "#38BDF8" },
-  { label: "Auth & Security", className: "right-[4%] top-[18%]", status: "Guard", color: "#F59E0B" },
-  { label: "Domain logic", className: "left-[18%] top-[42%]", status: "Core", color: "#A855F7" },
-  { label: "PostgreSQL", className: "right-[12%] top-[48%]", status: "Data", color: "#3B82F6" },
-  { label: "AI Engine", className: "left-[38%] bottom-[22%]", status: "RAG", color: "#EC4899" },
-];
-
 export default function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden py-16 md:py-24">
-      {/* Background Ambience & Media Layer */}
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden py-20 md:py-28">
+      {/* Background Effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <video
-          aria-hidden="true"
-          className="h-full w-full object-cover opacity-[0.14] grayscale sepia contrast-125 dark:opacity-[0.18]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src="/video/video.mp4" type="video/mp4" />
-        </video>
-        {/* Ambient Glow Orbs */}
-        <div className="absolute -left-20 top-20 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
-        
-        {/* Soft Mesh Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-[var(--background)] to-[var(--background)] opacity-80" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,rgba(247,243,234,0.85)_40%,rgba(247,243,234,0.4)_100%)] dark:bg-[linear-gradient(90deg,var(--background)_0%,rgba(8,10,8,0.92)_40%,rgba(8,10,8,0.55)_100%)]" />
-        <div className="architectural-grid absolute inset-0 opacity-25" />
+        {/* Radial glow from top-left */}
+        <div className="absolute -left-[20%] -top-[30%] h-[50rem] w-[50rem] rounded-full bg-[radial-gradient(circle,rgba(0,229,255,0.12),transparent_60%)]" />
+        {/* Radial glow from right */}
+        <div className="absolute -right-[10%] top-[20%] h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.08),transparent_60%)]" />
+        {/* Grid overlay */}
+        <div className="line-grid absolute inset-0 opacity-30" />
+        {/* Bottom fade */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_70%,var(--background))]" />
       </div>
 
       <div className="site-shell">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           {/* Main Copy Column */}
           <div>
             <Reveal>
-              <div className="mb-6 flex flex-wrap items-center gap-4">
-                {/* Profile Photo Badge */}
-                <div className="flex items-center gap-3 rounded-full border border-[var(--line)] bg-[var(--surface-strong)] p-1.5 pr-4 shadow-md backdrop-blur-xl">
-                  <div className="relative h-10 w-10 overflow-hidden rounded-full border border-[var(--accent)] shadow-inner">
-                    <Image
-                      src={profile.avatar}
-                      alt={profile.name}
-                      width={40}
-                      height={40}
-                      className="h-full w-full object-cover"
-                    />
-                    <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-black bg-emerald-400 animate-pulse" />
-                  </div>
-                  <div>
-                    <span className="block text-xs font-black text-[var(--ink)]">{profile.name}</span>
-                    <span className="block text-[0.68rem] font-bold text-emerald-600 dark:text-emerald-400">
-                      Open for full-stack & AI roles
-                    </span>
-                  </div>
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                {/* Availability Badge */}
+                <div className="inline-flex items-center gap-2.5 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/5 px-4 py-2 backdrop-blur-xl">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-75" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--accent)]" />
+                  </span>
+                  <span className="text-xs font-semibold text-[var(--accent)]">
+                    Available for full-stack & AI roles
+                  </span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-semibold text-[var(--ink)] backdrop-blur-md shadow-sm">
-                  <ShieldCheck size={14} className="shrink-0 text-[var(--accent)]" />
-                  <span>Full-Stack, Systems & AI Workflows</span>
+                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-[var(--muted)] backdrop-blur-xl">
+                  <MapPin size={13} className="text-[var(--accent-2)]" />
+                  <span>{profile.location}</span>
                 </div>
               </div>
             </Reveal>
 
             <Reveal delay={0.08}>
-              <h1 className="display-title max-w-4xl text-4xl font-black tracking-tight text-[var(--ink)] sm:text-6xl lg:text-5xl lg:leading-[1.14]">
-                Building reliable software products with{" "}
-                <span className="gradient-text">thoughtful UX & resilient architecture.</span>
+              <h1 className="display-title max-w-3xl text-4xl text-[var(--ink)] sm:text-5xl lg:text-6xl">
+                I build{" "}
+                <span className="gradient-text">production-grade</span>{" "}
+                software with{" "}
+                <TypingEffect phrases={typingPhrases} />
               </h1>
             </Reveal>
 
             <Reveal delay={0.16}>
-              <p className="body-copy mt-6 max-w-2xl text-base leading-relaxed text-[var(--muted)] md:text-lg">
-                I help founders and product teams turn complex ideas into software products that
-                feel effortless on the surface and robust underneath: clear backend APIs, scalable databases, and AI systems with guardrails.
+              <p className="body-copy mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
+                Full-stack engineer turning complex product ideas into reliable web applications,
+                scalable APIs, and AI-driven workflows. I care about the parts users notice —
+                and the parts future engineers have to maintain.
               </p>
             </Reveal>
 
@@ -112,12 +89,12 @@ export default function Hero() {
             <Reveal delay={0.24}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a href="#projects" className="button-base button-primary group inline-flex items-center gap-2">
-                  <span>Explore case studies</span>
+                  <span>View my work</span>
                   <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </a>
                 <a href="#contact" className="button-base button-secondary inline-flex items-center gap-2">
                   <Mail size={16} />
-                  <span>Talk through a build</span>
+                  <span>Get in touch</span>
                 </a>
                 <a
                   href={profile.resumeUrl}
@@ -134,16 +111,18 @@ export default function Hero() {
             {/* Metric Cards */}
             <Reveal delay={0.32}>
               <div className="mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
-                {heroMetrics.map((metric) => (
+                {heroMetrics.map((metric, i) => (
                   <div
                     key={metric.label}
-                    className="glass-card group relative overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4 shadow-sm transition-all hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-md"
+                    className="aurora-card group relative rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 transition-all"
                   >
-                    <p className="text-3xl font-black tracking-tight text-[var(--ink)]">
+                    <p className="text-3xl font-bold tracking-tight text-[var(--ink)]">
                       <AnimatedCounter value={metric.value} />
                     </p>
-                    <p className="mt-1 text-xs font-black uppercase tracking-wider text-[var(--accent)]">{metric.label}</p>
-                    <p className="body-copy mt-1 text-xs opacity-80">{metric.detail}</p>
+                    <p className="mt-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--accent)]">
+                      {metric.label}
+                    </p>
+                    <p className="body-copy mt-1.5 text-xs opacity-80">{metric.detail}</p>
                   </div>
                 ))}
               </div>
@@ -151,34 +130,29 @@ export default function Hero() {
 
             {/* Trust Signals */}
             <Reveal delay={0.4}>
-              <div className="mt-8 grid gap-2.5 text-xs font-semibold text-[var(--muted)] sm:grid-cols-2">
+              <div className="mt-8 grid gap-2.5 text-xs font-medium text-[var(--muted)] sm:grid-cols-2">
                 {trustSignals.map((signal) => (
                   <span key={signal} className="inline-flex items-center gap-2">
-                    <CheckCircle2 size={15} className="shrink-0 text-[var(--accent)]" />
+                    <CheckCircle2 size={14} className="shrink-0 text-[var(--accent)]" />
                     <span>{signal}</span>
                   </span>
                 ))}
               </div>
             </Reveal>
 
-            {/* Social & Meta */}
+            {/* Social Links */}
             <Reveal delay={0.46}>
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--line)] pt-6 text-xs font-bold text-[var(--muted)]">
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin size={15} className="text-[var(--accent-2)]" />
-                  {profile.location}
-                </span>
-                <span className="h-3 w-px bg-[var(--line)]" aria-hidden="true" />
+              <div className="mt-8 flex items-center gap-3 border-t border-[var(--line)] pt-6">
                 {socialLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 transition-colors hover:text-[var(--ink)]"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]"
+                    aria-label={link.label}
                   >
-                    <link.Icon size={15} />
-                    <span>{link.label}</span>
+                    <link.Icon size={18} />
                   </a>
                 ))}
               </div>
@@ -195,10 +169,15 @@ export default function Hero() {
         <Reveal delay={0.5}>
           <a
             href="#projects"
-            className="group mt-12 inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+            className="group mt-16 inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
           >
-            <span>See work structure</span>
-            <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" />
+            <span>Scroll to explore</span>
+            <motion.span
+              animate={{ y: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowDown size={14} />
+            </motion.span>
           </a>
         </Reveal>
       </div>
@@ -206,30 +185,42 @@ export default function Hero() {
   );
 }
 
+/* framer-motion import for scroll indicator bounce */
+import { motion } from "framer-motion";
+
+const diagramNodes = [
+  { label: "Product need", className: "left-[4%] top-[14%]", status: "Input", color: "#00E5FF" },
+  { label: "API contract", className: "left-[36%] top-[8%]", status: "Schema", color: "#A855F7" },
+  { label: "Auth & Security", className: "right-[4%] top-[18%]", status: "Guard", color: "#FBBF24" },
+  { label: "Domain logic", className: "left-[18%] top-[42%]", status: "Core", color: "#818CF8" },
+  { label: "PostgreSQL", className: "right-[12%] top-[48%]", status: "Data", color: "#60A5FA" },
+  { label: "AI Engine", className: "left-[38%] bottom-[22%]", status: "RAG", color: "#F472B6" },
+];
+
 function EngineeringIllustration() {
   return (
-    <div className="cinematic-surface shimmer-line relative w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-xl backdrop-blur-2xl">
+    <div className="aurora-card shimmer-line relative w-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-xl backdrop-blur-2xl">
       {/* Visual Header */}
       <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
+          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--accent)] font-[family-name:var(--mono-font)]">
             <Layers size={14} />
-            <span>Architecture & Workflow Canvas</span>
+            <span>Architecture Canvas</span>
           </div>
-          <p className="mt-1 text-base font-black text-[var(--ink)]">
+          <p className="mt-1 text-base font-bold text-[var(--ink)]">
             User Intent → Scalable Architecture
           </p>
         </div>
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-semibold text-[var(--ink)] shadow-sm">
-          <Sparkles size={13} className="text-[var(--accent)]" />
-          <span>Interactive Blueprint</span>
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-medium text-[var(--accent)]">
+          <Sparkles size={13} />
+          <span>Interactive</span>
         </div>
       </div>
 
       {/* Diagram Node Canvas */}
-      <div className="relative mt-5 aspect-[1.05/1] min-h-[26rem] w-full overflow-hidden rounded-xl border border-[var(--line)] bg-[linear-gradient(135deg,rgba(15,107,74,0.08),rgba(255,250,240,0.6)_45%,rgba(166,120,58,0.08))] p-5 dark:bg-[linear-gradient(135deg,rgba(51,208,138,0.08),rgba(17,20,15,0.85)_45%,rgba(215,179,106,0.08))]">
+      <div className="relative mt-5 aspect-[1.05/1] min-h-[26rem] w-full overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-solid)] p-5">
         <div className="architectural-grid absolute inset-0 opacity-30" />
-        
+
         {/* Connection Traces */}
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 420 420" aria-hidden="true">
           <path
@@ -237,24 +228,27 @@ function EngineeringIllustration() {
             fill="none"
             stroke="var(--accent)"
             strokeDasharray="8 8"
-            strokeWidth="2"
+            strokeWidth="1.5"
             className="pulse-trace"
+            style={{ opacity: 0.5 }}
           />
           <path
             d="M94 210 C155 160 220 190 268 222 S321 278 230 344"
             fill="none"
             stroke="var(--accent-2)"
             strokeDasharray="6 8"
-            strokeWidth="2"
+            strokeWidth="1.5"
             className="pulse-trace"
+            style={{ opacity: 0.4 }}
           />
           <path
             d="M164 228 C228 222 279 220 330 238"
             fill="none"
             stroke="var(--accent-3)"
             strokeDasharray="5 7"
-            strokeWidth="1.5"
+            strokeWidth="1"
             className="pulse-trace"
+            style={{ opacity: 0.35 }}
           />
         </svg>
 
@@ -265,12 +259,12 @@ function EngineeringIllustration() {
             className={`absolute ${node.className} float-soft flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1.5 shadow-md backdrop-blur-xl transition-all hover:scale-105 hover:border-[var(--accent)]`}
             style={{ animationDelay: `${index * 0.35}s` }}
           >
-            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: node.color }} />
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: node.color, boxShadow: `0 0 8px ${node.color}40` }} />
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted)] font-[family-name:var(--mono-font)]">
                 {node.status}
               </span>
-              <span className="text-xs font-black text-[var(--ink)]">{node.label}</span>
+              <span className="text-xs font-bold text-[var(--ink)]">{node.label}</span>
             </div>
           </div>
         ))}
@@ -285,10 +279,10 @@ function EngineeringIllustration() {
             ].map((step, index) => (
               <div key={step.title} className="flex flex-col">
                 <div className="flex items-center gap-1.5">
-                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-[var(--ink)] text-[10px] font-black text-[var(--ink-contrast)]">
+                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-[var(--accent)] text-[10px] font-bold text-[var(--ink-contrast)]">
                     {index + 1}
                   </span>
-                  <span className="text-xs font-bold text-[var(--ink)]">{step.title}</span>
+                  <span className="text-xs font-semibold text-[var(--ink)]">{step.title}</span>
                 </div>
                 <span className="mt-1 hidden text-[11px] text-[var(--muted)] sm:block">
                   {step.detail}
@@ -297,7 +291,7 @@ function EngineeringIllustration() {
             ))}
           </div>
           <p className="body-copy mt-2.5 text-xs text-[var(--muted)]">
-            Constructing systems that can be reasoned about easily, traced in production logs, and evolved without friction.
+            Systems designed to be traced, debugged, and evolved without friction.
           </p>
         </div>
       </div>

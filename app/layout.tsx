@@ -7,15 +7,16 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} | Product-minded Software Engineer`,
+    default: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
     template: `%s | ${profile.name}`,
   },
   description:
-    "Portfolio for Chala Gobena, a product-minded software engineer building reliable web products, backend systems, and AI-assisted workflows.",
+    "Portfolio of Chala Gobena — a full-stack engineer building production-grade web products, scalable APIs, and AI-driven workflows with Next.js, TypeScript, and modern design systems.",
   keywords: [
     "Chala Gobena",
+    "Full-Stack Engineer",
     "Software Engineer",
-    "Product-minded Engineer",
+    "AI Systems Developer",
     "React Developer",
     "Next.js Developer",
     "TypeScript",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     url: siteUrl,
-    title: `${profile.name} | Product-minded Software Engineer`,
+    title: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
     description: profile.headline,
     siteName: `${profile.name} Portfolio`,
     images: [
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} | Product-minded Software Engineer`,
+    title: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
     description: profile.headline,
     images: [profile.avatar],
   },
@@ -100,13 +101,16 @@ const structuredData = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{const t=localStorage.getItem("theme");const d=t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)}catch{}`,
-          }}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
         />
+      </head>
+      <body className="antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         {children}
       </body>
