@@ -22,76 +22,50 @@ export default function Contact() {
     e.preventDefault();
     setStatus("submitting");
     setErrorMsg("");
-
     const form = e.currentTarget;
     const data = new FormData(form);
-
     try {
       const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
       if (!endpoint) throw new Error("Contact endpoint not configured.");
-
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          email: data.get("email"),
-          subject: data.get("subject"),
-          message: data.get("message"),
-        }),
+        body: JSON.stringify({ name: data.get("name"), email: data.get("email"), subject: data.get("subject"), message: data.get("message") }),
       });
-
       if (!res.ok) throw new Error(`Server returned ${res.status}`);
       setStatus("success");
       form.reset();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Something went wrong.";
-      setErrorMsg(msg);
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
       setStatus("error");
     }
   };
 
   return (
-    <section id="contact" className="section-band bg-[var(--background)] relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute left-[10%] top-[20%] h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,rgba(0,229,255,0.06),transparent_60%)]" />
-        <div className="absolute right-[10%] bottom-[10%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.05),transparent_60%)]" />
-        <div className="dot-grid absolute inset-0 opacity-20" />
-      </div>
-
+    <section id="contact" className="section-band relative overflow-hidden">
       <div className="site-shell relative z-10">
         <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
           <Reveal>
             <div>
               <p className="section-kicker">Let&apos;s Connect</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-5xl">
+              <h2 className="display-title mt-4 text-4xl md:text-5xl">
                 Let&apos;s build something worth shipping.
               </h2>
               <p className="body-copy mt-5 text-lg leading-relaxed">
                 Looking for a full-stack engineer who cares about product quality? I&apos;m open to full-time roles, project collaborations, and meaningful conversations.
               </p>
-
               <div className="mt-8 grid gap-3 text-sm font-medium text-[var(--muted)]">
-                <span className="inline-flex items-center gap-2.5">
-                  <MapPin size={16} className="text-[var(--accent)]" />{profile.location} • {profile.timezone}
-                </span>
-                <span className="inline-flex items-center gap-2.5">
-                  <Clock size={16} className="text-[var(--accent)]" />Usually responds within 24h
-                </span>
-                <span className="inline-flex items-center gap-2.5">
-                  <Sparkles size={16} className="text-[var(--accent)]" />Open to remote & hybrid roles
-                </span>
+                <span className="inline-flex items-center gap-2.5"><MapPin size={16} className="text-[var(--accent)]" />{profile.location} • {profile.timezone}</span>
+                <span className="inline-flex items-center gap-2.5"><Clock size={16} className="text-[var(--accent)]" />Usually responds within 24h</span>
+                <span className="inline-flex items-center gap-2.5"><Sparkles size={16} className="text-[var(--accent)]" />Open to remote & hybrid roles</span>
               </div>
-
               <div className="mt-8 flex flex-wrap gap-3">
                 {socials.map((s) => (
-                  <a key={s.label} href={s.href} target={s.href.startsWith("mailto:") ? undefined : "_blank"} rel={s.href.startsWith("mailto:") ? undefined : "noopener noreferrer"} className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]" aria-label={s.label}>
+                  <a key={s.label} href={s.href} target={s.href.startsWith("mailto:") ? undefined : "_blank"} rel={s.href.startsWith("mailto:") ? undefined : "noopener noreferrer"} className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]" aria-label={s.label}>
                     <s.Icon size={20} />
                   </a>
                 ))}
               </div>
-
               <a href={profile.links.email} className="button-base button-secondary inline-flex items-center gap-2 mt-6 text-xs">
                 <Mail size={14} /><span>Direct Email</span><ArrowUpRight size={13} />
               </a>
@@ -99,17 +73,14 @@ export default function Contact() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="aurora-card rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 md:p-8 shadow-xl backdrop-blur-2xl">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 md:p-8 shadow-[var(--shadow-soft)] backdrop-blur-2xl">
               <div className="border-b border-[var(--line)] pb-5">
                 <h3 className="text-xl font-bold text-[var(--ink)]">Send a Message</h3>
                 <p className="body-copy mt-1.5 text-sm">I&apos;ll get back to you within 24 hours.</p>
               </div>
-
               {status === "success" ? (
                 <div className="mt-6 rounded-xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 p-8 text-center">
-                  <div className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)] shadow-[0_0_30px_rgba(0,229,255,0.15)]">
-                    <CheckCircle2 size={28} />
-                  </div>
+                  <div className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)]"><CheckCircle2 size={28} /></div>
                   <p className="text-lg font-bold text-[var(--ink)]">Message sent!</p>
                   <p className="body-copy mt-2 text-sm">I&apos;ll respond within 24 hours.</p>
                   <button type="button" onClick={() => setStatus("idle")} className="button-base button-secondary mt-6 text-xs">Send Another</button>
@@ -134,19 +105,11 @@ export default function Contact() {
                     <label htmlFor="contact-message" className="text-xs font-semibold text-[var(--ink)]">Message</label>
                     <textarea id="contact-message" name="message" rows={5} required className="input-field mt-2 resize-none" placeholder="Tell me about your project or opportunity..." />
                   </div>
-
                   {status === "error" && (
-                    <div className="flex items-center gap-2 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/5 p-3 text-xs font-medium text-[var(--danger)]">
-                      <X size={14} /><span>{errorMsg}</span>
-                    </div>
+                    <div className="flex items-center gap-2 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/5 p-3 text-xs font-medium text-[var(--danger)]"><X size={14} /><span>{errorMsg}</span></div>
                   )}
-
                   <button type="submit" disabled={status === "submitting"} className="button-base button-primary justify-center w-full text-sm disabled:opacity-60 disabled:cursor-not-allowed">
-                    {status === "submitting" ? (
-                      <><span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />Sending...</>
-                    ) : (
-                      <><Send size={16} />Send Message</>
-                    )}
+                    {status === "submitting" ? (<><span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />Sending...</>) : (<><Send size={16} />Send Message</>)}
                   </button>
                 </form>
               )}

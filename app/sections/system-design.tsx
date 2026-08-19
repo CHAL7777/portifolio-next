@@ -18,33 +18,38 @@ const architectureTopics = [
 
 export default function SystemDesign() {
   return (
-    <section id="system-design" className="section-band bg-[var(--background)] relative overflow-hidden">
-      <div className="section-glow h-[40rem] w-[40rem] bg-[var(--accent-2)] -right-[10%] top-[10%]" />
+    <section id="system-design" className="section-band relative overflow-hidden">
       <div className="site-shell relative z-10">
-        <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
+        {/* Centered header */}
+        <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <div>
-              <p className="section-kicker">System Design & Architecture</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-5xl">
-                I think in flows, boundaries, and failure modes.
-              </h2>
-              <p className="body-copy mt-5 text-lg leading-relaxed">
-                A good system makes the important paths clear: who can do what, where the data lives, what happens when something fails.
-              </p>
-            </div>
+            <p className="section-kicker">System Design & Architecture</p>
+            <h2 className="display-title mt-4 text-4xl md:text-5xl">
+              I think in flows, boundaries, and failure modes.
+            </h2>
           </Reveal>
-          <Reveal delay={0.08}>
-            <ArchitectureMap />
+          <Reveal delay={0.06}>
+            <p className="body-copy mx-auto mt-5 max-w-2xl text-lg">
+              A good system makes the important paths clear: who can do what, where the data lives, what happens when something fails.
+            </p>
           </Reveal>
         </div>
 
+        {/* Interactive Architecture Map */}
+        <Reveal delay={0.1}>
+          <div className="mx-auto mt-14 max-w-5xl">
+            <ArchitectureMap />
+          </div>
+        </Reveal>
+
+        {/* Principles */}
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {systemPrinciples.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.06}>
-              <article className="aurora-card group flex h-full flex-col p-6 rounded-2xl border border-[var(--line)] bg-[var(--surface)]">
+              <article className="flex h-full flex-col rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/20 px-3 py-1 text-xs font-semibold text-[var(--accent)] font-[family-name:var(--mono-font)]">Principle 0{i + 1}</span>
-                  <CheckCircle size={18} className="text-[var(--accent)] opacity-30 group-hover:opacity-100 transition-opacity" />
+                  <span className="rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/5 px-3 py-1 text-xs font-semibold text-[var(--accent)] font-[family-name:var(--mono-font)]">Principle 0{i + 1}</span>
+                  <CheckCircle size={18} className="text-[var(--accent)] opacity-40" />
                 </div>
                 <h3 className="mt-5 text-xl font-bold text-[var(--ink)] leading-snug">{p.title}</h3>
                 <p className="body-copy mt-3 text-sm leading-relaxed">{p.text}</p>
@@ -53,15 +58,16 @@ export default function SystemDesign() {
           ))}
         </div>
 
+        {/* Architecture topics */}
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {architectureTopics.map((t, i) => (
             <Reveal key={t.title} delay={i * 0.035}>
-              <article className="aurora-card group h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] transition-all group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]" style={{ color: t.color }}>
+              <article className="h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)]" style={{ color: t.color }}>
                   <t.Icon size={20} />
                 </div>
                 <h3 className="mt-4 text-base font-bold text-[var(--ink)]">{t.title}</h3>
-                <p className="body-copy mt-2 text-xs leading-relaxed opacity-80">{t.text}</p>
+                <p className="body-copy mt-2 text-xs leading-relaxed">{t.text}</p>
               </article>
             </Reveal>
           ))}
@@ -81,7 +87,7 @@ function ArchitectureMap() {
   ];
 
   return (
-    <div className="aurora-card rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-xl backdrop-blur-2xl">
+    <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[var(--shadow-soft)] backdrop-blur-2xl">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-[var(--line)] pb-4">
         <div>
           <p className="section-kicker">Interactive Request Lifecycle</p>
@@ -93,18 +99,17 @@ function ArchitectureMap() {
       </div>
 
       <div className="relative mt-6 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface-solid)] p-5">
-        <div className="architectural-grid absolute inset-0 opacity-20" />
         <div className="relative grid gap-3 sm:grid-cols-4">
           {systemFlows.map((step, i) => {
             const isActive = activeStep === i;
             return (
-              <button key={step} type="button" onClick={() => setActiveStep(i)} className={`relative min-h-[7rem] rounded-xl border p-4 text-left transition-all ${isActive ? "border-[var(--accent)] bg-[var(--accent)]/5 shadow-[0_0_25px_rgba(0,229,255,0.08)]" : "border-[var(--line)] bg-white/[0.02] hover:border-[var(--line-strong)] hover:bg-white/[0.04]"}`}>
+              <button key={step} type="button" onClick={() => setActiveStep(i)} className={`relative min-h-[7rem] rounded-xl border p-4 text-left transition-colors ${isActive ? "border-[var(--accent)] bg-[var(--accent)]/5" : "border-[var(--line)] bg-[var(--surface)] hover:border-[var(--line-strong)]"}`}>
                 <div className="flex items-center justify-between">
                   <span className={`text-xs font-[family-name:var(--mono-font)] font-bold ${isActive ? "text-[var(--accent)]" : "text-[var(--muted)]"}`}>0{i + 1}</span>
-                  {isActive && <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-ping" />}
+                  {isActive && <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />}
                 </div>
                 <p className="mt-3 text-sm font-bold text-[var(--ink)] leading-tight">{step}</p>
-                <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
+                <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-[var(--line)]">
                   <div className="h-full bg-[var(--accent)] transition-all duration-300" style={{ width: `${(i + 1) * 25}%` }} />
                 </div>
               </button>

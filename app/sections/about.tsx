@@ -12,23 +12,22 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="section-band bg-[var(--surface-alt)] relative overflow-hidden">
-      <div className="section-glow h-[30rem] w-[30rem] bg-[var(--accent)] right-[5%] top-[5%]" />
+    <section id="about" className="section-band relative overflow-hidden">
       <div className="site-shell relative z-10">
         <div className="grid gap-10 lg:grid-cols-[0.45fr_0.55fr] lg:items-start">
           <Reveal>
-            <div className="neon-border overflow-hidden rounded-2xl shadow-2xl">
+            <div className="overflow-hidden rounded-2xl border border-[var(--line)] shadow-2xl">
               <div className="relative aspect-[4/5] min-h-[28rem] w-full bg-[var(--surface-solid)]">
-                <Image src={profile.avatar} alt={profile.name} fill sizes="(min-width:1024px)42vw,100vw" className="object-cover transition-transform duration-700 hover:scale-[1.03]" />
+                <Image src={profile.avatar} alt={profile.name} fill sizes="(min-width:1024px)42vw,100vw" className="object-cover" />
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(6,7,10,0.9),transparent_55%)]" />
-                <div className="absolute inset-x-4 bottom-4 rounded-xl border border-white/10 bg-black/60 p-4 text-white backdrop-blur-xl shadow-xl">
+                <div className="absolute inset-x-4 bottom-4 rounded-xl border border-[var(--line)] bg-black/60 p-4 text-white backdrop-blur-xl shadow-xl">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-base font-bold">{profile.name}</p>
                       <p className="mt-0.5 text-xs text-white/70 font-medium">{profile.role}</p>
                     </div>
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-2.5 py-1 text-[0.7rem] font-semibold text-[var(--accent)]">
-                      <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
                       {profile.timezone}
                     </span>
                   </div>
@@ -44,7 +43,7 @@ export default function About() {
           <div>
             <Reveal delay={0.08}>
               <p className="section-kicker">Developer Story</p>
-              <h2 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-5xl">
+              <h2 className="display-title mt-4 text-4xl md:text-5xl">
                 I care about the moment software becomes understandable.
               </h2>
             </Reveal>
@@ -74,8 +73,8 @@ export default function About() {
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {highlights.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.05}>
-              <article className="aurora-card group h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] text-[var(--accent)] transition-all group-hover:bg-[var(--accent)] group-hover:text-[var(--ink-contrast)] group-hover:shadow-[0_0_20px_rgba(0,229,255,0.15)]">
+              <article className="h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] text-[var(--accent)]">
                   <item.Icon className="h-6 w-6" />
                 </div>
                 <h3 className="mt-5 text-lg font-bold text-[var(--ink)]">{item.title}</h3>

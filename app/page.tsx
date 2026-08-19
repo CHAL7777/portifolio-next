@@ -13,7 +13,6 @@ import Experience from "./sections/experience";
 import Footer from "./sections/footer";
 import GitHubSection from "./sections/github";
 import Hero from "./sections/hero";
-import LogoMarquee from "./sections/logo-marquee";
 import Projects from "./sections/projects";
 import ResumePreview from "./sections/resume-preview";
 import Skills from "./sections/skills";
@@ -27,7 +26,6 @@ export default function Home() {
       <ScrollProgress />
       <Navbar />
       <Hero />
-      <LogoMarquee />
       <Projects />
       <SystemDesign />
       <AIEngineering />
