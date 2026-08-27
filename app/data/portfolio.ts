@@ -218,6 +218,84 @@ export const projects = [
     sourceUrl: "https://github.com/CHAL7777",
   },
   {
+    title: "SoleFlow Footwear Store",
+    category: "Commerce",
+    year: "2026",
+    role: "Full-Stack Developer",
+    status: "Live production build",
+    image: "/docs/nike.png",
+    visual: {
+      label: "Catalog & cart",
+      alt: "SoleFlow footwear store screenshot showing the product hero, featured sneakers, and category navigation.",
+      accent: "#F97316",
+      accentRgb: "249, 115, 22",
+      secondary: "#111827",
+      size: "medium",
+    },
+    summary:
+      "A sneaker storefront built around fast catalog scanning, product detail depth, and a persistent cart and wishlist.",
+    problem:
+      "Footwear catalogs live or die on browsing speed. Shoppers compare several pairs at once, so any friction between listing, detail, and cart costs the sale.",
+    goal: "Let a shopper move between category, product detail, wishlist, and cart without losing their place or their selection.",
+    architecture:
+      "A Next.js App Router storefront with route-driven category filtering, dynamic product detail pages, and client-side cart and wishlist state persisted across navigation.",
+    decisions: [
+      "Made category a URL query parameter so filtered views are shareable and survive a refresh.",
+      "Kept cart and wishlist state global and persistent so quick-add never forces a context switch.",
+      "Surfaced price, discount, rating, and review count directly on the card so comparison happens in the grid, not the detail page.",
+    ],
+    challenges:
+      "Product imagery dominates a footwear store, and loading full-resolution shots for a whole grid made first paint heavy.",
+    solution:
+      "I leaned on Next.js image optimization with per-breakpoint sizing, deferred off-screen media, and kept card anatomy identical so the browser could reuse layout instead of reflowing.",
+    lessons:
+      "In commerce, the grid is the product. Most of the engineering effort belongs to the listing view, not the checkout.",
+    metrics: ["Men / women / kids catalog", "Persistent cart & wishlist", "Shareable filtered URLs"],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+    features: ["Category filtering", "Product detail pages", "Cart & wishlist", "Responsive grid"],
+    liveUrl: "https://chala-product-store.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777/chala-product-store",
+  },
+  {
+    title: "Jalo Hotel & Resort",
+    category: "Hospitality",
+    year: "2026",
+    role: "Full-Stack Developer",
+    status: "Live production build",
+    image: "/docs/jalo.png",
+    visual: {
+      label: "Booking journey",
+      alt: "Jalo Hotel & Resort screenshot showing the hero availability search, room rates, and amenity sections.",
+      accent: "#B08A4A",
+      accentRgb: "176, 138, 74",
+      secondary: "#1C2331",
+      size: "medium",
+    },
+    summary:
+      "A hotel site for a property in Shashemene, built so a guest can check availability, compare rooms, and reserve directly.",
+    problem:
+      "Regional hotels lose direct bookings to aggregators because their own sites bury rates, room differences, and the actual booking action.",
+    goal: "Put availability at the top of the page and make every room's price, capacity, and inclusions comparable at a glance.",
+    architecture:
+      "A Next.js marketing and booking site with a date and occupancy search in the hero, filterable room types, a categorised photo gallery, an accordion FAQ, and a staff portal route.",
+    decisions: [
+      "Placed check-in, check-out, guests, and room type in the hero so the booking intent is the first interaction, not a buried CTA.",
+      "Gave every room a consistent card anatomy — rate, guest count, bed configuration, inclusions — so comparison needs no scrolling back.",
+      "Grouped the gallery and FAQ by category so a long content page stays navigable without a search feature.",
+    ],
+    challenges:
+      "The property has a lot to say — rooms, dining, spa, conference, shuttle, location, policies — and a single scrolling page risked becoming an undifferentiated wall.",
+    solution:
+      "I gave each concern its own banded section with a distinct layout and filter controls, so length reads as depth rather than clutter.",
+    lessons:
+      "For a hospitality site, trust is built by answering questions before they are asked. The FAQ and location sections do as much conversion work as the hero.",
+    metrics: ["Availability search in hero", "Three comparable room tiers", "Filterable gallery & FAQ"],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+    features: ["Availability search", "Room comparison", "Categorised gallery", "FAQ & location guide"],
+    liveUrl: "https://jalo-hotel.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777",
+  },
+  {
     title: "E-commerce Dashboard",
     category: "Operations",
     year: "2025",
@@ -501,13 +579,6 @@ export const certificates = [
   },
 ];
 
-export const achievements = [
-  { label: "Coding practice", value: "150+", detail: "DSA and implementation exercises across core topics" },
-  { label: "Public building", value: "Active", detail: "Regular project commits, experiments, and portfolio updates" },
-  { label: "MVP delivery", value: "Fast", detail: "Comfortable turning rough ideas into demo-ready product surfaces" },
-  { label: "Engineering depth", value: "Growing", detail: "Focused on backend design, AI workflows, and system reliability" },
-];
-
 export const repositories = [
   {
     name: "Food delivery experience",
@@ -523,41 +594,5 @@ export const repositories = [
     name: "Study Buddy SaaS",
     description: "Student productivity concepts with app shell structure and polished UI states.",
     tags: ["SaaS", "Next.js", "Framer Motion"],
-  },
-];
-
-export const testimonials = [
-  {
-    role: "Product collaborators",
-    quote: "Chala asks the practical questions early: what the user needs to do, where the data comes from, and what could break after launch.",
-  },
-  {
-    role: "Project reviewers",
-    quote: "His strongest work is in the small details: responsive behavior, readable components, and screens that feel complete instead of rushed.",
-  },
-  {
-    role: "Engineering peers",
-    quote: "He is comfortable owning a feature from rough idea to deployed interface, and he keeps the implementation understandable for the next person.",
-  },
-];
-
-export const blogPosts = [
-  {
-    title: "How I approach dashboard UI as a developer",
-    summary: "A practical note on hierarchy, density, and building screens that teams can scan quickly.",
-    tags: ["UI", "React", "Dashboards"],
-    readTime: "4 min read",
-  },
-  {
-    title: "Lessons from building a food ordering flow",
-    summary: "State, checkout clarity, and the micro-interactions that make commerce products feel trustworthy.",
-    tags: ["Next.js", "UX", "State"],
-    readTime: "5 min read",
-  },
-  {
-    title: "What I am learning next",
-    summary: "A short roadmap covering backend depth, testing, system design, and stronger product analytics.",
-    tags: ["Career", "Backend", "Testing"],
-    readTime: "3 min read",
   },
 ];

@@ -1,6 +1,7 @@
 import { profile } from "@/app/data/portfolio";
 import Reveal from "@/components/reveal";
-import { ArrowUpRight, Compass, DraftingCompass, Lightbulb, MapPin, Mountain } from "lucide-react";
+import SectionHeading from "@/components/section-heading";
+import { ArrowUpRight, Compass, DraftingCompass, Lightbulb, Mountain } from "lucide-react";
 import Image from "next/image";
 
 const highlights = [
@@ -12,73 +13,76 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="section-band relative overflow-hidden">
+    <section id="about" className="section-band relative">
       <div className="site-shell relative z-10">
-        <div className="grid gap-10 lg:grid-cols-[0.45fr_0.55fr] lg:items-start">
+        <SectionHeading
+          index="05"
+          kicker="Developer story"
+          title={
+            <>
+              I care about the moment
+              <br />
+              software becomes understandable.
+            </>
+          }
+        />
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-[0.42fr_0.58fr] lg:items-start lg:gap-16">
           <Reveal>
-            <div className="overflow-hidden rounded-2xl border border-[var(--line)] shadow-2xl">
-              <div className="relative aspect-[4/5] min-h-[28rem] w-full bg-[var(--surface-solid)]">
-                <Image src={profile.avatar} alt={profile.name} fill sizes="(min-width:1024px)42vw,100vw" className="object-cover" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(6,7,10,0.9),transparent_55%)]" />
-                <div className="absolute inset-x-4 bottom-4 rounded-xl border border-[var(--line)] bg-black/60 p-4 text-white backdrop-blur-xl shadow-xl">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-base font-bold">{profile.name}</p>
-                      <p className="mt-0.5 text-xs text-white/70 font-medium">{profile.role}</p>
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-2.5 py-1 text-[0.7rem] font-semibold text-[var(--accent)]">
-                      <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
-                      {profile.timezone}
-                    </span>
-                  </div>
-                  <div className="mt-3 flex items-center gap-2 border-t border-white/10 pt-2.5 text-xs text-white/60">
-                    <MapPin size={14} className="text-[var(--accent)]" />
-                    <span>Based in {profile.location}</span>
-                  </div>
-                </div>
+            <figure className="m-0">
+              <div className="relative aspect-[4/5] w-full overflow-hidden border border-[var(--line)] bg-[var(--surface-solid)]">
+                <Image
+                  src={profile.avatar}
+                  alt={profile.name}
+                  fill
+                  sizes="(min-width:1024px) 40vw, 100vw"
+                  className="object-cover"
+                />
               </div>
-            </div>
+              {/* Caption block, like a plate in a technical document */}
+              <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-x border-b border-[var(--line)] px-4 py-3">
+                <span className="meta-mono text-[var(--ink-soft)]">{profile.name}</span>
+                <span className="meta-mono">
+                  {profile.location} — {profile.timezone}
+                </span>
+              </figcaption>
+            </figure>
           </Reveal>
 
           <div>
-            <Reveal delay={0.08}>
-              <p className="section-kicker">Developer Story</p>
-              <h2 className="display-title mt-4 text-4xl md:text-5xl">
-                I care about the moment software becomes understandable.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.16}>
-              <div className="mt-6 grid gap-5 text-base md:text-lg">
-                <p className="body-copy leading-relaxed">
-                  I did not get into development because I wanted to collect frameworks. I stayed because code
-                  is one of the few places where careful thinking can become a useful tool in someone else&apos;s hands.
+            <Reveal delay={0.1}>
+              <div className="grid gap-6">
+                <p className="display-lede text-xl sm:text-2xl">
+                  I did not get into development because I wanted to collect frameworks. I
+                  stayed because code is one of the few places where careful thinking can
+                  become a useful tool in someone else&apos;s hands.
                 </p>
-                <p className="body-copy leading-relaxed">
-                  My best work starts before the implementation. I ask what the user is trying to finish, what
-                  the system needs to remember, what can fail, and what the next engineer should understand.
+                <p className="body-copy text-base">
+                  My best work starts before the implementation. I ask what the user is
+                  trying to finish, what the system needs to remember, what can fail, and
+                  what the next engineer should understand.
                 </p>
-                <p className="body-copy leading-relaxed">
-                  Right now I am deepening my backend, system design, and AI engineering practice. I want to
-                  build products that feel simple because the messy decisions were handled with discipline.
+                <p className="body-copy text-base">
+                  Right now I am deepening my backend, system design, and AI engineering
+                  practice. I want to build products that feel simple because the messy
+                  decisions were handled with discipline.
                 </p>
               </div>
-              <a href="#contact" className="button-base button-primary inline-flex items-center gap-2 mt-8">
+              <a href="#contact" className="button-base button-primary mt-9 inline-flex">
                 <span>Start a conversation</span>
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={15} />
               </a>
             </Reveal>
           </div>
         </div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid border-t border-[var(--line)] md:grid-cols-2 lg:grid-cols-4">
           {highlights.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.05}>
-              <article className="h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] text-[var(--accent)]">
-                  <item.Icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-5 text-lg font-bold text-[var(--ink)]">{item.title}</h3>
-                <p className="body-copy mt-2.5 text-sm leading-relaxed">{item.text}</p>
+              <article className="h-full border-b border-[var(--line)] py-8 lg:border-b-0 lg:border-r lg:px-7 lg:first:pl-0 lg:last:border-r-0">
+                <item.Icon className="h-4 w-4 text-[var(--accent)]" />
+                <h3 className="display-title mt-5 text-base">{item.title}</h3>
+                <p className="body-copy mt-2.5 text-sm">{item.text}</p>
               </article>
             </Reveal>
           ))}

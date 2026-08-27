@@ -1,65 +1,117 @@
-import { experiences } from "@/app/data/portfolio";
+import { certificates, education, experiences } from "@/app/data/portfolio";
 import Reveal from "@/components/reveal";
-import { BriefcaseBusiness, GraduationCap, Handshake, Users, CheckCircle2 } from "lucide-react";
+import SectionHeading from "@/components/section-heading";
+import {
+  BriefcaseBusiness,
+  CheckCircle2,
+  ExternalLink,
+  GraduationCap,
+  Handshake,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 
-const iconMap = { Work: BriefcaseBusiness, Freelance: Handshake, Internship: GraduationCap, Leadership: Users };
+const iconMap = {
+  Work: BriefcaseBusiness,
+  Freelance: Handshake,
+  Internship: GraduationCap,
+  Leadership: Users,
+  Education: GraduationCap,
+};
+
+const timelineItems = [
+  ...experiences,
+  {
+    type: "Education",
+    role: education.degree,
+    organization: education.institution,
+    period: education.period,
+    summary: `Coursework: ${education.coursework.join(", ")}.`,
+    impact: education.achievements,
+  },
+];
 
 export default function Experience() {
   return (
-    <section id="experience" className="section-band relative overflow-hidden">
+    <section id="experience" className="section-band relative">
       <div className="site-shell relative z-10">
-        {/* Centered header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <Reveal>
-            <p className="section-kicker">Experience & Journey</p>
-            <h2 className="display-title mt-4 text-4xl md:text-5xl">
-              Ownership built through shipped work.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="body-copy mx-auto mt-5 max-w-2xl text-lg">
-              My experience is a mix of independent product building, client-style interfaces, internship practice, and student team leadership.
-            </p>
-          </Reveal>
-        </div>
+        <SectionHeading
+          index="06"
+          kicker="Growth & journey"
+          title={
+            <>
+              Ownership built
+              <br />
+              through shipped work.
+            </>
+          }
+          lede="Independent product building, client-style interfaces, internship practice, student team leadership, and formal software engineering education."
+        />
 
-        {/* Timeline */}
-        <div className="relative mx-auto mt-14 max-w-4xl grid gap-6">
-          {/* Timeline line */}
-          <div className="absolute left-6 top-6 hidden h-[calc(100%-3rem)] w-px md:block" aria-hidden="true" style={{ background: "linear-gradient(to bottom, var(--accent), var(--accent-2), transparent)" }} />
-
-          {experiences.map((item, i) => {
+        {/* Timeline as a ruled ledger */}
+        <div className="mt-16 border-t border-[var(--line)]">
+          {timelineItems.map((item, i) => {
             const Icon = iconMap[item.type as keyof typeof iconMap] ?? BriefcaseBusiness;
             return (
-              <Reveal key={`${item.type}-${item.role}`} delay={i * 0.06}>
-                <article className="group relative rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)] md:ml-14">
-                  <div className="absolute -left-[3.85rem] top-6 hidden h-11 w-11 items-center justify-center rounded-xl border border-[var(--accent)] bg-[var(--surface-solid)] text-[var(--accent)] shadow-[0_0_20px_rgba(0,229,255,0.1)] md:flex">
-                    <Icon size={18} />
+              <Reveal key={`${item.type}-${item.role}`} delay={i * 0.05}>
+                <article className="grid gap-6 border-b border-[var(--line)] py-10 md:grid-cols-12 md:gap-10">
+                  <div className="md:col-span-3">
+                    <span className="meta-mono text-[var(--accent)]">{item.period}</span>
+                    <p className="mt-3 inline-flex items-center gap-2">
+                      <Icon size={13} className="text-[var(--muted)]" />
+                      <span className="meta-mono">{item.type}</span>
+                    </p>
                   </div>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-medium text-[var(--ink)]">{item.type}</span>
-                      <h3 className="mt-3 text-2xl font-bold text-[var(--ink)] leading-tight">{item.role}</h3>
-                      <p className="mt-1 text-sm font-semibold text-[var(--accent)]">{item.organization}</p>
-                    </div>
-                    <span className="inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-[family-name:var(--mono-font)] font-medium text-[var(--muted)]">{item.period}</span>
-                  </div>
-                  <p className="body-copy mt-4 text-sm leading-relaxed">{item.summary}</p>
-                  <div className="mt-5 border-t border-[var(--line)] pt-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] font-[family-name:var(--mono-font)]">Impact Signals</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
+
+                  <div className="md:col-span-9">
+                    <h3 className="display-title text-2xl">{item.role}</h3>
+                    <p className="meta-mono mt-2 text-[var(--ink-soft)]">{item.organization}</p>
+                    <p className="body-copy mt-4 max-w-2xl text-sm">{item.summary}</p>
+                    <ul className="mt-5 grid gap-2 sm:grid-cols-2">
                       {item.impact.map((p) => (
-                        <span key={p} className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] px-2.5 py-1 text-xs font-medium text-[var(--ink)]">
-                          <CheckCircle2 size={13} className="text-[var(--accent)]" />{p}
-                        </span>
+                        <li key={p} className="flex gap-3 text-sm text-[var(--muted)]">
+                          <CheckCircle2 size={14} className="mt-1 shrink-0 text-[var(--accent)]" />
+                          {p}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 </article>
               </Reveal>
             );
           })}
         </div>
+
+        {/* Credentials */}
+        <Reveal delay={0.2}>
+          <div className="mt-14">
+            <p className="meta-mono inline-flex items-center gap-2">
+              <ShieldCheck size={14} className="text-[var(--accent)]" />
+              Certifications
+            </p>
+            <div className="mt-6 grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-3">
+              {certificates.map((cert) => (
+                <a
+                  key={cert.credentialId}
+                  href={cert.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col bg-[var(--background)] p-6 transition-colors hover:bg-[var(--surface)]"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="meta-mono text-[var(--accent)]">{cert.track}</span>
+                    <span className="meta-mono">{cert.date}</span>
+                  </div>
+                  <p className="display-title mt-4 text-base">{cert.title}</p>
+                  <p className="body-copy mt-1 text-xs">{cert.issuer}</p>
+                  <span className="meta-mono mt-4 inline-flex items-center gap-1.5 text-[var(--accent)] opacity-0 transition-opacity group-hover:opacity-100">
+                    View credential <ExternalLink size={11} />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

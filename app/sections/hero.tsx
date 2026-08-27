@@ -1,20 +1,9 @@
 "use client";
 
-import AnimatedCounter from "@/components/animated-counter";
 import Reveal from "@/components/reveal";
-import { heroMetrics, profile, trustSignals, toolchain } from "@/app/data/portfolio";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  CheckCircle2,
-  Download,
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-  Send,
-} from "lucide-react";
-import Image from "next/image";
+import SystemDiagram from "@/components/system-diagram";
+import { heroMetrics, profile, toolchain } from "@/app/data/portfolio";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail, Send } from "lucide-react";
 
 const socialLinks = [
   { label: "GitHub", href: profile.links.github, Icon: Github },
@@ -24,174 +13,149 @@ const socialLinks = [
 
 export default function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden py-24 md:py-32"
-    >
-      {/* ─── Ambient Glow (static, no animation) ─── */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-[18%] -top-[25%] h-[48rem] w-[48rem] rounded-full bg-[radial-gradient(circle,rgba(0,229,255,0.1),transparent_60%)]" />
-        <div className="absolute -right-[12%] top-[25%] h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.07),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_75%,var(--background))]" />
-      </div>
-
+    <section id="hero" className="relative overflow-hidden pb-20 pt-16 md:pb-28 md:pt-24">
       <div className="site-shell">
-        {/* ─── Top: Centered intro block ─── */}
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Status badges */}
-          <Reveal>
-            <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
-              {/* Availability — static green dot, no ping */}
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/5 px-4 py-2 backdrop-blur-xl">
-                <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_rgba(0,229,255,0.5)]" />
-                <span className="text-xs font-semibold text-[var(--accent)]">
-                  Open to opportunities
-                </span>
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-[var(--muted)] backdrop-blur-xl">
-                <MapPin size={13} className="text-[var(--accent-2)]" />
-                <span>{profile.location}</span>
-              </div>
-            </div>
-          </Reveal>
+        {/* ─── Sheet header: the title block of a technical drawing ─── */}
+        <Reveal>
+          <div className="section-index">
+            <span className="meta-mono text-[var(--accent)]">00</span>
+            <span className="meta-mono">
+              {profile.location} — {profile.timezone}
+            </span>
+          </div>
+        </Reveal>
 
-          {/* Main heading — no typing effect, clean static text */}
-          <Reveal delay={0.06}>
-            <h1 className="display-title mx-auto max-w-3xl text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]">
-              {profile.name.split(" ")[0]}{" "}
-              <span className="gradient-text">Gobena</span>
-            </h1>
-          </Reveal>
+        {/* ─── The one oversized typographic moment ─── */}
+        <Reveal delay={0.05}>
+          <h1 className="display-hero mt-8 sm:mt-10">
+            Chala
+            <br />
+            Gobena
+            <span
+              className="ml-[0.12em] align-super text-[0.3em] text-[var(--accent)]"
+              aria-hidden="true"
+            >
+              ●
+            </span>
+          </h1>
+        </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="mx-auto mt-3 max-w-xl text-lg font-medium text-[var(--ink-soft)] md:text-xl">
-              {profile.role}
-            </p>
-          </Reveal>
+        {/* ─── Positioning statement, set against the signature diagram ─── */}
+        <div className="mt-10 grid gap-x-12 gap-y-12 sm:mt-12 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <Reveal delay={0.1}>
+              <p className="display-lede text-[1.55rem] sm:text-[1.75rem]">
+                Software engineer building products where interface, systems, and
+                engineering meet.
+              </p>
+            </Reveal>
 
-          <Reveal delay={0.14}>
-            <p className="body-copy mx-auto mt-5 max-w-2xl text-base md:text-lg">
-              I build reliable web products, scalable APIs, and AI-driven workflows —
-              with careful attention to both the parts users notice and the parts future
-              engineers have to maintain.
-            </p>
-          </Reveal>
+            <Reveal delay={0.16}>
+              <p className="body-copy mt-6 max-w-md text-base">
+                I care about the parts users notice and the parts the next engineer has
+                to maintain — backend contracts, considered interfaces, and AI features
+                with guardrails.
+              </p>
+            </Reveal>
 
-          {/* CTAs */}
-          <Reveal delay={0.2}>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#projects"
-                className="button-base button-primary group inline-flex items-center gap-2"
-              >
-                <span>View my work</span>
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
-              <a
-                href="#contact"
-                className="button-base button-secondary inline-flex items-center gap-2"
-              >
-                <Mail size={16} />
-                <span>Get in touch</span>
-              </a>
-              <a
-                href={profile.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button-base button-ghost inline-flex items-center gap-2"
-              >
-                <Download size={16} />
-                <span>Resume</span>
-              </a>
-            </div>
-          </Reveal>
-
-          {/* Social icons */}
-          <Reveal delay={0.24}>
-            <div className="mt-8 flex items-center justify-center gap-3">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(0,229,255,0.1)]"
-                  aria-label={link.label}
-                >
-                  <link.Icon size={18} />
+            <Reveal delay={0.22}>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <a href="#projects" className="button-base button-primary group">
+                  <span>Selected work</span>
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
                 </a>
-              ))}
+                <a href="#contact" className="button-base button-secondary">
+                  <Mail size={15} />
+                  <span>Get in touch</span>
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.28}>
+              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[var(--line)] pt-6">
+                <span className="inline-flex items-center gap-2.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                  <span className="meta-mono text-[var(--ink-soft)]">
+                    Open to opportunities
+                  </span>
+                </span>
+                <div className="flex items-center gap-1">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-[3px] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                      aria-label={link.label}
+                    >
+                      <link.Icon size={16} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* ─── Signature visual ─── */}
+          <Reveal delay={0.18} className="lg:col-span-7">
+            <div className="drafted p-4 sm:p-6 md:p-8">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+                <span className="meta-mono">Fig. 01 — Request path</span>
+                <span className="meta-mono text-[var(--accent)]">Interactive</span>
+              </div>
+              <SystemDiagram />
             </div>
           </Reveal>
         </div>
 
-        {/* ─── Metrics + Trust — Bento grid below the intro ─── */}
-        <Reveal delay={0.3}>
-          <div className="mx-auto mt-16 max-w-5xl">
-            {/* Metric cards */}
-            <div className="grid gap-4 sm:grid-cols-3">
-              {heroMetrics.map((metric) => (
-                <div
-                  key={metric.label}
-                  className="group relative rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]"
-                >
-                  <p className="text-3xl font-bold tracking-tight text-[var(--ink)]">
-                    <AnimatedCounter value={metric.value} />
-                  </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-[var(--accent)] font-[family-name:var(--mono-font)]">
+        {/* ─── Facts as a ruled table, not floating cards ─── */}
+        <Reveal delay={0.32}>
+          <dl className="mt-16 grid border-t border-[var(--line)] sm:grid-cols-3">
+            {heroMetrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="border-b border-[var(--line)] py-6 sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0"
+              >
+                <dt className="display-title text-4xl">{metric.value}</dt>
+                <dd className="mt-3">
+                  <span className="meta-mono block text-[var(--ink-soft)]">
                     {metric.label}
-                  </p>
-                  <p className="body-copy mt-2 text-xs">{metric.detail}</p>
-                </div>
-              ))}
-            </div>
+                  </span>
+                  <span className="body-copy mt-2 block text-sm">{metric.detail}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
 
-            {/* Trust signals */}
-            <div className="mt-6 grid gap-2.5 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl sm:grid-cols-2">
-              {trustSignals.map((signal) => (
-                <span
-                  key={signal}
-                  className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--muted)]"
-                >
-                  <CheckCircle2 size={15} className="shrink-0 text-[var(--accent)]" />
-                  <span>{signal}</span>
-                </span>
-              ))}
-            </div>
-
-            {/* Toolchain strip */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-6 py-5 backdrop-blur-2xl">
-              <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-[var(--muted)] font-[family-name:var(--mono-font)]">
-                Stack
+        {/* ─── Stack as a quiet running list, not a wall of logos ─── */}
+        <Reveal delay={0.36}>
+          <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--line)] pt-6">
+            <span className="meta-mono shrink-0">Stack</span>
+            {toolchain.map((tool) => (
+              <span
+                key={tool.name}
+                className="inline-flex items-center gap-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+              >
+                <tool.Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                {tool.name}
               </span>
-              <span className="h-4 w-px bg-[var(--line-strong)]" />
-              {toolchain.map((tool) => (
-                <span
-                  key={tool.name}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1.5 text-xs font-medium text-[var(--ink-soft)] transition-colors hover:border-[var(--accent)]/30 hover:text-[var(--ink)]"
-                >
-                  <tool.Icon className="h-3.5 w-3.5" />
-                  <span>{tool.name}</span>
-                </span>
-              ))}
-            </div>
+            ))}
           </div>
         </Reveal>
 
-        {/* Scroll cue — static, no bounce */}
-        <Reveal delay={0.36}>
-          <div className="mt-16 flex justify-center">
-            <a
-              href="#projects"
-              className="group inline-flex flex-col items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
-            >
-              <span>Scroll to explore</span>
-              <ArrowDown size={14} />
-            </a>
-          </div>
+        <Reveal delay={0.4}>
+          <a
+            href="#projects"
+            className="meta-mono mt-14 inline-flex items-center gap-2 transition-colors hover:text-[var(--accent)]"
+          >
+            <ArrowDown size={13} />
+            <span>Scroll</span>
+          </a>
         </Reveal>
       </div>
     </section>

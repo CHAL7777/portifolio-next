@@ -1,46 +1,34 @@
-import StarfieldCanvas from "./starfield-canvas";
-
+/**
+ * The drafting field: a ruled technical grid with a single warm focus pool.
+ * Pure CSS — no canvas loop, no rAF, no animation cost.
+ */
 export default function BackgroundMain() {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-50 overflow-hidden bg-[var(--background)]">
-      {/* ─── Starfield Canvas (fluid night sky with stars + nebula) ─── */}
-      <StarfieldCanvas />
-
-      {/* Aurora gradient orbs — deep space glow */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 -z-50 overflow-hidden bg-[var(--background)]"
+    >
+      {/* Ruled grid, fading toward the edges so content always leads */}
       <div
-        className="aurora-pulse absolute -left-[20%] -top-[20%] h-[60rem] w-[60rem] rounded-full opacity-[0.08]"
+        className="blueprint-field absolute inset-0"
         style={{
-          background: "radial-gradient(circle, rgba(0, 229, 255, 0.25), transparent 60%)",
-          animation: "aurora-drift 22s ease-in-out infinite",
-        }}
-      />
-      <div
-        className="aurora-pulse absolute -right-[15%] top-[20%] h-[50rem] w-[50rem] rounded-full opacity-[0.06]"
-        style={{
-          background: "radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 60%)",
-          animation: "aurora-drift 28s ease-in-out infinite reverse",
-          animationDelay: "-8s",
-        }}
-      />
-      <div
-        className="aurora-pulse absolute -bottom-[10%] left-[30%] h-[45rem] w-[45rem] rounded-full opacity-[0.05]"
-        style={{
-          background: "radial-gradient(circle, rgba(255, 107, 107, 0.2), transparent 60%)",
-          animation: "aurora-drift 25s ease-in-out infinite",
-          animationDelay: "-14s",
+          maskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 32%, #000 20%, transparent 78%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 32%, #000 20%, transparent 78%)",
         }}
       />
 
-      {/* Noise texture overlay — film grain */}
+      {/* A single pool of light behind the fold — the only "glow" on the site */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute left-1/2 top-[-20rem] h-[48rem] w-[80rem] -translate-x-1/2 opacity-[0.14]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          background:
+            "radial-gradient(ellipse at center, var(--accent) 0%, transparent 62%)",
+          filter: "blur(130px)",
         }}
       />
-
-      {/* Edge vignette — cinematic darkening */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,var(--background)_100%)]" />
     </div>
   );
 }
+

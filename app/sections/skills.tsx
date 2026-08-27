@@ -2,6 +2,7 @@
 
 import { skillGroups } from "@/app/data/portfolio";
 import Reveal from "@/components/reveal";
+import SectionHeading from "@/components/section-heading";
 import { BrainCircuit, FileCheck2, Gauge, Layers3 } from "lucide-react";
 import { useState } from "react";
 
@@ -17,62 +18,75 @@ export default function Skills() {
   const filteredGroups = selectedFilter === "all" ? skillGroups : skillGroups.filter((g) => g.title.toLowerCase().includes(selectedFilter.toLowerCase()));
 
   return (
-    <section id="skills" className="section-band relative overflow-hidden">
+    <section id="skills" className="section-band relative">
       <div className="site-shell relative z-10">
-        {/* Centered header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <Reveal>
-            <p className="section-kicker">Capabilities & Tech Stack</p>
-            <h2 className="display-title mt-4 text-4xl md:text-5xl">
-              Skills grouped by the problems they solve.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="body-copy mx-auto mt-5 max-w-2xl text-lg">
-              Tools change fast, but engineering principles endure: knowing when to simplify, when to separate concerns, and how to build reliable systems.
-            </p>
-          </Reveal>
+        <SectionHeading
+          index="04"
+          kicker="Capabilities & tech stack"
+          title={
+            <>
+              Skills grouped by
+              <br />
+              the problems they solve.
+            </>
+          }
+          lede="Tools change fast, but engineering principles endure: knowing when to simplify, when to separate concerns, and how to build reliable systems."
+        />
 
-          {/* Filter pills */}
-          <Reveal delay={0.1}>
-            <div className="mt-8 flex flex-wrap justify-center gap-2">
-              <button type="button" onClick={() => setSelectedFilter("all")} className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${selectedFilter === "all" ? "bg-[var(--accent)] text-[var(--ink-contrast)]" : "border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)]"}`}>
-                All Domains
-              </button>
-              {skillGroups.map((g) => {
-                const key = g.title.split(" ")[0].toLowerCase();
-                const isSelected = selectedFilter === key;
-                return (
-                  <button key={g.title} type="button" onClick={() => setSelectedFilter(isSelected ? "all" : key)} className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${isSelected ? "bg-[var(--accent)] text-[var(--ink-contrast)]" : "border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] hover:border-[var(--accent)]"}`}>
-                    {g.title.split(" ")[0]}
-                  </button>
-                );
-              })}
-            </div>
-          </Reveal>
-        </div>
+        {/* Filters as a ruled control bar */}
+        <Reveal delay={0.1}>
+          <div className="no-scrollbar mt-14 flex gap-1 overflow-x-auto border-y border-[var(--line)] py-3">
+            <button
+              type="button"
+              onClick={() => setSelectedFilter("all")}
+              aria-pressed={selectedFilter === "all"}
+              className={`meta-mono shrink-0 px-3 py-2 transition-colors ${
+                selectedFilter === "all"
+                  ? "text-[var(--accent)]"
+                  : "text-[var(--muted)] hover:text-[var(--ink)]"
+              }`}
+            >
+              All
+            </button>
+            {skillGroups.map((g) => {
+              const key = g.title.split(" ")[0].toLowerCase();
+              const isSelected = selectedFilter === key;
+              return (
+                <button
+                  key={g.title}
+                  type="button"
+                  onClick={() => setSelectedFilter(isSelected ? "all" : key)}
+                  aria-pressed={isSelected}
+                  className={`meta-mono shrink-0 px-3 py-2 transition-colors ${
+                    isSelected
+                      ? "text-[var(--accent)]"
+                      : "text-[var(--muted)] hover:text-[var(--ink)]"
+                  }`}
+                >
+                  {g.title.split(" ")[0]}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
 
-        {/* Skill cards */}
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Skill groups */}
+        <div className="mt-10 grid gap-px border border-[var(--line)] bg-[var(--line)] md:grid-cols-2 lg:grid-cols-3">
           {filteredGroups.map((group, i) => (
             <Reveal key={group.title} delay={i * 0.05}>
-              <article className="flex h-full flex-col rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
-                <div className="flex items-start gap-4">
-                  <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] text-[var(--accent)]">
-                    <group.Icon className="text-xl" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[var(--ink)]">{group.title}</h3>
-                    <p className="body-copy mt-1.5 text-xs leading-relaxed">{group.description}</p>
-                  </div>
-                </div>
-                <div className="mt-5 rounded-xl border-l-2 border-[var(--accent)] bg-[var(--surface-strong)] p-3 text-xs font-medium leading-relaxed text-[var(--ink)]">
-                  <span className="block text-[0.68rem] font-semibold uppercase tracking-wider text-[var(--accent)] font-[family-name:var(--mono-font)]">Primary Outcome:</span>
-                  <span className="mt-0.5 block">{group.outcome}</span>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2 pt-2 border-t border-[var(--line)]">
+              <article className="flex h-full flex-col bg-[var(--background)] p-7 transition-colors hover:bg-[var(--surface)]">
+                <group.Icon className="text-lg text-[var(--accent)]" aria-hidden="true" />
+                <h3 className="display-title mt-5 text-xl">{group.title}</h3>
+                <p className="body-copy mt-2 text-sm">{group.description}</p>
+
+                <p className="mt-6 border-l border-[var(--accent)] pl-4 text-sm text-[var(--ink-soft)]">
+                  <span className="meta-mono block text-[var(--accent)]">Outcome</span>
+                  <span className="mt-1.5 block">{group.outcome}</span>
+                </p>
+
+                <div className="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-7">
                   {group.skills.map((s) => (
-                    <span key={`${group.title}-${s}`} className="rounded-lg border border-[var(--line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-medium text-[var(--ink)]">
+                    <span key={`${group.title}-${s}`} className="meta-mono text-[var(--ink-soft)]">
                       {s}
                     </span>
                   ))}
@@ -82,16 +96,14 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Strengths */}
-        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {/* How I work */}
+        <div className="mt-16 grid border-t border-[var(--line)] md:grid-cols-2 lg:grid-cols-4">
           {strengths.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.06}>
-              <article className="h-full rounded-xl border border-[var(--line)] bg-[var(--surface)] p-6 backdrop-blur-2xl transition-colors hover:border-[var(--line-strong)]">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-strong)] text-[var(--accent-2)]">
-                  <item.Icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-4 text-base font-bold text-[var(--ink)]">{item.title}</h3>
-                <p className="body-copy mt-2 text-xs leading-relaxed">{item.text}</p>
+            <Reveal key={item.title} delay={i * 0.05}>
+              <article className="h-full border-b border-[var(--line)] py-8 lg:border-b-0 lg:border-r lg:px-7 lg:first:pl-0 lg:last:border-r-0">
+                <item.Icon className="h-4 w-4 text-[var(--muted)]" />
+                <h3 className="display-title mt-5 text-base">{item.title}</h3>
+                <p className="body-copy mt-2 text-xs">{item.text}</p>
               </article>
             </Reveal>
           ))}
