@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Chala Gobena - Resume</title>
+<style>
+  @page { size: A4; margin: 9mm 11mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: #17202b;
+    font-size: 9pt;
+    line-height: 1.23;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: #12507a; text-decoration: none; }
+
+  header {
+    display: grid; grid-template-columns: 61px 1fr; gap: 12px; align-items: center;
+    border-bottom: 2px solid #17202b; padding-bottom: 6px; margin-bottom: 6px;
+  }
+  .portrait {
+    width: 61px; height: 61px; border-radius: 50%; object-fit: cover;
+    object-position: 50% 34%; border: 2px solid #d2dbe3;
+  }
+  h1 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 20pt; letter-spacing: 1px; margin: 0 0 1px;
+    text-transform: uppercase; font-weight: 700;
+  }
+  .role {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.6pt; letter-spacing: 0; text-transform: uppercase;
+    color: #536273; margin-bottom: 4px;
+  }
+  .contact {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.8pt; line-height: 1.34; color: #2c3742;
+  }
+  .contact span::after { content: "  •  "; color: #9aa5b1; }
+  .contact span:last-child::after { content: ""; }
+
+  h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.4pt; letter-spacing: 0; text-transform: uppercase;
+    color: #17202b; margin: 7px 0 3px; padding-bottom: 1.5px;
+    border-bottom: 1px solid #c8d0d8; font-weight: 700;
+  }
+  section:first-of-type h2 { margin-top: 2px; }
+
+  p { margin: 0 0 2px; }
+  ul { margin: 1.5px 0 0; padding-left: 14px; }
+  li { margin-bottom: 1px; }
+
+  section, .item { break-inside: avoid; }
+  .item { margin-bottom: 4px; }
+  .item:last-child { margin-bottom: 0; }
+  .item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .item-title { font-weight: 700; font-size: 9.4pt; }
+  .item-org { font-style: italic; color: #3d4854; }
+  .meta {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.7pt; color: #5a6673; white-space: nowrap; letter-spacing: .2px;
+  }
+
+  .skills-grid { display: grid; grid-template-columns: 94px 1fr; row-gap: 1.5px; column-gap: 7px; margin: 0; }
+  .skills-grid dt {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.8pt; font-weight: 700; text-transform: uppercase; letter-spacing: .45px; color: #17202b;
+  }
+  .skills-grid dd { margin: 0; font-size: 8.7pt; }
+
+  .compact li { margin-bottom: .7px; }
+  .tech {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.5pt; color: #5a6673; margin-top: 1px;
+  }
+  .certs { font-size: 8.5pt; }
+  .certs span::after { content: "  •  "; color: #9aa5b1; }
+  .certs span:last-child::after { content: ""; }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="portrait" src="../public/img/chala.jpg" alt="Chala Gobena" />
+  <div>
+    <h1>Chala Gobena</h1>
+    <div class="role">Software Engineer &nbsp;·&nbsp; Full-Stack &amp; AI Applications</div>
+    <div class="contact">
+      <span>Addis Ababa, Ethiopia (GMT+3, remote-friendly)</span>
+      <span><a href="mailto:chalagobena43@gmail.com">chalagobena43@gmail.com</a></span>
+      <span>+251 951 459 139</span>
+    </div>
+    <div class="contact">
+      <span><a href="https://chaldev.netlify.app">chaldev.netlify.app</a></span>
+      <span><a href="https://github.com/CHAL7777">github.com/CHAL7777</a></span>
+      <span><a href="https://www.linkedin.com/in/chala-gobena-01a22b346">linkedin.com/in/chala-gobena-01a22b346</a></span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>Summary</h2>
+  <p>Software engineering student and product-minded developer who builds and deploys responsive web products,
+  APIs, and AI-assisted workflows. Strongest in Next.js, React, TypeScript, Python/FastAPI, and PostgreSQL, with
+  hands-on experience taking commerce, hospitality, dashboard, and career-guidance products from idea to live deployment.</p>
+</section>
+
+<section>
+  <h2>Technical Skills</h2>
+  <dl class="skills-grid">
+    <dt>Languages</dt><dd>TypeScript, JavaScript, Python, SQL, HTML, CSS</dd>
+    <dt>Frontend</dt><dd>Next.js (App Router), React, Tailwind CSS, Framer Motion, responsive design, accessible UI</dd>
+    <dt>Backend / Data</dt><dd>FastAPI, REST APIs, authentication, async Python, PostgreSQL, Supabase, schema design, Redis</dd>
+    <dt>AI Engineering</dt><dd>LLM applications, RAG, agent workflows, LangChain, OpenAI APIs, prompt/output contracts, vector stores</dd>
+    <dt>Dev Tools</dt><dd>Git &amp; GitHub, Docker, Linux, CI/CD, API design, caching, observability, Vercel, Netlify</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">Independent Product Builder</span> — <span class="item-org">Self-directed products &amp; public experiments</span></div>
+      <div class="meta">2024 – Present</div>
+    </div>
+    <ul>
+      <li>Built and publicly deployed a portfolio of commerce, hospitality, analytics, content, SaaS, and AI-guided products using Next.js, React, TypeScript, and Tailwind CSS.</li>
+      <li>Created reusable typed components and implemented route-driven filtering, dynamic pages, persistent client state, and explicit loading, empty, error, and success states.</li>
+      <li>Improved image-heavy interfaces with Next.js image optimization, responsive sizing, deferred off-screen media, and stable layouts that avoid visual reflow.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">Freelance Frontend &amp; Product Interface Developer</span> — <span class="item-org">Client websites, dashboards, and MVPs</span></div>
+      <div class="meta">2024 – Present</div>
+    </div>
+    <ul>
+      <li>Translated rough goals into scoped landing pages, dashboards, and MVP workflows, then refined responsive behavior, keyboard access, and mobile spacing.</li>
+      <li>Structured dense KPI and inventory views with reusable cards and tables so information remains scannable across screen sizes.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">Frontend Developer Intern</span> — <span class="item-org">Tech Solutions</span></div>
+      <div class="meta">2025</div>
+    </div>
+    <ul>
+      <li>Implemented responsive React components and UI fixes from design feedback; participated in team code reviews and documented component usage.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">Student Project Lead</span> — <span class="item-org">Software engineering project teams, Haramaya University</span></div>
+      <div class="meta">2023 – Present</div>
+    </div>
+    <ul>
+      <li>Led small Agile teams from idea to demo: scoped requirements, split implementation work, ran code reviews, and presented working builds.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Selected Projects</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">EthioPath AI Pathfinder</span> — <span class="item-org">AI-guided career platform</span></div>
+      <div class="meta"><a href="https://ethio-path-finder.vercel.app/">Live application</a> · 2026</div>
+    </div>
+    <ul class="compact">
+      <li>Built a Next.js platform with multi-step technical assessments, resilient state recovery, dynamic progress roadmaps, and AI-guided career recommendations for Ethiopian students and developers.</li>
+    </ul>
+    <div class="tech">Next.js · React · TypeScript · Tailwind CSS · AI workflows</div>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">SoleFlow Footwear Store</span> — <span class="item-org">Commerce storefront</span></div>
+      <div class="meta"><a href="https://chala-product-store.vercel.app/">Live application</a> · 2026</div>
+    </div>
+    <ul class="compact">
+      <li>Implemented shareable URL-based category filtering, dynamic product routes, comparison-ready product cards, and cart/wishlist state that persists across navigation.</li>
+    </ul>
+    <div class="tech">Next.js · React · TypeScript · Tailwind CSS · Vercel</div>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">Jalo Hotel &amp; Resort</span> — <span class="item-org">Hospitality booking experience</span></div>
+      <div class="meta"><a href="https://jalo-hotel.vercel.app/">Live application</a> · 2026</div>
+    </div>
+    <ul class="compact">
+      <li>Designed date/occupancy availability search, comparable room tiers, categorized gallery and FAQ sections, location guidance, and a staff portal route.</li>
+    </ul>
+    <div class="tech">Next.js · React · TypeScript · Tailwind CSS · Vercel</div>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">E-commerce Operations Dashboard</span> — <span class="item-org">Analytics interface</span></div>
+      <div class="meta"><a href="https://eccommercebychal.netlify.app">Live application</a> · 2025</div>
+    </div>
+    <ul class="compact">
+      <li>Built reusable KPI, inventory, and revenue components with a responsive information-dense layout designed for smaller laptops.</li>
+    </ul>
+    <div class="tech">React · TypeScript · Tailwind CSS · Charting</div>
+  </div>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="item">
+    <div class="item-head">
+      <div><span class="item-title">B.Sc. Software Engineering</span> — <span class="item-org">Haramaya University, Ethiopia</span></div>
+      <div class="meta">2023 – Expected 2028</div>
+    </div>
+    <p><strong>Coursework:</strong> Data Structures &amp; Algorithms, Database Systems, Web Programming,
+    Software Engineering, Object-Oriented Programming, Computer Networks.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Certifications</h2>
+  <div class="certs">
+    <span>Artificial Intelligence Fundamentals — Udacity, 2025</span>
+    <span>Programming Fundamentals — Udacity, 2025</span>
+    <span>Web Programming — Hucisa, 2024</span>
+  </div>
+</section>
+
+</body>
+</html>
