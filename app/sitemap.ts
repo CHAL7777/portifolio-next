@@ -1,14 +1,15 @@
+import { projects, siteUrl } from "@/app/data/portfolio";
 import type { MetadataRoute } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
   return [
-    {
-      url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
+    { url: siteUrl, lastModified: now, changeFrequency: "monthly", priority: 1 },
+    ...projects.map((p) => ({
+      url: `${siteUrl}/work/${p.slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: p.featured ? 0.8 : 0.6,
+    })),
   ];
 }

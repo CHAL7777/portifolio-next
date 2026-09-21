@@ -1,163 +1,87 @@
 "use client";
 
-import Reveal from "@/components/reveal";
-import SystemDiagram from "@/components/system-diagram";
-import { heroMetrics, profile, toolchain } from "@/app/data/portfolio";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail, Send } from "lucide-react";
+import { profile } from "@/app/data/portfolio";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { SiGithub, SiLinkedin } from "react-icons/si";
 
-const socialLinks = [
-  { label: "GitHub", href: profile.links.github, Icon: Github },
-  { label: "LinkedIn", href: profile.links.linkedin, Icon: Linkedin },
-  { label: "Telegram", href: profile.links.telegram, Icon: Send },
-];
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+  const fade = (delay: number) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease },
+  });
+
   return (
-    <section id="hero" className="relative overflow-hidden pb-20 pt-16 md:pb-28 md:pt-24">
-      <div className="site-shell">
-        {/* ─── Sheet header: the title block of a technical drawing ─── */}
-        <Reveal>
-          <div className="section-index">
-            <span className="meta-mono text-[var(--accent)]">00</span>
-            <span className="meta-mono">
-              {profile.location} — {profile.timezone}
-            </span>
-          </div>
-        </Reveal>
+    <section id="hero" className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-between overflow-hidden" aria-labelledby="hero-title">
+      <div className="site-shell flex flex-1 flex-col justify-center pb-16 pt-14 sm:pt-20">
+        <motion.div {...fade(0)} className="section-index max-w-2xl">
+          <span className="meta-mono text-[var(--accent)]">00</span>
+          <span className="meta-mono">Portfolio — {new Date().getFullYear()}</span>
+          <span className="meta-mono ml-auto hidden text-[var(--muted)] sm:inline">{profile.location}</span>
+        </motion.div>
 
-        {/* ─── The one oversized typographic moment ─── */}
-        <Reveal delay={0.05}>
-          <h1 className="display-hero mt-8 sm:mt-10">
+        <h1 id="hero-title" className="mt-10 max-w-[14ch] sm:mt-14">
+          <motion.span {...fade(0.08)} className="display-hero block">
             Chala
-            <br />
+          </motion.span>
+          <motion.span {...fade(0.16)} className="display-hero block text-[var(--muted)]">
             Gobena
-            <span
-              className="ml-[0.12em] align-super text-[0.3em] text-[var(--accent)]"
-              aria-hidden="true"
-            >
-              ●
-            </span>
-          </h1>
-        </Reveal>
+          </motion.span>
+        </h1>
 
-        {/* ─── Positioning statement, set against the signature diagram ─── */}
-        <div className="mt-10 grid gap-x-12 gap-y-12 sm:mt-12 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
-            <Reveal delay={0.1}>
-              <p className="display-lede text-[1.55rem] sm:text-[1.75rem]">
-                Software engineer building products where interface, systems, and
-                engineering meet.
-              </p>
-            </Reveal>
+        <div className="mt-10 grid gap-8 md:mt-14 md:grid-cols-12 md:items-end">
+          <motion.div {...fade(0.26)} className="md:col-span-7">
+            <p className="section-kicker">{profile.role}</p>
+            <p className="display-lede mt-4 max-w-xl">
+              I build full-stack web applications — from the database schema and the API, to interfaces people can actually use. Currently a software engineering student shipping real projects for real users.
+            </p>
+          </motion.div>
 
-            <Reveal delay={0.16}>
-              <p className="body-copy mt-6 max-w-md text-base">
-                I care about the parts users notice and the parts the next engineer has
-                to maintain — backend contracts, considered interfaces, and AI features
-                with guardrails.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.22}>
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a href="#projects" className="button-base button-primary group">
-                  <span>Selected work</span>
-                  <ArrowUpRight
-                    size={15}
-                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </a>
-                <a href="#contact" className="button-base button-secondary">
-                  <Mail size={15} />
-                  <span>Get in touch</span>
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.28}>
-              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[var(--line)] pt-6">
-                <span className="inline-flex items-center gap-2.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  <span className="meta-mono text-[var(--ink-soft)]">
-                    Open to opportunities
-                  </span>
-                </span>
-                <div className="flex items-center gap-1">
-                  {socialLinks.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-[3px] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
-                      aria-label={link.label}
-                    >
-                      <link.Icon size={16} />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* ─── Signature visual ─── */}
-          <Reveal delay={0.18} className="lg:col-span-7">
-            <div className="drafted p-4 sm:p-6 md:p-8">
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
-                <span className="meta-mono">Fig. 01 — Request path</span>
-                <span className="meta-mono text-[var(--accent)]">Interactive</span>
-              </div>
-              <SystemDiagram />
+          <motion.div {...fade(0.34)} className="flex flex-col gap-6 md:col-span-5 md:items-end">
+            <div className="flex flex-wrap gap-3">
+              <Link href="/#work" className="button-base button-primary">
+                View my work
+                <ArrowDown size={15} aria-hidden="true" />
+              </Link>
+              <Link href="/#contact" className="button-base button-secondary">
+                Let&apos;s work together
+              </Link>
             </div>
-          </Reveal>
+            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="Profiles">
+              <li>
+                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="rule-link">
+                  <SiGithub size={13} aria-hidden="true" /> GitHub
+                </a>
+              </li>
+              <li>
+                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="rule-link">
+                  <SiLinkedin size={13} aria-hidden="true" /> LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href={profile.links.email} className="rule-link">
+                  {profile.email} <ArrowUpRight size={12} aria-hidden="true" />
+                </a>
+              </li>
+            </ul>
+          </motion.div>
         </div>
-
-        {/* ─── Facts as a ruled table, not floating cards ─── */}
-        <Reveal delay={0.32}>
-          <dl className="mt-16 grid border-t border-[var(--line)] sm:grid-cols-3">
-            {heroMetrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="border-b border-[var(--line)] py-6 sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0"
-              >
-                <dt className="display-title text-4xl">{metric.value}</dt>
-                <dd className="mt-3">
-                  <span className="meta-mono block text-[var(--ink-soft)]">
-                    {metric.label}
-                  </span>
-                  <span className="body-copy mt-2 block text-sm">{metric.detail}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-
-        {/* ─── Stack as a quiet running list, not a wall of logos ─── */}
-        <Reveal delay={0.36}>
-          <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--line)] pt-6">
-            <span className="meta-mono shrink-0">Stack</span>
-            {toolchain.map((tool) => (
-              <span
-                key={tool.name}
-                className="inline-flex items-center gap-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
-              >
-                <tool.Icon className="h-3.5 w-3.5" aria-hidden="true" />
-                {tool.name}
-              </span>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.4}>
-          <a
-            href="#projects"
-            className="meta-mono mt-14 inline-flex items-center gap-2 transition-colors hover:text-[var(--accent)]"
-          >
-            <ArrowDown size={13} />
-            <span>Scroll</span>
-          </a>
-        </Reveal>
       </div>
+
+      <motion.div {...fade(0.5)} className="site-shell">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--line)] py-4">
+          <span className="meta-mono inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+            {profile.availability}
+          </span>
+          <span className="meta-mono hidden sm:inline">React · Next.js · TypeScript · Node · FastAPI · PostgreSQL</span>
+        </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,121 +1,102 @@
-/* eslint-disable @next/next/no-img-element */
-import { profile, repositories } from "@/app/data/portfolio";
+import { pinnedRepos, profile, type Repo } from "@/app/data/portfolio";
 import Reveal from "@/components/reveal";
 import SectionHeading from "@/components/section-heading";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 
-const statsImage = `https://github-readme-stats.vercel.app/api?username=${profile.githubUsername}&show_icons=true&hide_border=true&bg_color=00000000&title_color=FF4A1C&text_color=8b8b85&icon_color=FF4A1C`;
-const languageImage = `https://github-readme-stats.vercel.app/api/top-langs/?username=${profile.githubUsername}&layout=compact&hide_border=true&bg_color=00000000&title_color=FF4A1C&text_color=8b8b85`;
-const graphImage = `https://ghchart.rshah.org/FF4A1C/${profile.githubUsername}`;
+type GitHubRepo = {
+  name: string;
+  description: string | null;
+  language: string | null;
+  html_url: string;
+  stargazers_count: number;
+  pushed_at: string;
+  fork: boolean;
+  archived: boolean;
+};
 
-export default function GitHubSection() {
+/**
+ * Pull the most recently pushed public repos straight from GitHub, revalidated
+ * daily. If the API is rate-limited or down, fall back to a verified static list
+ * so the section never shows fabricated numbers.
+ */
+async function getRepos(): Promise<{ repos: Repo[]; live: boolean }> {
+  try {
+    const res = await fetch(`https://api.github.com/users/${profile.githubUsername}/repos?sort=pushed&per_page=30&type=owner`, {
+      headers: { Accept: "application/vnd.github+json" },
+      next: { revalidate: 60 * 60 * 24 },
+    });
+    if (!res.ok) throw new Error(`GitHub ${res.status}`);
+    const data = (await res.json()) as GitHubRepo[];
+    const repos = data
+      .filter((r) => !r.fork && !r.archived)
+      .slice(0, 6)
+      .map<Repo>((r) => ({
+        name: r.name,
+        description: r.description,
+        language: r.language,
+        url: r.html_url,
+        stars: r.stargazers_count,
+        updatedAt: r.pushed_at,
+      }));
+    return repos.length ? { repos, live: true } : { repos: pinnedRepos, live: false };
+  } catch {
+    return { repos: pinnedRepos, live: false };
+  }
+}
+
+function formatDate(iso?: string) {
+  if (!iso) return null;
+  return new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
+export default async function GitHubSection() {
+  const { repos, live } = await getRepos();
+
   return (
-    <section id="github" className="section-band relative">
-      <div className="site-shell relative z-10">
+    <section id="github" className="section-band scroll-mt-16" aria-labelledby="github-title">
+      <div className="site-shell">
         <SectionHeading
-          index="07"
-          kicker="Open source & activity"
-          title={
-            <>
-              Public work, commits,
-              <br />
-              and repository signals.
-            </>
-          }
-          lede="My GitHub profile shows consistent code iterations and full-stack projects built with modern tooling."
+          index="05"
+          kicker="Open source"
+          id="github-title"
+          title="The code is public. Go read it."
+          lede={live ? "Most recently pushed public repositories, fetched from GitHub and refreshed daily." : "A selection of public repositories."}
           action={
-            <a
-              href={profile.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rule-link"
-            >
-              <Github size={13} /> @{profile.githubUsername} <ArrowUpRight size={13} />
+            <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="button-base button-secondary">
+              <SiGithub size={15} aria-hidden="true" />
+              github.com/{profile.githubUsername}
             </a>
           }
         />
 
-        <div className="mt-16 grid gap-px border border-[var(--line)] bg-[var(--line)] lg:grid-cols-2">
-          <Reveal>
-            <article className="h-full bg-[var(--background)] p-6">
-              <p className="meta-mono border-b border-[var(--line)] pb-4">
-                Stats — @{profile.githubUsername}
-              </p>
-              <img
-                src={statsImage}
-                alt={`${profile.githubUsername} stats`}
-                loading="lazy"
-                className="mt-4 w-full object-contain"
-              />
-            </article>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <article className="h-full bg-[var(--background)] p-6">
-              <p className="meta-mono border-b border-[var(--line)] pb-4">Top languages</p>
-              <img
-                src={languageImage}
-                alt={`${profile.githubUsername} languages`}
-                loading="lazy"
-                className="mt-4 w-full object-contain"
-              />
-            </article>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.08}>
-          <article className="drafted mt-6 p-6">
-            <div className="flex flex-col gap-2 border-b border-[var(--line)] pb-4 sm:flex-row sm:items-baseline sm:justify-between">
-              <p className="meta-mono">Contribution activity</p>
-              <a
-                href={profile.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rule-link"
-              >
-                Full history <ArrowUpRight size={13} />
-              </a>
-            </div>
-            <div className="mt-5 overflow-x-auto">
-              <img
-                src={graphImage}
-                alt={`${profile.githubUsername} contributions`}
-                loading="lazy"
-                className="w-full min-w-[720px]"
-              />
-            </div>
-          </article>
-        </Reveal>
-
-        <div className="mt-6 grid gap-px border border-[var(--line)] bg-[var(--line)] md:grid-cols-3">
-          {repositories.map((repo, i) => (
-            <Reveal key={repo.name} delay={i * 0.05}>
-              <article className="flex h-full flex-col bg-[var(--background)] p-6 transition-colors hover:bg-[var(--surface)]">
-                <span className="meta-mono text-[var(--accent)]">
-                  R/{String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="display-title mt-4 text-lg">{repo.name}</h3>
-                <p className="body-copy mt-2 text-sm">{repo.description}</p>
-                <div className="mt-auto pt-6">
-                  <div className="flex flex-wrap gap-x-4 gap-y-2 border-t border-[var(--line)] pt-4">
-                    {repo.tags.map((t) => (
-                      <span key={t} className="meta-mono text-[var(--ink-soft)]">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <a
-                    href={profile.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rule-link mt-5"
-                  >
-                    View repo <ArrowUpRight size={13} />
-                  </a>
+        <ul className="mt-12 grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+          {repos.map((repo, i) => (
+            <Reveal as="li" key={repo.url} delay={Math.min(i * 0.04, 0.2)} className="bg-[var(--background)]">
+              <a href={repo.url} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col p-5 transition-colors hover:bg-[var(--surface)] sm:p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-mono text-sm font-medium text-[var(--ink)] group-hover:text-[var(--accent)]">{repo.name}</h3>
+                  <ArrowUpRight size={15} className="shrink-0 text-[var(--muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
                 </div>
-              </article>
+                <p className="body-copy mt-3 flex-1 text-sm">{repo.description ?? "No description provided."}</p>
+                <div className="meta-mono mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--line)] pt-3">
+                  {repo.language && (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--blueprint)]" aria-hidden="true" />
+                      {repo.language}
+                    </span>
+                  )}
+                  {repo.stars > 0 && (
+                    <span className="inline-flex items-center gap-1">
+                      <Star size={11} aria-hidden="true" /> {repo.stars}
+                    </span>
+                  )}
+                  {repo.updatedAt && <span className="ml-auto">{formatDate(repo.updatedAt)}</span>}
+                </div>
+              </a>
             </Reveal>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

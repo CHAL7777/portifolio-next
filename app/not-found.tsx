@@ -1,28 +1,26 @@
-import { profile } from "@/app/data/portfolio";
-import { ArrowLeft, Home } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] p-6 text-[var(--foreground)]">
-      <section className="glass-card max-w-xl p-8 text-center">
-        <p className="section-kicker">404</p>
-        <h1 className="display-title mt-4 text-4xl text-[var(--ink)] md:text-5xl">Page not found.</h1>
-        <p className="body-copy mt-4">
-          This route does not exist in {profile.name}&apos;s portfolio. Return home to view projects, skills,
-          GitHub activity, resume, and contact details.
-        </p>
-        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+    <main className="flex min-h-screen items-center bg-[var(--background)] text-[var(--foreground)]">
+      <div className="site-shell py-24">
+        <div className="section-index">
+          <span className="meta-mono text-[var(--accent)]">404</span>
+          <span className="meta-mono">Route not found</span>
+        </div>
+        <h1 className="display-title mt-8 text-4xl sm:text-6xl">Nothing lives at this address.</h1>
+        <p className="body-copy mt-5 max-w-md">The page may have moved, or the link was mistyped. Everything on this site is reachable from the home page.</p>
+        <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/" className="button-base button-primary">
-            <Home size={16} />
-            Home
+            <ArrowLeft size={15} aria-hidden="true" />
+            Back home
           </Link>
-          <Link href="/#projects" className="button-base button-secondary">
-            <ArrowLeft size={16} />
-            Projects
+          <Link href="/#work" className="button-base button-secondary">
+            View work
           </Link>
         </div>
-      </section>
+      </div>
     </main>
   );
 }

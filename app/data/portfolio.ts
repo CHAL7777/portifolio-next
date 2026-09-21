@@ -1,33 +1,38 @@
 import type { IconType } from "react-icons";
+import { FaJava } from "react-icons/fa6";
 import {
-  SiDocker,
   SiFastapi,
+  SiFigma,
+  SiFramer,
   SiGit,
-  SiLangchain,
-  SiLinux,
+  SiGithub,
+  SiHtml5,
+  SiJavascript,
+  SiMysql,
   SiNextdotjs,
-  SiOpenai,
+  SiNodedotjs,
   SiPostgresql,
   SiPython,
   SiReact,
-  SiRedis,
-  SiSupabase,
   SiTailwindcss,
   SiTypescript,
 } from "react-icons/si";
 
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://chaldev.vercel.app";
+
 export const profile = {
   name: "Chala Gobena",
   shortName: "Chala",
-  role: "Product-minded Software Engineer",
-  headline:
-    "I design and build reliable web products, APIs, and AI-assisted workflows with careful attention to how real people use software.",
+  role: "Software Engineer · Full-Stack Web Developer",
+  tagline:
+    "I build web applications end to end — typed React frontends, REST APIs, and the database schemas underneath them — and ship them to production.",
   email: "chalagobena43@gmail.com",
   location: "Addis Ababa, Ethiopia",
   timezone: "GMT+3",
   resumeUrl: "/resume.pdf",
   avatar: "/img/chala.jpg",
   githubUsername: "CHAL7777",
+  availability: "Open to freelance, internships, and software engineering roles",
   links: {
     github: "https://github.com/CHAL7777",
     linkedin: "https://www.linkedin.com/in/chala-gobena-01a22b346",
@@ -37,562 +42,558 @@ export const profile = {
 };
 
 export const navItems = [
-  { label: "Work", href: "#projects" },
-  { label: "Systems", href: "#system-design" },
-  { label: "AI", href: "#ai-engineering" },
-  { label: "Skills", href: "#skills" },
-  { label: "Story", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#work" },
+  { label: "Engineering", href: "/#engineering" },
+  { label: "Skills", href: "/#skills" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
 ];
 
-export const typingPhrases = [
-  "reliable product foundations",
-  "clear backend contracts",
-  "AI workflows with guardrails",
-  "interfaces that feel considered",
-];
+/* ─────────────────────────────────────────────────────────
+   Skills — grouped, no proficiency percentages
+   ───────────────────────────────────────────────────────── */
 
-export const heroMetrics = [
-  {
-    value: "20+",
-    label: "Products and experiments shipped",
-    detail: "from dashboards to commerce flows and AI learning paths",
-  },
-  {
-    value: "3+",
-    label: "Years building in public",
-    detail: "turning coursework, client-style briefs, and product ideas into working software",
-  },
-  {
-    value: "8",
-    label: "Architecture concerns I design around",
-    detail: "auth, APIs, data, caching, queues, observability, AI context, and UX states",
-  },
-];
+export type Skill = { name: string; Icon?: IconType };
 
-export const trustSignals = [
-  "Remote-friendly from Addis Ababa",
-  "Backend-first product thinking",
-  "AI systems with human-readable guardrails",
-  "Interfaces built for real device behavior",
-];
-
-export const skillGroups: Array<{
+export type SkillGroup = {
   title: string;
-  description: string;
-  outcome: string;
-  Icon: IconType;
-  skills: string[];
-}> = [
+  note: string;
+  skills: Skill[];
+};
+
+export const skillGroups: SkillGroup[] = [
   {
-    title: "Backend Engineering",
-    description:
-      "I use backend tools to make product behavior predictable: clear contracts, explicit validation, and APIs that frontend teams can trust.",
-    outcome: "Useful when a product needs authentication, stable data flows, and integration surfaces that will not collapse as the UI grows.",
-    Icon: SiFastapi,
+    title: "Frontend",
+    note: "Where most of my shipped work lives: component systems, routing, state, responsive layout, and motion that stays out of the way.",
     skills: [
-      "FastAPI",
-      "Python",
-      "REST APIs",
-      "Authentication",
-      "PostgreSQL",
-      "Supabase",
-      "Async Programming",
-      "API Design",
+      { name: "React", Icon: SiReact },
+      { name: "Next.js", Icon: SiNextdotjs },
+      { name: "TypeScript", Icon: SiTypescript },
+      { name: "JavaScript", Icon: SiJavascript },
+      { name: "Tailwind CSS", Icon: SiTailwindcss },
+      { name: "Framer Motion", Icon: SiFramer },
+      { name: "HTML & CSS", Icon: SiHtml5 },
     ],
   },
   {
-    title: "Frontend",
-    description:
-      "I build interfaces as product surfaces, not decoration: responsive layout, careful state, accessible controls, and motion that supports meaning.",
-    outcome: "Useful when teams need polished dashboards, workflows, and user journeys that stay maintainable after the first launch.",
-    Icon: SiNextdotjs,
-    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    title: "Backend",
+    note: "REST endpoints, validation, authentication, and the unglamorous parts: error shapes, environment config, CORS.",
+    skills: [
+      { name: "Node.js", Icon: SiNodedotjs },
+      { name: "FastAPI", Icon: SiFastapi },
+      { name: "Python", Icon: SiPython },
+      { name: "Java", Icon: FaJava },
+      { name: "REST API design" },
+      { name: "Authentication" },
+    ],
   },
   {
     title: "Database",
-    description:
-      "I think through the shape of the data early so features have a reliable source of truth and queries stay understandable.",
-    outcome: "Useful for products where search, filtering, permissions, reporting, and history matter more than a quick demo.",
-    Icon: SiPostgresql,
-    skills: ["PostgreSQL", "SQL", "Database Design", "Query Optimization"],
-  },
-  {
-    title: "AI Engineering",
-    description:
-      "I approach AI as an application layer: define the job, prepare the context, constrain the model, and make outputs reviewable.",
-    outcome: "Useful for assistants, document workflows, RAG systems, and automation where the product must be helpful without becoming opaque.",
-    Icon: SiOpenai,
+    note: "Relational modelling first. Constraints over conventions; queries I can explain.",
     skills: [
-      "LLM Applications",
-      "RAG",
-      "AI Agents",
-      "Prompt Engineering",
-      "LangChain",
-      "Vector Databases",
-      "AI API Integration",
-      "AI Automation",
+      { name: "PostgreSQL", Icon: SiPostgresql },
+      { name: "MySQL", Icon: SiMysql },
+      { name: "SQL & schema design" },
+      { name: "Supabase" },
     ],
   },
   {
-    title: "System Design",
-    description:
-      "I map features as systems: request paths, failure modes, ownership boundaries, scaling pressure, and the cost of future change.",
-    outcome: "Useful when an MVP needs a path toward reliability instead of a rewrite the moment traffic or complexity increases.",
-    Icon: SiRedis,
+    title: "Tools",
+    note: "Version control, design handoff, deployment.",
     skills: [
-      "Scalable Architecture",
-      "Distributed Systems",
-      "Caching",
-      "Load Balancing",
-      "Microservices",
-      "Event-Driven Architecture",
-      "Message Queues",
-      "API Gateway",
-      "Cloud Architecture",
+      { name: "Git", Icon: SiGit },
+      { name: "GitHub", Icon: SiGithub },
+      { name: "Figma", Icon: SiFigma },
+      { name: "Vercel / Netlify" },
+      { name: "Linux" },
     ],
-  },
-  {
-    title: "DevOps",
-    description:
-      "I keep deployment and collaboration habits practical: reproducible environments, clear Git history, and build checks that protect the team.",
-    outcome: "Useful when a product needs to move quickly without losing confidence in what is being shipped.",
-    Icon: SiDocker,
-    skills: ["Docker", "CI/CD", "Git", "Linux"],
   },
 ];
 
-export const toolchain = [
-  { name: "FastAPI", Icon: SiFastapi },
-  { name: "Python", Icon: SiPython },
-  { name: "PostgreSQL", Icon: SiPostgresql },
-  { name: "Supabase", Icon: SiSupabase },
-  { name: "Next.js", Icon: SiNextdotjs },
-  { name: "React", Icon: SiReact },
-  { name: "TypeScript", Icon: SiTypescript },
-  { name: "Tailwind CSS", Icon: SiTailwindcss },
-  { name: "OpenAI APIs", Icon: SiOpenai },
-  { name: "LangChain", Icon: SiLangchain },
-  { name: "Redis", Icon: SiRedis },
-  { name: "Docker", Icon: SiDocker },
-  { name: "Git", Icon: SiGit },
-  { name: "Linux", Icon: SiLinux },
-];
+/* ─────────────────────────────────────────────────────────
+   Projects — case studies backed by real deployments
+   ───────────────────────────────────────────────────────── */
 
-export const projects = [
+export type Project = {
+  slug: string;
+  title: string;
+  category: string;
+  year: string;
+  role: string;
+  status: string;
+  featured?: boolean;
+  image: string;
+  imageAlt: string;
+  accent: string;
+  summary: string;
+  problem: string;
+  goals: string[];
+  solution: string;
+  features: string[];
+  architecture: string;
+  decisions: string[];
+  challenge: string;
+  lessons: string;
+  result: string;
+  technologies: string[];
+  liveUrl: string;
+  /** Only set when a public repository actually exists. */
+  sourceUrl?: string;
+};
+
+export const projects: Project[] = [
   {
-    title: "Food Delivery Web App",
-    category: "Commerce",
-    year: "2026",
-    role: "Frontend Engineer / Product UI",
-    status: "Live production demo",
-    image: "/docs/food.png",
-    visual: {
-      label: "Commerce flow",
-      alt: "Food Delivery Web Application screenshot showcasing ordering UI, menu items, and real-time cart.",
-      accent: "#23D48D",
-      accentRgb: "35, 212, 141",
-      secondary: "#F97316",
-      size: "featured",
-    },
-    summary: "A responsive ordering experience designed around fast choice, clear cart state, and checkout confidence.",
-    problem:
-      "Food ordering products lose trust when menu browsing feels heavy or when cart changes are hard to understand on mobile.",
-    goal: "Make the path from discovery to checkout feel obvious, fast, and calm across screen sizes.",
-    architecture:
-      "A Next.js interface with reusable menu, cart, and checkout modules, structured so API-backed inventory and order submission can be introduced cleanly.",
-    decisions: [
-      "Separated browsing state from checkout state so the UI can stay responsive while order details change.",
-      "Designed the menu around scanning and comparison instead of forcing users through deep category pages.",
-      "Kept interaction states explicit: empty cart, updating quantity, checkout review, and mobile navigation.",
-    ],
-    challenges: "The hard part was making the product feel visual without letting imagery slow down the ordering task.",
-    solution:
-      "I tightened the layout rhythm, kept cart actions close to the food item, and used consistent confirmation states to reduce hesitation.",
-    lessons:
-      "Commerce polish is mostly invisible. Users feel the quality when totals, quantities, loading states, and mobile spacing behave exactly as expected.",
-    metrics: ["Mobile-first checkout", "Reusable cart flow", "Production deployment"],
-    technologies: ["Next.js", "React", "Tailwind CSS", "REST APIs", "Vercel"],
-    features: ["Menu browsing", "Cart workflow", "Responsive checkout", "Production deployment"],
-    liveUrl: "https://food-delivery-rho-rouge.vercel.app/",
-    sourceUrl: "https://github.com/CHAL7777",
-  },
-  {
+    slug: "soleflow-store",
     title: "SoleFlow Footwear Store",
     category: "Commerce",
     year: "2026",
-    role: "Full-Stack Developer",
-    status: "Live production build",
+    role: "Full-stack developer",
+    status: "Live",
+    featured: true,
     image: "/docs/nike.png",
-    visual: {
-      label: "Catalog & cart",
-      alt: "SoleFlow footwear store screenshot showing the product hero, featured sneakers, and category navigation.",
-      accent: "#F97316",
-      accentRgb: "249, 115, 22",
-      secondary: "#111827",
-      size: "medium",
-    },
+    imageAlt:
+      "SoleFlow storefront home page with a featured sneaker, price, quick-add button, and a strip of related products.",
+    accent: "#2dd4bf",
     summary:
-      "A sneaker storefront built around fast catalog scanning, product detail depth, and a persistent cart and wishlist.",
+      "A sneaker storefront built around fast catalogue scanning, product detail pages, and a cart and wishlist that survive navigation.",
     problem:
-      "Footwear catalogs live or die on browsing speed. Shoppers compare several pairs at once, so any friction between listing, detail, and cart costs the sale.",
-    goal: "Let a shopper move between category, product detail, wishlist, and cart without losing their place or their selection.",
-    architecture:
-      "A Next.js App Router storefront with route-driven category filtering, dynamic product detail pages, and client-side cart and wishlist state persisted across navigation.",
-    decisions: [
-      "Made category a URL query parameter so filtered views are shareable and survive a refresh.",
-      "Kept cart and wishlist state global and persistent so quick-add never forces a context switch.",
-      "Surfaced price, discount, rating, and review count directly on the card so comparison happens in the grid, not the detail page.",
+      "Footwear shoppers compare several pairs at once. If moving between the listing, a product page, and the cart drops their selection or their filter, they leave.",
+    goals: [
+      "Let a shopper move between category, product, wishlist, and cart without losing their place.",
+      "Make filtered views shareable and refresh-safe.",
+      "Keep the product grid fast even with large imagery.",
     ],
-    challenges:
-      "Product imagery dominates a footwear store, and loading full-resolution shots for a whole grid made first paint heavy.",
     solution:
-      "I leaned on Next.js image optimization with per-breakpoint sizing, deferred off-screen media, and kept card anatomy identical so the browser could reuse layout instead of reflowing.",
+      "A Next.js App Router storefront. Category is a URL search parameter, product pages are dynamic routes, and cart and wishlist live in a small global store that persists across navigation.",
+    features: [
+      "Men / women / kids catalogue with URL-driven filtering",
+      "Dynamic product detail routes",
+      "Persistent cart and wishlist with quick-add",
+      "Price, discount, rating, and review count on the card",
+      "Responsive grid from 320px up",
+    ],
+    architecture:
+      "App Router pages for the catalogue and product detail; a client-side store for cart and wishlist; next/image with per-breakpoint sizes for the grid; product data in typed modules so the card and detail views share one shape.",
+    decisions: [
+      "Category lives in the URL (?category=men) instead of component state, so filtered views can be shared and survive a reload.",
+      "Cart and wishlist are global and persistent so a quick-add never forces a context switch away from the grid.",
+      "Price, discount, rating, and review count sit on the card itself. Comparison happens in the grid, not by opening each product.",
+      "Identical card anatomy across the whole catalogue so the browser reuses layout instead of reflowing.",
+    ],
+    challenge:
+      "Product imagery dominates a footwear store, and loading full-resolution shots for a whole grid made first paint heavy.",
     lessons:
-      "In commerce, the grid is the product. Most of the engineering effort belongs to the listing view, not the checkout.",
-    metrics: ["Men / women / kids catalog", "Persistent cart & wishlist", "Shareable filtered URLs"],
+      "In commerce the grid is the product. Most of the engineering effort belongs to the listing view, not the checkout.",
+    result:
+      "A deployed storefront where filtering, product detail, and cart state all work together and hold up on mobile.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-    features: ["Category filtering", "Product detail pages", "Cart & wishlist", "Responsive grid"],
     liveUrl: "https://chala-product-store.vercel.app/",
     sourceUrl: "https://github.com/CHAL7777/chala-product-store",
   },
   {
+    slug: "jalo-hotel",
     title: "Jalo Hotel & Resort",
     category: "Hospitality",
     year: "2026",
-    role: "Full-Stack Developer",
-    status: "Live production build",
+    role: "Full-stack developer",
+    status: "Live",
+    featured: true,
     image: "/docs/jalo.png",
-    visual: {
-      label: "Booking journey",
-      alt: "Jalo Hotel & Resort screenshot showing the hero availability search, room rates, and amenity sections.",
-      accent: "#B08A4A",
-      accentRgb: "176, 138, 74",
-      secondary: "#1C2331",
-      size: "medium",
-    },
+    imageAlt:
+      "Jalo Hotel & Resort home page with a gold Book Now call to action, availability search, and a photo of the hotel at dusk.",
+    accent: "#c9a25a",
     summary:
-      "A hotel site for a property in Shashemene, built so a guest can check availability, compare rooms, and reserve directly.",
+      "A hotel site for a property in Shashemene, built so a guest can check availability, compare rooms, and reserve directly instead of through an aggregator.",
     problem:
-      "Regional hotels lose direct bookings to aggregators because their own sites bury rates, room differences, and the actual booking action.",
-    goal: "Put availability at the top of the page and make every room's price, capacity, and inclusions comparable at a glance.",
-    architecture:
-      "A Next.js marketing and booking site with a date and occupancy search in the hero, filterable room types, a categorised photo gallery, an accordion FAQ, and a staff portal route.",
-    decisions: [
-      "Placed check-in, check-out, guests, and room type in the hero so the booking intent is the first interaction, not a buried CTA.",
-      "Gave every room a consistent card anatomy — rate, guest count, bed configuration, inclusions — so comparison needs no scrolling back.",
-      "Grouped the gallery and FAQ by category so a long content page stays navigable without a search feature.",
+      "Regional hotels lose direct bookings because their own sites bury rates, room differences, and the actual booking action under marketing copy.",
+    goals: [
+      "Put availability search in the first viewport.",
+      "Make every room's rate, capacity, and inclusions comparable at a glance.",
+      "Keep a long content page (rooms, dining, spa, events, location, FAQ) navigable.",
     ],
-    challenges:
-      "The property has a lot to say — rooms, dining, spa, conference, shuttle, location, policies — and a single scrolling page risked becoming an undifferentiated wall.",
     solution:
-      "I gave each concern its own banded section with a distinct layout and filter controls, so length reads as depth rather than clutter.",
+      "A Next.js marketing and booking site. The hero carries check-in, check-out, guests, and room-type inputs; rooms share one card anatomy; the gallery and FAQ are grouped by category; a separate staff portal route exists for the property.",
+    features: [
+      "Date and occupancy availability search in the hero",
+      "Three comparable room tiers with rate, capacity, bed configuration, inclusions",
+      "Categorised photo gallery and accordion FAQ",
+      "Location and transfer guidance (Hawassa airport)",
+      "Amharic / English language toggle",
+      "Staff portal route",
+    ],
+    architecture:
+      "App Router with banded page sections, a client-side search form that validates dates and occupancy, filterable gallery and FAQ components driven by category data, and a separate staff route.",
+    decisions: [
+      "Booking intent is the first interaction on the page, not a buried CTA.",
+      "Room cards share one anatomy so comparison needs no scrolling back.",
+      "Gallery and FAQ are grouped by category so a content-heavy page stays scannable without a search box.",
+      "Each concern gets its own banded section with a distinct layout, so length reads as depth rather than clutter.",
+    ],
+    challenge:
+      "The property has a lot to say — rooms, dining, spa, conference, shuttle, location, policies — and a single scrolling page risked becoming an undifferentiated wall.",
     lessons:
       "For a hospitality site, trust is built by answering questions before they are asked. The FAQ and location sections do as much conversion work as the hero.",
-    metrics: ["Availability search in hero", "Three comparable room tiers", "Filterable gallery & FAQ"],
+    result:
+      "A deployed site where a guest can search dates, compare rooms, and reach a booking without leaving the page flow.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-    features: ["Availability search", "Room comparison", "Categorised gallery", "FAQ & location guide"],
     liveUrl: "https://jalo-hotel.vercel.app/",
-    sourceUrl: "https://github.com/CHAL7777",
   },
   {
-    title: "E-commerce Dashboard",
-    category: "Operations",
-    year: "2025",
-    role: "Dashboard UI Engineer",
-    status: "Deployed analytics prototype",
-    image: "/docs/ecco.png",
-    visual: {
-      label: "Operations intelligence",
-      alt: "E-commerce Operations Dashboard screenshot displaying revenue charts, inventory metrics, and sales data.",
-      accent: "#8B5CF6",
-      accentRgb: "139, 92, 246",
-      secondary: "#F0B84F",
-      size: "medium",
-    },
-    summary: "A dashboard surface for sales, inventory, and operational scanning without burying the signal.",
+    slug: "ethiopath-ai",
+    title: "EthioPath AI Pathfinder",
+    category: "AI product",
+    year: "2026",
+    role: "Full-stack developer",
+    status: "Live",
+    featured: true,
+    image: "/docs/pathfinder.png",
+    imageAlt:
+      "EthioPath application showing a career-path assessment with progress nodes and category badges.",
+    accent: "#38bdf8",
+    summary:
+      "A career pathfinder for Ethiopian students and developers: a multi-step technical assessment feeds an AI-guided roadmap of what to learn next.",
     problem:
-      "Dashboards often become walls of numbers. The user needs quick comparison, not a decorative report.",
-    goal: "Create an operational interface where a manager can scan status, notice change, and move to the next decision quickly.",
-    architecture:
-      "A React dashboard built from reusable metric, inventory, and analytics sections with a layout system tuned for dense information.",
-    decisions: [
-      "Used consistent card anatomy so the eye can compare metrics without relearning every block.",
-      "Prioritized typography and spacing before adding visual accents.",
-      "Designed responsive tables and summaries so the dashboard remains useful on smaller laptops.",
+      "Students choosing a technical direction usually get a list of job titles, not a structured view of which skills lead where or where they currently stand.",
+    goals: [
+      "Turn a self-assessment into a concrete, ordered learning roadmap.",
+      "Make a long multi-question assessment resumable rather than fragile.",
+      "Show progress visually at every step.",
     ],
-    challenges: "Balancing density with breathing room was the main design and implementation challenge.",
     solution:
-      "I reduced decorative weight, grouped related metrics, and used restrained visual hierarchy so the important numbers could lead.",
+      "A Next.js platform with a step-by-step assessment, persisted answer state so a refresh does not lose progress, a visual roadmap of path nodes, and AI-generated recommendations layered on top of the assessment result.",
+    features: [
+      "Multi-step technical skill assessment",
+      "State recovery — refresh or return without losing answers",
+      "Visual career-path roadmap with progress nodes",
+      "AI-guided recommendations based on results",
+      "Category badges and progress tracking",
+    ],
+    architecture:
+      "App Router UI; assessment state persisted client-side and restored on load; roadmap rendered from a typed path tree; AI recommendations requested through a server-side handler so keys never reach the browser.",
+    decisions: [
+      "Assessment state is persisted after every answer, because losing ten minutes of input to a refresh is the fastest way to lose a user.",
+      "The roadmap is a data structure (nodes and edges), not a hard-coded page, so paths can change without touching layout.",
+      "AI output is presented as a recommendation next to the deterministic assessment result, not as the only answer.",
+    ],
+    challenge:
+      "Making guidance feel interactive and structured while keeping the assessment fast and the AI calls off the client.",
     lessons:
-      "A dashboard succeeds when the interface gets out of the way and helps people answer a small set of repeated questions.",
-    metrics: ["Dense KPI layout", "Reusable dashboard components", "Responsive analytics surface"],
-    technologies: ["TypeScript", "React", "Tailwind CSS", "Charts", "Responsive UI"],
-    features: ["Sales overview", "Inventory cards", "Analytics layout", "Reusable components"],
-    liveUrl: "https://eccommercebychal.netlify.app",
-    sourceUrl: "https://github.com/CHAL7777",
+      "Interactive guidance needs a feedback loop at every step. A single result page at the end is not enough to keep people going.",
+    result:
+      "A live platform where a student completes an assessment, sees a roadmap, and receives targeted next steps.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "LLM API"],
+    liveUrl: "https://ethio-path-finder.vercel.app/",
   },
   {
-    title: "Ethiopian E-book Site",
+    slug: "food-delivery",
+    title: "Food Delivery Web App",
+    category: "Commerce",
+    year: "2026",
+    role: "Frontend developer",
+    status: "Live",
+    image: "/docs/food.png",
+    imageAlt: "Food delivery application showing a menu grid, item cards, and a cart panel.",
+    accent: "#34d399",
+    summary:
+      "A responsive ordering experience: browse a menu, adjust a cart, and reach checkout without the interface getting in the way.",
+    problem:
+      "Ordering products lose trust when menu browsing feels heavy or when cart changes are hard to follow on a phone.",
+    goals: [
+      "Make discovery → cart → checkout obvious on every screen size.",
+      "Keep cart state explicit: empty, updating, reviewing.",
+    ],
+    solution:
+      "A Next.js interface with separate menu, cart, and checkout modules, structured so an inventory and order API can be introduced behind them.",
+    features: ["Menu browsing", "Cart with quantity updates", "Responsive checkout review", "Mobile navigation"],
+    architecture:
+      "Reusable menu, cart, and checkout components; browsing state separated from checkout state; layout tuned so imagery never blocks the ordering task.",
+    decisions: [
+      "Browsing state and checkout state are separate so the menu stays responsive while order details change.",
+      "Cart actions sit next to the food item rather than in a distant drawer.",
+      "Every interaction state is explicit: empty cart, updating quantity, checkout review.",
+    ],
+    challenge: "Making the product feel visual without letting imagery slow down the ordering task.",
+    lessons:
+      "Commerce polish is mostly invisible. Users feel quality when totals, quantities, and mobile spacing behave exactly as expected.",
+    result: "A deployed ordering flow that works from 320px up.",
+    technologies: ["Next.js", "React", "Tailwind CSS", "Vercel"],
+    liveUrl: "https://food-delivery-rho-rouge.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777/food-delivery",
+  },
+  {
+    slug: "ecommerce-dashboard",
+    title: "E-commerce Operations Dashboard",
+    category: "Dashboard",
+    year: "2025",
+    role: "Frontend developer",
+    status: "Live",
+    image: "/docs/ecco.png",
+    imageAlt: "Operations dashboard with revenue charts, inventory metrics, and a sales table.",
+    accent: "#a78bfa",
+    summary: "A dense analytics surface for sales, inventory, and revenue that stays readable on a small laptop.",
+    problem: "Dashboards turn into walls of numbers. A manager needs fast comparison, not a decorative report.",
+    goals: ["Let someone scan status, notice change, and move on.", "Stay useful at 13-inch laptop widths."],
+    solution:
+      "A React dashboard built from reusable metric, inventory, and chart components with a layout system tuned for dense information.",
+    features: ["Sales overview", "Inventory cards", "Revenue charts", "Responsive tables"],
+    architecture:
+      "Typed KPI, table, and chart components; a grid layout that collapses predictably; charting isolated behind a small wrapper so the library can be swapped.",
+    decisions: [
+      "Consistent card anatomy so the eye compares metrics without relearning each block.",
+      "Typography and spacing were settled before any colour accents were added.",
+      "Tables collapse into summaries on narrow viewports instead of scrolling horizontally.",
+    ],
+    challenge: "Balancing density with breathing room.",
+    lessons: "A dashboard succeeds when it helps people answer a small set of repeated questions quickly.",
+    result: "A deployed prototype that shows how I structure information-dense UI.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Charts", "Netlify"],
+    liveUrl: "https://eccommercebychal.netlify.app",
+    sourceUrl: "https://github.com/CHAL7777/eccomerce-dashboard",
+  },
+  {
+    slug: "ethio-ebook",
+    title: "Ethiopian E-book Library",
     category: "Content",
     year: "2025",
-    role: "Next.js Product Developer",
-    status: "Live content platform",
+    role: "Full-stack developer",
+    status: "Live",
     image: "/docs/ebook.png",
-    visual: {
-      label: "Digital library",
-      alt: "Ethiopian E-book Digital Library screenshot showcasing book catalog, search bar, and reader interface.",
-      accent: "#D8A23B",
-      accentRgb: "216, 162, 59",
-      secondary: "#18B67D",
-      size: "medium",
-    },
-    summary: "A digital library experience focused on discovery, reading intent, and simple content flow.",
-    problem:
-      "Content-heavy products become difficult when navigation, filtering, and reading context are treated as afterthoughts.",
-    goal: "Help visitors move from browsing to choosing a book with clear categories, readable spacing, and low-friction actions.",
-    architecture:
-      "A Next.js content interface organized around book metadata, category pages, search-friendly structure, and mobile reading behavior.",
-    decisions: [
-      "Kept content cards consistent so users can compare books quickly.",
-      "Designed category navigation before visual detail to protect the browsing path.",
-      "Used responsive spacing and image constraints to avoid layout shifts.",
-    ],
-    challenges: "The challenge was keeping the experience light while still showing enough book context to support choice.",
+    imageAlt: "Digital library with a book catalogue, search bar, and category navigation.",
+    accent: "#fbbf24",
+    summary: "A digital library focused on discovery: categories, search-friendly structure, and a light reading flow.",
+    problem: "Content-heavy sites get hard to use when navigation and filtering are afterthoughts.",
+    goals: ["Move a visitor from browsing to choosing a book with minimal friction.", "Support English and Amharic."],
     solution:
-      "I simplified the category structure, made actions predictable, and tuned typography for scanning instead of long marketing copy.",
-    lessons:
-      "Good content UX is quiet. It works when readers never have to think about where the next useful action is.",
-    metrics: ["Search-focused structure", "Mobile reading emphasis", "Content-first UI"],
-    technologies: ["Next.js", "Content UI", "Tailwind CSS", "Search UX", "Vercel"],
-    features: ["Book browsing", "Category pages", "Download flow", "Mobile reading focus"],
+      "A Next.js content site organised around book metadata, category pages, locale-prefixed routes, and mobile reading behaviour.",
+    features: ["Book browsing and categories", "Localised routes (/en, /am)", "Download flow", "Mobile reading focus"],
+    architecture:
+      "Locale-prefixed App Router routes; book metadata in typed modules driving both cards and detail pages; image constraints to avoid layout shift.",
+    decisions: [
+      "Category navigation was designed before visual detail to protect the browsing path.",
+      "Cards are consistent so books can be compared quickly.",
+      "Locale is part of the URL so links are shareable in either language.",
+    ],
+    challenge: "Showing enough book context to support a choice while keeping pages light.",
+    lessons: "Good content UX is quiet. Readers should never have to hunt for the next useful action.",
+    result: "A live bilingual library site.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "i18n routing", "Vercel"],
     liveUrl: "https://ethio-book-site.vercel.app/",
-    sourceUrl: "https://github.com/CHAL7777",
   },
   {
-    title: "Study Buddy App",
+    slug: "study-buddy",
+    title: "Study Buddy",
     category: "SaaS",
     year: "2026",
-    role: "SaaS Interface Engineer",
-    status: "Motion-enhanced MVP",
+    role: "Frontend developer",
+    status: "MVP",
     image: "/docs/saas-s.png",
-    visual: {
-      label: "AI study workspace",
-      alt: "Study Buddy SaaS application screenshot with task boards, progress rings, and study workspace.",
-      accent: "#7C3AED",
-      accentRgb: "124, 58, 237",
-      secondary: "#14B889",
-      size: "medium",
-    },
-    summary: "A planning hub that turns student work into visible priorities, resources, and progress.",
-    problem:
-      "Students often know they have work to do, but the plan is scattered across notes, chats, files, and memory.",
-    goal: "Create a lightweight SaaS-style workspace that makes the next study action visible without becoming project-management overhead.",
-    architecture:
-      "A Next.js application shell with task, resource, and progress surfaces designed as independent modules for future backend persistence.",
-    decisions: [
-      "Kept the app shell calm and repeatable so students can return to it every day.",
-      "Structured progress as a workflow signal, not a decorative chart.",
-      "Used Framer Motion carefully to make transitions feel alive without slowing the task.",
-    ],
-    challenges: "The product needed structure, but too much structure would make students abandon it.",
+    imageAlt: "Study Buddy workspace with task boards, progress rings, and a resource list.",
+    accent: "#8b5cf6",
+    summary: "A planning workspace that turns student work into visible priorities, resources, and progress.",
+    problem: "Students know they have work to do, but the plan is scattered across notes, chats, and memory.",
+    goals: ["Make the next study action visible.", "Avoid becoming project-management overhead."],
     solution:
-      "I reduced the workflow to priority, resource, and progress views so planning feels lighter than the work itself.",
-    lessons:
-      "Productivity tools should protect momentum. Every extra field has to earn its place.",
-    metrics: ["SaaS app shell", "Progress workflow", "Motion-enhanced UI"],
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "SaaS UI", "Framer Motion"],
-    features: ["Task planning", "Resource organization", "Progress sections", "Responsive app shell"],
+      "A Next.js app shell with task, resource, and progress surfaces built as independent modules so a backend can be added without a rewrite.",
+    features: ["Task planning", "Resource organisation", "Progress view", "Responsive app shell"],
+    architecture:
+      "App shell with independent task, resource, and progress modules; Framer Motion for transitions between views; structure ready for persistence.",
+    decisions: [
+      "The shell is calm and repeatable so it can be opened every day.",
+      "Progress is a workflow signal, not a decorative chart.",
+      "Motion is limited to view transitions.",
+    ],
+    challenge: "Enough structure to help, not so much that students abandon it.",
+    lessons: "Productivity tools should protect momentum. Every extra field has to earn its place.",
+    result: "A deployed MVP of the interface layer.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
     liveUrl: "https://student-sass.vercel.app/",
-    sourceUrl: "https://github.com/CHAL7777",
-  },
-  {
-    title: "EthioPath AI Pathfinder",
-    category: "AI",
-    year: "2026",
-    role: "AI & Full-Stack Developer",
-    status: "Interactive AI Platform",
-    image: "/docs/pathfinder.png",
-    visual: {
-      label: "AI Career Navigator",
-      alt: "EthioPath AI application screenshot showing career path planning and skill assessment interface.",
-      accent: "#0EA5E9",
-      accentRgb: "14, 165, 233",
-      secondary: "#10B981",
-      size: "medium",
-    },
-    summary: "An AI-guided assessment and career pathfinder platform tailored for Ethiopian students and developers.",
-    problem:
-      "Students struggle to navigate technical career choices without structured skill trees and clear path guidance.",
-    goal: "Provide personalized career roadmaps, interactive skill assessments, and AI-driven recommendations.",
-    architecture:
-      "Next.js full-stack platform with glassmorphic UI system, dynamic progress tracking, and AI assessment workflows.",
-    decisions: [
-      "Implemented glassmorphism design tokens for high-fidelity assessment cards.",
-      "Designed step-by-step career path trees with visual progress nodes.",
-      "Created resilient state recovery for multi-question technical assessments.",
-    ],
-    challenges: "Making career guidance feel interactive and structured while maintaining fast load times.",
-    solution:
-      "Used responsive visual node maps, instant question progression, and clear category badges.",
-    lessons:
-      "Interactive guidance apps require clear feedback loops and visual progress cues at every step.",
-    metrics: ["AI career guidance", "Interactive roadmaps", "High-fidelity UI"],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "AI Workflows"],
-    features: ["Career roadmaps", "Skill quizzes", "AI guidance", "Progress tracking"],
-    liveUrl: "https://ethio-path-finder.vercel.app/",
-    sourceUrl: "https://ethio-path-finder.vercel.app/",
+    sourceUrl: "https://github.com/CHAL7777/studen-saas",
   },
 ];
 
-export const systemPrinciples = [
+export const featuredProjects = projects.filter((p) => p.featured);
+export const moreProjects = projects.filter((p) => !p.featured);
+
+export function getProject(slug: string) {
+  return projects.find((p) => p.slug === slug);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Engineering — what I do beyond the UI, with evidence
+   ───────────────────────────────────────────────────────── */
+
+export type EngineeringArea = {
+  title: string;
+  text: string;
+  evidence: string;
+};
+
+export const engineeringAreas: EngineeringArea[] = [
   {
-    title: "Start with the request path",
-    text: "I map what happens from the first user action to the final stored record: validation, auth, service boundaries, failure cases, and what the UI should show.",
+    title: "Frontend architecture",
+    text: "Typed components with one shared data shape per entity, URL-driven state where it should be shareable, and explicit loading, empty, and error states.",
+    evidence: "SoleFlow · Jalo Hotel · this site",
   },
   {
-    title: "Separate product risk from technical risk",
-    text: "Some features need quick learning. Others need reliability early. I choose architecture based on the cost of being wrong.",
+    title: "REST APIs",
+    text: "Endpoints with validated input, honest error shapes, and CORS and environment configuration handled deliberately. FastAPI and Node.",
+    evidence: "Portfolio contact API · fastAPI-class · hucms",
   },
   {
-    title: "Design for the next team member",
-    text: "Readable APIs, obvious data ownership, and simple deployment notes matter because software lives longer than the first version.",
+    title: "Databases",
+    text: "Relational schemas in PostgreSQL and MySQL. Constraints over conventions; queries I can read back and explain.",
+    evidence: "Student-Management-System · hucms",
+  },
+  {
+    title: "Authentication",
+    text: "Session and token flows, protected routes, and permission checks that fail safely.",
+    evidence: "Jalo staff portal · Secure-Student-Data-Web-Application",
+  },
+  {
+    title: "API integration",
+    text: "Third-party and LLM APIs called from the server so secrets stay off the client, with output validated before it reaches the UI.",
+    evidence: "EthioPath AI · Telegram bots",
+  },
+  {
+    title: "Deployment",
+    text: "Vercel and Netlify deployments, environment-variable boundaries, and build checks before merge.",
+    evidence: "Every live project above",
+  },
+  {
+    title: "Performance",
+    text: "Image sizing per breakpoint, deferred off-screen media, no layout shift, reduced-motion support.",
+    evidence: "SoleFlow product grid · this site",
+  },
+  {
+    title: "Responsive design",
+    text: "Layouts tested from 320px up. No accidental horizontal scroll; touch targets sized for thumbs.",
+    evidence: "All shipped projects",
   },
 ];
 
-export const systemFlows = [
-  "Client request",
-  "API gateway",
-  "Auth service",
-  "Domain service",
-  "Cache",
-  "Queue",
-  "PostgreSQL",
-  "Observability",
+/** The request path I design around. Rendered by SystemDiagram. */
+export const requestPath = [
+  { id: "client", label: "Client", detail: "Next.js UI. Validated input, optimistic state, explicit error and empty states." },
+  { id: "edge", label: "Edge", detail: "Routing and caching before compute. Static where possible." },
+  { id: "auth", label: "Auth", detail: "Identity and permission checks resolved before business logic runs." },
+  { id: "api", label: "API", detail: "Typed request and response contracts. Errors have a shape the UI can use." },
+  { id: "data", label: "Postgres", detail: "Source of truth. Constraints protect integrity; queries stay explainable." },
+  { id: "cache", label: "Cache", detail: "Repeat reads served fast, with invalidation rules written next to the write path." },
 ];
 
-export const aiWorkflows = [
-  {
-    title: "Retrieval-Augmented Generation",
-    text: "Documents are chunked, embedded, searched, and passed to the model as grounded context so answers are tied to known source material.",
-  },
-  {
-    title: "Agentic task flow",
-    text: "The model plans, calls tools, checks intermediate results, and returns a useful answer with limits on what it is allowed to change.",
-  },
-  {
-    title: "Prompt and output contracts",
-    text: "Prompts define role, context, constraints, and expected shape. Outputs are validated before they become product behavior.",
-  },
-  {
-    title: "Human review loops",
-    text: "For high-impact tasks, AI should prepare decisions, not hide them. The interface needs review states, source traces, and correction paths.",
-  },
-];
+/* ─────────────────────────────────────────────────────────
+   About — timeline from the résumé, nothing added
+   ───────────────────────────────────────────────────────── */
 
-export const experiences = [
+export type TimelineEntry = {
+  period: string;
+  title: string;
+  organization: string;
+  text: string;
+};
+
+export const timeline: TimelineEntry[] = [
   {
-    type: "Work",
-    role: "Independent Product Builder",
-    organization: "Portfolio products and public experiments",
-    period: "2024 - Present",
-    summary:
-      "I turn product ideas into working web applications, paying attention to the parts users notice and the parts future engineers have to maintain.",
-    impact: [
-      "Built reusable component systems",
-      "Connected UI decisions to API and data needs",
-      "Shipped responsive products with deployment in mind",
-    ],
+    period: "2024 — now",
+    title: "Independent product builder",
+    organization: "Self-directed, publicly deployed",
+    text: "Commerce, hospitality, dashboard, content, and AI-guided products from idea to live URL. Reusable typed components, route-driven filtering, persistent client state.",
   },
   {
-    type: "Freelance",
-    role: "Frontend and Product Interface Developer",
-    organization: "Client-style websites, dashboards, and MVPs",
-    period: "2024 - Present",
-    summary:
-      "I translate rough goals into usable screens, then refine spacing, states, and flows until the interface feels ready for real conversations.",
-    impact: ["Landing pages", "Dashboards", "MVP workflows", "Performance-focused UI cleanup"],
+    period: "2024 — now",
+    title: "Freelance frontend developer",
+    organization: "Client sites, dashboards, MVPs",
+    text: "Turning rough briefs into scoped landing pages and dashboards, then refining responsive behaviour, keyboard access, and mobile spacing.",
   },
   {
-    type: "Internship",
-    role: "Frontend Developer Intern",
-    organization: "Tech Solutions Inc.",
-    period: "2025 - 2026",
-    summary:
-      "I improved responsive screens, implemented React updates, and learned how design feedback becomes production detail.",
-    impact: ["Component updates", "Image and loading improvements", "Interface cleanup"],
+    period: "2025",
+    title: "Frontend developer intern",
+    organization: "Tech Solutions",
+    text: "Responsive React components and UI fixes from design feedback; code reviews; documented component usage.",
   },
   {
-    type: "Leadership",
-    role: "Student Project Lead",
-    organization: "Software engineering project teams",
-    period: "2023 - Present",
-    summary:
-      "I help small teams reduce uncertainty: define scope, split implementation work, review decisions, and move from idea to demo.",
-    impact: ["Planning", "Code reviews", "Team delivery", "Clear demos"],
+    period: "2023 — now",
+    title: "Student project lead",
+    organization: "Haramaya University",
+    text: "Leading small teams from idea to demo: scoping, splitting implementation, reviewing code, presenting working builds.",
   },
 ];
 
 export const education = {
   degree: "B.Sc. Software Engineering",
-  institution: "Haramaya University",
-  period: "In progress",
+  institution: "Haramaya University, Ethiopia",
+  period: "2023 — expected 2028",
   coursework: [
-    "Data Structures and Algorithms",
+    "Data Structures & Algorithms",
     "Database Systems",
     "Web Programming",
     "Software Engineering",
     "Object-Oriented Programming",
     "Computer Networks",
   ],
-  achievements: [
-    "Built practical full-stack projects alongside coursework",
-    "Focused on clean UI implementation and problem solving",
-    "Applied algorithms and database concepts in portfolio products",
-  ],
 };
 
 export const certificates = [
-  {
-    title: "Artificial Intelligence Fundamentals",
-    issuer: "Udacity",
-    date: "2025",
-    credentialId: "UD-AI-9920",
-    image: "/docs/ai.png",
-    track: "AI",
-  },
-  {
-    title: "Programming Fundamentals",
-    issuer: "Udacity",
-    date: "2025",
-    credentialId: "UD-PROG-4412",
-    image: "/docs/web.png",
-    track: "Programming",
-  },
-  {
-    title: "Web Programming",
-    issuer: "Hucisa",
-    date: "2024",
-    credentialId: "HU-WEB-2024",
-    image: "/docs/web-h.jpg",
-    track: "Web",
-  },
+  { title: "Artificial Intelligence Fundamentals", issuer: "Udacity", year: "2025", image: "/docs/ai.png" },
+  { title: "Programming Fundamentals", issuer: "Udacity", year: "2025", image: "/docs/web.png" },
+  { title: "Web Programming", issuer: "Hucisa", year: "2024", image: "/docs/web-h.jpg" },
 ];
 
-export const repositories = [
+/* ─────────────────────────────────────────────────────────
+   GitHub — verified public repositories, used as the
+   fallback when the GitHub API is unavailable.
+   ───────────────────────────────────────────────────────── */
+
+export type Repo = {
+  name: string;
+  description: string | null;
+  language: string | null;
+  url: string;
+  stars: number;
+  updatedAt?: string;
+};
+
+export const pinnedRepos: Repo[] = [
   {
-    name: "Food delivery experience",
-    description: "Ordering UI, responsive menu flow, and production deployment practice.",
-    tags: ["Next.js", "Tailwind", "UX"],
+    name: "chala-product-store",
+    description: "SoleFlow footwear storefront — URL-driven catalogue filtering, product routes, persistent cart and wishlist.",
+    language: "JavaScript",
+    url: "https://github.com/CHAL7777/chala-product-store",
+    stars: 1,
   },
   {
-    name: "E-commerce dashboard",
-    description: "Operational dashboard patterns for metrics, inventory, and business summaries.",
-    tags: ["React", "TypeScript", "Charts"],
+    name: "food-delivery",
+    description: "Responsive ordering UI with menu, cart, and checkout modules.",
+    language: "TypeScript",
+    url: "https://github.com/CHAL7777/food-delivery",
+    stars: 0,
   },
   {
-    name: "Study Buddy SaaS",
-    description: "Student productivity concepts with app shell structure and polished UI states.",
-    tags: ["SaaS", "Next.js", "Framer Motion"],
+    name: "eccomerce-dashboard",
+    description: "Information-dense operations dashboard: KPIs, inventory, revenue charts.",
+    language: "TypeScript",
+    url: "https://github.com/CHAL7777/eccomerce-dashboard",
+    stars: 0,
+  },
+  {
+    name: "hucms",
+    description: "Haramaya University Cafeteria Management System (HUCMS).",
+    language: "PHP",
+    url: "https://github.com/CHAL7777/hucms",
+    stars: 1,
+  },
+  {
+    name: "Student-Management-System",
+    description: "Student records management with a relational schema.",
+    language: "TypeScript",
+    url: "https://github.com/CHAL7777/Student-Management-System",
+    stars: 1,
+  },
+  {
+    name: "fastAPI-class",
+    description: "FastAPI endpoints, validation, and async patterns.",
+    language: "Python",
+    url: "https://github.com/CHAL7777/fastAPI-class",
+    stars: 0,
   },
 ];

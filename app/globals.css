@@ -95,10 +95,12 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    overflow-x: clip;
   }
 
   body {
     min-height: 100vh;
+    overflow-x: clip;
     background: var(--background);
     color: var(--foreground);
     font-family: var(--body-font);
@@ -238,21 +240,6 @@
     }
   }
 
-  .glass-card,
-  .solid-card,
-  .aurora-card,
-  .cinematic-surface,
-  .neon-border {
-    position: relative;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    background: var(--surface);
-  }
-
-  .solid-card {
-    background: var(--surface-solid);
-  }
-
   /* Drafted panel: corner registration ticks, like a technical drawing */
   .drafted {
     position: relative;
@@ -297,16 +284,6 @@
   .drafted:hover::before,
   .drafted:hover::after {
     opacity: 1;
-  }
-
-  .interactive-card {
-    transition:
-      border-color 300ms var(--ease-premium),
-      background-color 300ms var(--ease-premium);
-  }
-
-  .interactive-card:hover {
-    border-color: var(--line-strong);
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -430,71 +407,23 @@
     outline: none;
   }
 
-  /* ═══════════════════════════════════════════════════════
-     BLUEPRINT FIELD — the background language
-     ═══════════════════════════════════════════════════════ */
-
+  /* Label + control stack used by the contact form */
   .blueprint-field {
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
-    background-size: 2rem 2rem, 2rem 2rem, 10rem 10rem, 10rem 10rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .dot-grid {
-    background-image: radial-gradient(circle, var(--grid-line-strong) 1px, transparent 1px);
-    background-size: 2rem 2rem;
-  }
-
-  .line-grid,
-  .architectural-grid {
+  .line-grid {
     background-image:
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 2.5rem 2.5rem;
   }
 
-  /* Accent text — solid, never a gradient */
-  .gradient-text,
-  .gradient-text-alt {
-    color: var(--accent);
-  }
-
-  .rule-top {
-    border-top: 1px solid var(--line);
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     PROJECT SURFACES
-     ═══════════════════════════════════════════════════════ */
-
-  .premium-projects {
-    background: transparent;
-  }
-
-  .premium-project-card {
-    transition:
-      border-color 300ms var(--ease-premium),
-      background-color 300ms var(--ease-premium);
-  }
-
-  .premium-project-card:hover {
-    border-color: var(--line-strong);
-  }
-
-  .project-visual-shell {
-    position: relative;
-  }
-
   /* ═══════════════════════════════════════════════════════
      MOTION — restrained, purposeful
      ═══════════════════════════════════════════════════════ */
-
-  .animate-caret {
-    animation: caret-blink 1.1s steps(1) infinite;
-  }
 
   /* Signal pulse travelling a diagram path */
   .trace-flow {
@@ -502,42 +431,12 @@
     animation: trace-flow 2.4s linear infinite;
   }
 
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 2.5rem;
-    width: max-content;
-    animation: marquee-scroll 46s linear infinite;
-  }
-
-  .marquee-track:hover {
-    animation-play-state: paused;
-  }
-
   /* ═══════════════════════════════════════════════════════
      KEYFRAMES
      ═══════════════════════════════════════════════════════ */
 
-  @keyframes caret-blink {
-    0%, 46% { opacity: 1; }
-    47%, 100% { opacity: 0; }
-  }
-
   @keyframes trace-flow {
     to { stroke-dashoffset: -28; }
-  }
-
-  @keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -549,9 +448,7 @@
       scroll-behavior: auto;
     }
 
-    .animate-caret,
-    .trace-flow,
-    .marquee-track {
+    .trace-flow {
       animation: none;
     }
 

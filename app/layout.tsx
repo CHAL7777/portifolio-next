@@ -1,133 +1,105 @@
-import { profile } from "@/app/data/portfolio";
-import type { Metadata } from "next";
+import { profile, siteUrl } from "@/app/data/portfolio";
+import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600"],
   variable: "--font-display",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-body",
   display: "swap",
 });
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const title = `${profile.name} — Software Engineer & Full-Stack Web Developer`;
+const description =
+  "Portfolio of Chala Gobena, a software engineering student and full-stack web developer building production web applications with React, Next.js, TypeScript, Node.js, FastAPI, and PostgreSQL. Open to freelance, internships, and engineering roles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
-    template: `%s | ${profile.name}`,
-  },
-  description:
-    "Portfolio of Chala Gobena — a full-stack engineer building production-grade web products, scalable APIs, and AI-driven workflows with Next.js, TypeScript, and modern design systems.",
+  title: { default: title, template: `%s — ${profile.name}` },
+  description,
   keywords: [
     "Chala Gobena",
-    "Full-Stack Engineer",
+    "CHAL7777",
     "Software Engineer",
-    "AI Systems Developer",
-    "React Developer",
-    "Next.js Developer",
+    "Full-Stack Developer",
+    "React",
+    "Next.js",
     "TypeScript",
+    "Node.js",
     "FastAPI",
-    "Python",
-    "System Design",
-    "AI Engineering",
-    "RAG",
+    "PostgreSQL",
+    "Ethiopia",
     "Portfolio",
   ],
   authors: [{ name: profile.name, url: siteUrl }],
   creator: profile.name,
-  alternates: {
-    canonical: siteUrl,
-  },
+  alternates: { canonical: "/" },
   openGraph: {
-    type: "profile",
+    type: "website",
     url: siteUrl,
-    title: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
-    description: profile.headline,
-    siteName: `${profile.name} Portfolio`,
-    images: [
-      {
-        url: profile.avatar,
-        width: 1200,
-        height: 1200,
-        alt: profile.name,
-      },
-    ],
+    title,
+    description,
+    siteName: profile.name,
+    locale: "en_US",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: title }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} | Full-Stack Engineer & AI Systems Developer`,
-    description: profile.headline,
-    images: [profile.avatar],
+    title,
+    description,
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
+  icons: { icon: [{ url: "/favicon.ico" }, { url: "/favicon.png", type: "image/png" }] },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b0d" },
+    { media: "(prefers-color-scheme: light)", color: "#f2f0ea" },
+  ],
+  width: "device-width",
+  initialScale: 1,
 };
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
-  jobTitle: profile.role,
-  description: profile.headline,
+  alternateName: profile.githubUsername,
+  jobTitle: "Software Engineer",
+  description,
   email: profile.email,
   url: siteUrl,
   image: `${siteUrl}${profile.avatar}`,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Addis Ababa",
-    addressCountry: "Ethiopia",
-  },
+  address: { "@type": "PostalAddress", addressLocality: "Addis Ababa", addressCountry: "ET" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Haramaya University" },
   sameAs: [profile.links.github, profile.links.linkedin, profile.links.telegram],
-  knowsAbout: [
-    "TypeScript",
-    "React",
-    "Next.js",
-    "FastAPI",
-    "Python",
-    "PostgreSQL",
-    "REST APIs",
-    "API Design",
-    "System Design",
-    "AI Engineering",
-    "Retrieval-Augmented Generation",
-    "Vector Databases",
-  ],
+  knowsAbout: ["React", "Next.js", "TypeScript", "JavaScript", "Node.js", "FastAPI", "Java", "PostgreSQL", "MySQL", "Tailwind CSS"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`dark ${bricolage.variable} ${inter.variable} ${jetBrainsMono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`dark ${bricolage.variable} ${inter.variable} ${jetBrainsMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Resolve the theme before paint so light mode never flashes dark. */}
         <script

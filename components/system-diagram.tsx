@@ -1,29 +1,17 @@
 "use client";
 
+import { requestPath } from "@/app/data/portfolio";
 import { useReducedMotion } from "framer-motion";
 import { useId, useState } from "react";
 
-type Node = {
-  id: string;
-  label: string;
-  detail: string;
-  x: number;
-  y: number;
+const POSITIONS: Record<string, { x: number; y: number }> = {
+  client: { x: 14, y: 50 },
+  edge: { x: 34, y: 22 },
+  auth: { x: 34, y: 78 },
+  api: { x: 50, y: 50 },
+  data: { x: 74, y: 26 },
+  cache: { x: 74, y: 74 },
 };
-
-/**
- * The signature visual: a request travelling through a real system.
- * Hovering a node explains the layer. Signals pulse along the wires.
- * ~4kb of inline SVG — no WebGL, no canvas, no image payload.
- */
-const NODES: Node[] = [
-  { id: "client", label: "Client", detail: "Next.js UI. Optimistic state, validated input.", x: 14, y: 50 },
-  { id: "edge", label: "Edge", detail: "Routing, caching, rate limits before compute.", x: 34, y: 22 },
-  { id: "api", label: "API", detail: "Typed contracts. Explicit error shapes.", x: 50, y: 50 },
-  { id: "auth", label: "Auth", detail: "Identity and permission checks, traceable.", x: 34, y: 78 },
-  { id: "data", label: "Postgres", detail: "Source of truth. Constraints over conventions.", x: 74, y: 26 },
-  { id: "cache", label: "Cache", detail: "Repeat reads, with invalidation rules written down.", x: 74, y: 74 },
-];
 
 const WIRES: Array<[string, string]> = [
   ["client", "edge"],
@@ -34,14 +22,15 @@ const WIRES: Array<[string, string]> = [
   ["api", "cache"],
 ];
 
-const byId = (id: string) => NODES.find((n) => n.id === id)!;
-
+/**
+ * A request travelling through a real system. ~3kb of inline SVG.
+ * Hover / focus / tap a node to read what the layer owns.
+ */
 export default function SystemDiagram() {
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState<string | null>(null);
   const gid = useId().replace(/:/g, "");
-
-  const activeNode = active ? byId(active) : null;
+  const activeNode = requestPath.find((n) => n.id === active) ?? null;
 
   return (
     <figure className="m-0">
@@ -49,26 +38,17 @@ export default function SystemDiagram() {
         viewBox="6 12 80 80"
         className="w-full overflow-visible"
         role="img"
-        aria-label="Diagram of a request travelling from client through edge, auth, and API to the database and cache."
+        aria-label="Diagram of a request travelling from client through edge and auth to the API, then to Postgres and a cache."
       >
         <defs>
-          <marker
-            id={`${gid}-arrow`}
-            viewBox="0 0 8 8"
-            refX="6"
-            refY="4"
-            markerWidth="4"
-            markerHeight="4"
-            orient="auto"
-          >
+          <marker id={`${gid}-arrow`} viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4" markerHeight="4" orient="auto">
             <path d="M0 0 L8 4 L0 8 z" fill="var(--line-strong)" />
           </marker>
         </defs>
 
-        {/* Wires */}
         {WIRES.map(([from, to]) => {
-          const a = byId(from);
-          const b = byId(to);
+          const a = POSITIONS[from];
+          const b = POSITIONS[to];
           const lit = active === from || active === to;
           return (
             <g key={`${from}-${to}`}>
@@ -92,31 +72,37 @@ export default function SystemDiagram() {
                   strokeWidth="0.5"
                   strokeLinecap="round"
                   className="trace-flow"
-                  opacity={lit ? 0.9 : 0.35}
+                  opacity={lit ? 0.9 : 0.3}
                 />
               )}
             </g>
           );
         })}
 
-        {/* Nodes */}
-        {NODES.map((node) => {
+        {requestPath.map((node) => {
+          const pos = POSITIONS[node.id];
           const isActive = active === node.id;
           return (
             <g
               key={node.id}
-              transform={`translate(${node.x} ${node.y})`}
+              transform={`translate(${pos.x} ${pos.y})`}
               onMouseEnter={() => setActive(node.id)}
               onMouseLeave={() => setActive(null)}
               onFocus={() => setActive(node.id)}
               onBlur={() => setActive(null)}
               onClick={() => setActive((cur) => (cur === node.id ? null : node.id))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setActive((cur) => (cur === node.id ? null : node.id));
+                }
+              }}
               tabIndex={0}
               role="button"
+              aria-pressed={isActive}
               aria-label={`${node.label}: ${node.detail}`}
               className="cursor-pointer focus:outline-none"
             >
-              {/* Registration square — drafting language, not a bubble */}
               <rect
                 x="-4.4"
                 y="-4.4"
@@ -124,16 +110,11 @@ export default function SystemDiagram() {
                 height="8.8"
                 fill="var(--background)"
                 stroke={isActive ? "var(--accent)" : "var(--line-strong)"}
-                strokeWidth="0.4"
+                strokeWidth={isActive ? 0.6 : 0.4}
                 style={{ transition: "stroke 300ms var(--ease-premium)" }}
               />
               <circle r="1.15" fill={isActive ? "var(--accent)" : "var(--muted)"} style={{ transition: "fill 300ms" }} />
-              <text
-                y="8.6"
-                textAnchor="middle"
-                fill={isActive ? "var(--ink)" : "var(--muted)"}
-                className="diagram-label"
-              >
+              <text y="8.6" textAnchor="middle" fill={isActive ? "var(--ink)" : "var(--muted)"} className="diagram-label">
                 {node.label}
               </text>
             </g>
@@ -141,15 +122,10 @@ export default function SystemDiagram() {
         })}
       </svg>
 
-      {/* Explanation rail — reserves height so nothing shifts on hover */}
       <figcaption className="mt-5 flex min-h-[3.75rem] flex-col gap-1.5 border-t border-[var(--line)] pt-3 sm:min-h-[2.75rem] sm:flex-row sm:items-start sm:gap-3">
-        <span className="meta-mono shrink-0 pt-0.5">
-          {activeNode ? `— ${activeNode.label}` : "Request path"}
-        </span>
-        <span className="body-copy text-sm">
-          {activeNode
-            ? activeNode.detail
-            : "Select a node to read what each layer is responsible for."}
+        <span className="meta-mono shrink-0 pt-0.5">{activeNode ? `— ${activeNode.label}` : "Request path"}</span>
+        <span className="body-copy text-sm" aria-live="polite">
+          {activeNode ? activeNode.detail : "Select a node to read what each layer is responsible for."}
         </span>
       </figcaption>
     </figure>

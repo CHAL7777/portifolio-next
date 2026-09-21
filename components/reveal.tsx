@@ -5,55 +5,33 @@ import type { ReactNode } from "react";
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+/**
+ * Scroll-triggered entrance. Opacity + small translate only — no blur filter,
+ * so it stays cheap on low-end devices. Renders static when reduced motion is on.
+ */
 export default function Reveal({
   children,
   className,
   delay = 0,
-  direction = "up",
+  as = "div",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "left" | "right" | "down";
+  as?: "div" | "li" | "article" | "header";
 }) {
   const reduceMotion = useReducedMotion();
-
-  const directionMap = {
-    up: { y: 24, x: 0 },
-    down: { y: -24, x: 0 },
-    left: { y: 0, x: -30 },
-    right: { y: 0, x: 30 },
-  };
-
-  const offset = directionMap[direction];
+  const Tag = motion[as];
 
   return (
-    <motion.div
-      initial={
-        reduceMotion
-          ? false
-          : {
-              opacity: 0,
-              y: offset.y,
-              x: offset.x,
-              filter: "blur(6px)",
-            }
-      }
-      whileInView={
-        reduceMotion
-          ? undefined
-          : {
-              opacity: 1,
-              y: 0,
-              x: 0,
-              filter: "blur(0px)",
-            }
-      }
-      viewport={{ once: true, margin: "-8%" }}
-      transition={{ duration: 0.7, delay, ease }}
+    <Tag
+      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      transition={{ duration: 0.6, delay, ease }}
       className={className}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
