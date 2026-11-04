@@ -18,7 +18,8 @@ import {
   SiTypescript,
 } from "react-icons/si";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://chaldev.vercel.app";
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://chaldev.vercel.app";
 
 export const profile = {
   name: "Chala Gobena",
@@ -32,7 +33,8 @@ export const profile = {
   resumeUrl: "/resume.pdf",
   avatar: "/img/chala.jpg",
   githubUsername: "CHAL7777",
-  availability: "Open to freelance, internships, and software engineering roles",
+  availability:
+    "Open to freelance, internships, and software engineering roles",
   links: {
     github: "https://github.com/CHAL7777",
     linkedin: "https://www.linkedin.com/in/chala-gobena-01a22b346",
@@ -282,7 +284,7 @@ export const projects: Project[] = [
     result:
       "A live platform where a student completes an assessment, sees a roadmap, and receives targeted next steps.",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "LLM API"],
-    liveUrl: "https://ethio-path-finder.vercel.app/",
+    liveUrl: "https://ethiopath.vercel.app",
   },
   {
     slug: "food-delivery",
@@ -292,7 +294,8 @@ export const projects: Project[] = [
     role: "Frontend developer",
     status: "Live",
     image: "/docs/food.png",
-    imageAlt: "Food delivery application showing a menu grid, item cards, and a cart panel.",
+    imageAlt:
+      "Food delivery application showing a menu grid, item cards, and a cart panel.",
     accent: "#34d399",
     summary:
       "A responsive ordering experience: browse a menu, adjust a cart, and reach checkout without the interface getting in the way.",
@@ -304,7 +307,12 @@ export const projects: Project[] = [
     ],
     solution:
       "A Next.js interface with separate menu, cart, and checkout modules, structured so an inventory and order API can be introduced behind them.",
-    features: ["Menu browsing", "Cart with quantity updates", "Responsive checkout review", "Mobile navigation"],
+    features: [
+      "Menu browsing",
+      "Cart with quantity updates",
+      "Responsive checkout review",
+      "Mobile navigation",
+    ],
     architecture:
       "Reusable menu, cart, and checkout components; browsing state separated from checkout state; layout tuned so imagery never blocks the ordering task.",
     decisions: [
@@ -312,7 +320,8 @@ export const projects: Project[] = [
       "Cart actions sit next to the food item rather than in a distant drawer.",
       "Every interaction state is explicit: empty cart, updating quantity, checkout review.",
     ],
-    challenge: "Making the product feel visual without letting imagery slow down the ordering task.",
+    challenge:
+      "Making the product feel visual without letting imagery slow down the ordering task.",
     lessons:
       "Commerce polish is mostly invisible. Users feel quality when totals, quantities, and mobile spacing behave exactly as expected.",
     result: "A deployed ordering flow that works from 320px up.",
@@ -328,14 +337,25 @@ export const projects: Project[] = [
     role: "Frontend developer",
     status: "Live",
     image: "/docs/ecco.png",
-    imageAlt: "Operations dashboard with revenue charts, inventory metrics, and a sales table.",
+    imageAlt:
+      "Operations dashboard with revenue charts, inventory metrics, and a sales table.",
     accent: "#a78bfa",
-    summary: "A dense analytics surface for sales, inventory, and revenue that stays readable on a small laptop.",
-    problem: "Dashboards turn into walls of numbers. A manager needs fast comparison, not a decorative report.",
-    goals: ["Let someone scan status, notice change, and move on.", "Stay useful at 13-inch laptop widths."],
+    summary:
+      "A dense analytics surface for sales, inventory, and revenue that stays readable on a small laptop.",
+    problem:
+      "Dashboards turn into walls of numbers. A manager needs fast comparison, not a decorative report.",
+    goals: [
+      "Let someone scan status, notice change, and move on.",
+      "Stay useful at 13-inch laptop widths.",
+    ],
     solution:
       "A React dashboard built from reusable metric, inventory, and chart components with a layout system tuned for dense information.",
-    features: ["Sales overview", "Inventory cards", "Revenue charts", "Responsive tables"],
+    features: [
+      "Sales overview",
+      "Inventory cards",
+      "Revenue charts",
+      "Responsive tables",
+    ],
     architecture:
       "Typed KPI, table, and chart components; a grid layout that collapses predictably; charting isolated behind a small wrapper so the library can be swapped.",
     decisions: [
@@ -344,8 +364,10 @@ export const projects: Project[] = [
       "Tables collapse into summaries on narrow viewports instead of scrolling horizontally.",
     ],
     challenge: "Balancing density with breathing room.",
-    lessons: "A dashboard succeeds when it helps people answer a small set of repeated questions quickly.",
-    result: "A deployed prototype that shows how I structure information-dense UI.",
+    lessons:
+      "A dashboard succeeds when it helps people answer a small set of repeated questions quickly.",
+    result:
+      "A deployed prototype that shows how I structure information-dense UI.",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Charts", "Netlify"],
     liveUrl: "https://eccommercebychal.netlify.app",
     sourceUrl: "https://github.com/CHAL7777/eccomerce-dashboard",
@@ -358,14 +380,25 @@ export const projects: Project[] = [
     role: "Full-stack developer",
     status: "Live",
     image: "/docs/ebook.png",
-    imageAlt: "Digital library with a book catalogue, search bar, and category navigation.",
+    imageAlt:
+      "Digital library with a book catalogue, search bar, and category navigation.",
     accent: "#fbbf24",
-    summary: "A digital library focused on discovery: categories, search-friendly structure, and a light reading flow.",
-    problem: "Content-heavy sites get hard to use when navigation and filtering are afterthoughts.",
-    goals: ["Move a visitor from browsing to choosing a book with minimal friction.", "Support English and Amharic."],
+    summary:
+      "A digital library focused on discovery: categories, search-friendly structure, and a light reading flow.",
+    problem:
+      "Content-heavy sites get hard to use when navigation and filtering are afterthoughts.",
+    goals: [
+      "Move a visitor from browsing to choosing a book with minimal friction.",
+      "Support English and Amharic.",
+    ],
     solution:
       "A Next.js content site organised around book metadata, category pages, locale-prefixed routes, and mobile reading behaviour.",
-    features: ["Book browsing and categories", "Localised routes (/en, /am)", "Download flow", "Mobile reading focus"],
+    features: [
+      "Book browsing and categories",
+      "Localised routes (/en, /am)",
+      "Download flow",
+      "Mobile reading focus",
+    ],
     architecture:
       "Locale-prefixed App Router routes; book metadata in typed modules driving both cards and detail pages; image constraints to avoid layout shift.",
     decisions: [
@@ -373,10 +406,18 @@ export const projects: Project[] = [
       "Cards are consistent so books can be compared quickly.",
       "Locale is part of the URL so links are shareable in either language.",
     ],
-    challenge: "Showing enough book context to support a choice while keeping pages light.",
-    lessons: "Good content UX is quiet. Readers should never have to hunt for the next useful action.",
+    challenge:
+      "Showing enough book context to support a choice while keeping pages light.",
+    lessons:
+      "Good content UX is quiet. Readers should never have to hunt for the next useful action.",
     result: "A live bilingual library site.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "i18n routing", "Vercel"],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "i18n routing",
+      "Vercel",
+    ],
     liveUrl: "https://ethio-book-site.vercel.app/",
   },
   {
@@ -387,14 +428,25 @@ export const projects: Project[] = [
     role: "Frontend developer",
     status: "MVP",
     image: "/docs/saas-s.png",
-    imageAlt: "Study Buddy workspace with task boards, progress rings, and a resource list.",
+    imageAlt:
+      "Study Buddy workspace with task boards, progress rings, and a resource list.",
     accent: "#8b5cf6",
-    summary: "A planning workspace that turns student work into visible priorities, resources, and progress.",
-    problem: "Students know they have work to do, but the plan is scattered across notes, chats, and memory.",
-    goals: ["Make the next study action visible.", "Avoid becoming project-management overhead."],
+    summary:
+      "A planning workspace that turns student work into visible priorities, resources, and progress.",
+    problem:
+      "Students know they have work to do, but the plan is scattered across notes, chats, and memory.",
+    goals: [
+      "Make the next study action visible.",
+      "Avoid becoming project-management overhead.",
+    ],
     solution:
       "A Next.js app shell with task, resource, and progress surfaces built as independent modules so a backend can be added without a rewrite.",
-    features: ["Task planning", "Resource organisation", "Progress view", "Responsive app shell"],
+    features: [
+      "Task planning",
+      "Resource organisation",
+      "Progress view",
+      "Responsive app shell",
+    ],
     architecture:
       "App shell with independent task, resource, and progress modules; Framer Motion for transitions between views; structure ready for persistence.",
     decisions: [
@@ -402,10 +454,18 @@ export const projects: Project[] = [
       "Progress is a workflow signal, not a decorative chart.",
       "Motion is limited to view transitions.",
     ],
-    challenge: "Enough structure to help, not so much that students abandon it.",
-    lessons: "Productivity tools should protect momentum. Every extra field has to earn its place.",
+    challenge:
+      "Enough structure to help, not so much that students abandon it.",
+    lessons:
+      "Productivity tools should protect momentum. Every extra field has to earn its place.",
     result: "A deployed MVP of the interface layer.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Vercel",
+    ],
     liveUrl: "https://student-sass.vercel.app/",
     sourceUrl: "https://github.com/CHAL7777/studen-saas",
   },
@@ -473,12 +533,41 @@ export const engineeringAreas: EngineeringArea[] = [
 
 /** The request path I design around. Rendered by SystemDiagram. */
 export const requestPath = [
-  { id: "client", label: "Client", detail: "Next.js UI. Validated input, optimistic state, explicit error and empty states." },
-  { id: "edge", label: "Edge", detail: "Routing and caching before compute. Static where possible." },
-  { id: "auth", label: "Auth", detail: "Identity and permission checks resolved before business logic runs." },
-  { id: "api", label: "API", detail: "Typed request and response contracts. Errors have a shape the UI can use." },
-  { id: "data", label: "Postgres", detail: "Source of truth. Constraints protect integrity; queries stay explainable." },
-  { id: "cache", label: "Cache", detail: "Repeat reads served fast, with invalidation rules written next to the write path." },
+  {
+    id: "client",
+    label: "Client",
+    detail:
+      "Next.js UI. Validated input, optimistic state, explicit error and empty states.",
+  },
+  {
+    id: "edge",
+    label: "Edge",
+    detail: "Routing and caching before compute. Static where possible.",
+  },
+  {
+    id: "auth",
+    label: "Auth",
+    detail:
+      "Identity and permission checks resolved before business logic runs.",
+  },
+  {
+    id: "api",
+    label: "API",
+    detail:
+      "Typed request and response contracts. Errors have a shape the UI can use.",
+  },
+  {
+    id: "data",
+    label: "Postgres",
+    detail:
+      "Source of truth. Constraints protect integrity; queries stay explainable.",
+  },
+  {
+    id: "cache",
+    label: "Cache",
+    detail:
+      "Repeat reads served fast, with invalidation rules written next to the write path.",
+  },
 ];
 
 /* ─────────────────────────────────────────────────────────
@@ -534,9 +623,24 @@ export const education = {
 };
 
 export const certificates = [
-  { title: "Artificial Intelligence Fundamentals", issuer: "Udacity", year: "2025", image: "/docs/ai.png" },
-  { title: "Programming Fundamentals", issuer: "Udacity", year: "2025", image: "/docs/web.png" },
-  { title: "Web Programming", issuer: "Hucisa", year: "2024", image: "/docs/web-h.jpg" },
+  {
+    title: "Artificial Intelligence Fundamentals",
+    issuer: "Udacity",
+    year: "2025",
+    image: "/docs/ai.png",
+  },
+  {
+    title: "Programming Fundamentals",
+    issuer: "Udacity",
+    year: "2025",
+    image: "/docs/web.png",
+  },
+  {
+    title: "Web Programming",
+    issuer: "Hucisa",
+    year: "2024",
+    image: "/docs/web-h.jpg",
+  },
 ];
 
 /* ─────────────────────────────────────────────────────────
@@ -556,21 +660,24 @@ export type Repo = {
 export const pinnedRepos: Repo[] = [
   {
     name: "chala-product-store",
-    description: "SoleFlow footwear storefront — URL-driven catalogue filtering, product routes, persistent cart and wishlist.",
+    description:
+      "SoleFlow footwear storefront — URL-driven catalogue filtering, product routes, persistent cart and wishlist.",
     language: "JavaScript",
     url: "https://github.com/CHAL7777/chala-product-store",
     stars: 1,
   },
   {
     name: "food-delivery",
-    description: "Responsive ordering UI with menu, cart, and checkout modules.",
+    description:
+      "Responsive ordering UI with menu, cart, and checkout modules.",
     language: "TypeScript",
     url: "https://github.com/CHAL7777/food-delivery",
     stars: 0,
   },
   {
     name: "eccomerce-dashboard",
-    description: "Information-dense operations dashboard: KPIs, inventory, revenue charts.",
+    description:
+      "Information-dense operations dashboard: KPIs, inventory, revenue charts.",
     language: "TypeScript",
     url: "https://github.com/CHAL7777/eccomerce-dashboard",
     stars: 0,
